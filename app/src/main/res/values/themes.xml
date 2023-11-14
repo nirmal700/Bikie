@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Bikie" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- Primary brand color. -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/Primary_Blue</item>
+        <item name="colorPrimaryVariant">@color/Primary_Blue</item>
+        <item name="colorOnPrimary">@color/Primary_Blue</item>
+        <item name="statusBarBackground">@color/Primary_Blue</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/Primary_Light</item>
+        <item name="colorSecondaryVariant">@color/Primary_Light</item>
+        <item name="colorOnSecondary">@color/Primary_Blue</item>
+        <!-- <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item> -->
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/statusBarBackground</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/Primary_Blue</item>
+    </style>
+
+    <style name="Theme.Bikie" parent="Base.Theme.Bikie" />
+</resources>

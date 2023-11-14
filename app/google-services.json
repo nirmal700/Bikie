@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514153036581",
+    "project_id": "bikie-in",
+    "storage_bucket": "bikie-in.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514153036581:android:7bce202ebbd5da8d1038cc",
+        "android_client_info": {
+          "package_name": "com.bikie.in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARexXJM_nRhfrkv62aPq45LYCwRU4xc5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
