@@ -18,7 +18,18 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/statusBarBackground</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@color/Primary_Blue</item>
+        <item name="checkboxStyle">@style/Widget.App.CheckBox</item>
     </style>
 
     <style name="Theme.Bikie" parent="Base.Theme.Bikie" />
+    <style name="Widget.App.CheckBox" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CheckBox</item>
+    </style>
+
+    <style name="ThemeOverlay.App.CheckBox" parent="">
+        <item name="colorOnSurface">@color/Primary_Blue</item>
+        <item name="colorSecondary">@color/Primary_Blue</item>
+    </style>
+
+
 </resources>

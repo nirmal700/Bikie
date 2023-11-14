@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.bikie.in.Singup_Login.Signup;
+import com.bikie.in.Singup_Login.SignupAadhar;
+import com.bikie.in.Singup_Login.SingupDL;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(getApplicationContext(), Signup.class));
+        Intent intent = new Intent(MainActivity.this, Signup.class);
+        startActivity(intent);
+        finish();
     }
 }
