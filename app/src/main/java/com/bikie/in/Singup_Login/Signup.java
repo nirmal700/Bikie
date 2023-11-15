@@ -221,8 +221,8 @@ public class Signup extends AppCompatActivity {
         } else if (val.length() < 8) {
             et_password.setError("Password minimum 8 Characters");
             return false;
-        } else if (!val.matches("\\w*")) {
-            et_password.setError("White spaces not allowed");
+        } else if (!val.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")) {
+            et_password.setError("Must contain atleast one letter and one number");
             return false;
         } else {
             et_password.setError(null);
