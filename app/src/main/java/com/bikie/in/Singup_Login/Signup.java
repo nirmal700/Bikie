@@ -66,6 +66,8 @@ public class Signup extends AppCompatActivity {
             showCustomDialog();
         }
 
+        btn_login.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Login.class)));
+
         btn_getOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
