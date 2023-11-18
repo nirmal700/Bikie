@@ -20,6 +20,7 @@ import com.bikie.in.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -76,6 +77,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
         });
         Glide.with(mContext)
                 .load(currentData.getmVehicleImages().get(0))
+                .transform(new RoundedCorners(10))
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {

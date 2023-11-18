@@ -33,14 +33,15 @@
             <ImageView
                 android:id="@+id/Vehicle_image"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="155dp"
+                android:background="@drawable/bg_image_rounded"
                 android:src="@drawable/ic_bike_dash"
                 android:scaleType="fitXY"/>
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieAnimationView"
                 android:layout_width="match_parent"
-                android:layout_height="185dp"
+                android:layout_height="155dp"
                 app:lottie_fileName="ic_loading_image.json"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true" />
@@ -54,6 +55,7 @@
             android:layout_marginTop="15dp"
             android:text="KTM Duke"
             android:textSize="25sp"
+            android:fontFamily="@font/robotto"
             android:textColor="@color/black"
             android:textStyle="bold" />
         <TextView
@@ -62,6 +64,7 @@
             android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:fontFamily="@font/robotto"
             android:layout_below="@id/Vehicle_name"
             android:text="Patia, Bhubaneswar" />
 

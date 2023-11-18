@@ -1,5 +1,6 @@
 package com.bikie.in.POJO_Classes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.Timestamp;

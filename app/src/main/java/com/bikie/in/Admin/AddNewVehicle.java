@@ -95,7 +95,7 @@ public class AddNewVehicle extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent2Hr) && validateNumericDigitData(mVehicleRent4Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory() ){
-                    Toast.makeText(AddNewVehicle.this, "All Validation Successfull", Toast.LENGTH_SHORT).show();
+
                     StorageReference vehicleImageRef = storageReference.child("Vehicle_Images/");
                     StorageReference fileRef = vehicleImageRef.child("VI_" + UUID.randomUUID() + ".jpg");
                     UploadTask uploadTask = fileRef.putFile(mVehicleUri);

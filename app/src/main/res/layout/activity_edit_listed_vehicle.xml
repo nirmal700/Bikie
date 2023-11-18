@@ -10,57 +10,64 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="100dp"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/btn_backToSd"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:src="@drawable/ic_back_arrow"
-            app:tint="@color/black"
-            android:contentDescription="@null"
-            android:focusable="true"
-            android:layout_marginStart="20dp" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_add_vehicle"
-            android:layout_marginTop="-55dp"
-            android:layout_gravity="center_horizontal"
-            android:contentDescription="@null" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autoSizeTextType="uniform"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:text="Edit Vehicle Info"
-            android:fontFamily="@font/my_fav_sans_number"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textSize="35sp"
-            tools:ignore="MissingConstraints"
-            tools:targetApi="o" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/btn_backToSd"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:src="@drawable/ic_back_arrow"
+                app:tint="@color/black"
+                android:contentDescription="@null"
+                android:focusable="true" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:text="Edit Vehicle Info"
+                android:paddingEnd="35dp"
+                android:fontFamily="@font/my_fav_sans_number"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                tools:ignore="MissingConstraints"
+                tools:targetApi="o" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
             android:background="@drawable/bg_dashboard"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             android:padding="15dp">
 
+            <ImageView
+                android:id="@+id/btn_chooseImage"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_upload"
+                android:contentDescription="Upload Image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_vName"
@@ -417,7 +424,7 @@
                     app:buttonTint="@color/black" />
 
                 <RadioButton
-                    android:id="@+id/radio_car"
+                    android:id="@+id/radio_scooty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -427,23 +434,7 @@
             </RadioGroup>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:autoSizeTextType="uniform"
-                android:text="Upload Bike Image's"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/btn_chooseImage"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_upload"
-                android:contentDescription="Upload Image" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -455,7 +446,7 @@
                 android:backgroundTint="@color/Primary_Blue"
                 android:fontFamily="@font/my_fav_sans_number"
                 android:gravity="center"
-                android:text="Add Vehicle"
+                android:text="Update Vehicle"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:transitionName="transition_signUp"
@@ -474,7 +465,7 @@
                 android:backgroundTint="@color/light_red"
                 android:fontFamily="@font/my_fav_sans_number"
                 android:gravity="center"
-                android:text="Cancel"
+                android:text="Delete"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:transitionName="transition_signUp"
