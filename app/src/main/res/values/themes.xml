@@ -30,6 +30,10 @@
         <item name="colorOnSurface">@color/Primary_Blue</item>
         <item name="colorSecondary">@color/Primary_Blue</item>
     </style>
-
+    <style name="ThemeOverlay.App.FloatingActionButton" parent="">
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSurface">@color/Primary_Light</item>
+    </style>
 
 </resources>

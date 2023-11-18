@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,11 +71,19 @@
                 android:layout_marginBottom="1dp"
                 tools:ignore="MissingConstraints" />
 
-
-
-
-
         </LinearLayout>
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/your_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="30dp"
+        android:text="New Vehicle"
+        android:backgroundTint="@color/Fab_Blue"
+        android:textColor="@color/white"
+        app:iconTint="@color/white"
+        app:icon="@drawable/ic_plus"
+        app:srcCompat="@drawable/ic_plus" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

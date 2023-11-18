@@ -29,6 +29,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -58,6 +59,10 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_listed_vehicle);
+
+        MaterialCardView cardView = findViewById(R.id.mEditCard);
+        String transitionName = getIntent().getStringExtra("EXTRA_TRANSITION_NAME");
+        cardView.setTransitionName(transitionName);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -98,7 +103,6 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
         String vehicleID = getIntent().getStringExtra("VehicleID");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         assert vehicleID != null;
-        Toast.makeText(this, "" + vehicleID, Toast.LENGTH_SHORT).show();
         db.collection("Vehicles").document(vehicleID).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

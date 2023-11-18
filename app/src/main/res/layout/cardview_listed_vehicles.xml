@@ -6,6 +6,7 @@
     android:layout_margin="8dp"
     android:background="@color/white"
     app:cardCornerRadius="5dp"
+    android:id="@+id/mCardViewListed"
     app:cardElevation="4dp">
 
     <RelativeLayout
@@ -46,6 +47,12 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true" />
         </FrameLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_below="@id/FrameLayout"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/Vehicle_name"

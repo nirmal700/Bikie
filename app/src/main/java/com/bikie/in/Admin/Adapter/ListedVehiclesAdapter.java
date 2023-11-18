@@ -23,6 +23,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,6 +60,9 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
 
         holder.mAvailaible.setOnCheckedChangeListener(null);
         holder.mAvailaible.setChecked(currentData.getmIsAvailable());
+
+        String transitionName = "sharedCard" + position;
+        holder.cardView.setTransitionName(transitionName);
 
         holder.mAvailaible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -108,6 +112,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
         public LottieAnimationView animationView;
         public TextView tv_location, tv_name;
         SwitchMaterial mAvailaible;
+        MaterialCardView cardView;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -117,6 +122,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
             tv_location = itemView.findViewById(R.id.Vehicle_location);
             animationView = itemView.findViewById(R.id.lottieAnimationView);
             mAvailaible = itemView.findViewById(R.id.switchAvailaible);
+            cardView = itemView.findViewById(R.id.mCardViewListed);
             itemView.setOnClickListener(this);
 
         }
@@ -127,7 +133,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
             if (mListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    mListener.onItemClick(position);
+                    mListener.onItemClick(position, cardView.getTransitionName());
                 }
             }
 
@@ -136,7 +142,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(int position, String transitionName);
 
     }
 

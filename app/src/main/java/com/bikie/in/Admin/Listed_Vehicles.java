@@ -2,13 +2,16 @@ package com.bikie.in.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,6 +22,9 @@ import com.bikie.in.SessionManager.SessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +52,7 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
     private boolean isLoading = false;
 
     ImageView btn_back;
+    RecyclerView.LayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +69,7 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
         recyclerView = findViewById(R.id.rv_ListedVehicles);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        layoutManager = recyclerView.getLayoutManager();
 
         // Initialize ProgressDialog
         progressDialog = new ProgressDialog(Listed_Vehicles.this);
@@ -76,6 +84,13 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
         listedVehiclesAdapter.setOnItemClickListener(Listed_Vehicles.this);
 
         btn_back = findViewById(R.id.btn_backToSd);
+        ExtendedFloatingActionButton fab = findViewById(R.id.your_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AddNewVehicle.class));
+            }
+        });
     }
 
     private void initializeFirestore() {
@@ -151,16 +166,28 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
         }
     }
 
-    public void onItemClick(int position) {
+    public void onItemClick(int position,  String transitionName) {
 
         NewVehicle vehicleData = list.get(position);
 
 
         String id = vehicleData.getmVehicleId();
 
-        Intent intent = new Intent(Listed_Vehicles.this, Edit_Listed_Vehicle.class);
+       // Intent intent = new Intent(Listed_Vehicles.this, Edit_Listed_Vehicle.class);
+        //
+        //startActivity(intent);
+
+        Intent intent = new Intent(this, Edit_Listed_Vehicle.class);
+        // Pass any other necessary data through intent
+        intent.putExtra("EXTRA_TRANSITION_NAME", transitionName);
         intent.putExtra("VehicleID", id);
-        startActivity(intent);
+        MaterialCardView cardView = layoutManager.findViewByPosition(position).findViewById(R.id.mCardViewListed);
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                Listed_Vehicles.this,
+                cardView,
+                transitionName
+        );
+        startActivity(intent, options.toBundle());
 
     }
 }
