@@ -50,6 +50,9 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.google.firebase:firebase-functions:20.4.0")
     testImplementation("junit:junit:4.13.2")
+    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation("com.google.firebase:firebase-appcheck-playintegrity")
+    implementation("com.google.firebase:firebase-appcheck-debug")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.github.dhaval2404:imagepicker:2.1")  //Image Picker

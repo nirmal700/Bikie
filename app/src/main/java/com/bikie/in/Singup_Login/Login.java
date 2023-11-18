@@ -91,11 +91,16 @@ public class Login extends AppCompatActivity {
                         String _phoneNo = snapshot.child(_completePhoneNumber).child("Profile").child("phoneNumber").getValue(String.class);
                         String _password = snapshot.child(_completePhoneNumber).child("Profile").child("password").getValue(String.class);
                         String _name = snapshot.child(_completePhoneNumber).child("Profile").child("name").getValue(String.class);
+                        String _aadharNo = snapshot.child(_completePhoneNumber).child("Profile").child("aadharNo").getValue(String.class);
+                        String _dlNo = snapshot.child(_completePhoneNumber).child("Profile").child("dlNo").getValue(String.class);
+                        String _dlIMGURL = snapshot.child(_completePhoneNumber).child("Profile").child("dlImageURL").getValue(String.class);
+                        String _aadharFront = snapshot.child(_completePhoneNumber).child("Profile").child("aadharFrontURL").getValue(String.class);
+                        String _aadharBack = snapshot.child(_completePhoneNumber).child("Profile").child("aadharBackURL").getValue(String.class);
 
 
 
                         manager.setUserLogin(true); //Set User Login Session
-                        manager.setDetails(_phoneNo, _password,_name); //Add Data To User Session manager
+                        manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(),_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack); //Add Data To User Session manager
                         // Intent to Next Activity
                         startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();

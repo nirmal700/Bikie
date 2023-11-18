@@ -173,9 +173,13 @@ public class SingupDL extends AppCompatActivity {
                                 String _phoneNo = snapshot.child(phoneNumber).child("Profile").child("phoneNumber").getValue(String.class);
                                 String _password = snapshot.child(phoneNumber).child("Profile").child("password").getValue(String.class);
                                 String _name = snapshot.child(phoneNumber).child("Profile").child("name").getValue(String.class);
-
+                                String _aadharNo = snapshot.child(phoneNumber).child("Profile").child("aadharNo").getValue(String.class);
+                                String _dlNo = snapshot.child(phoneNumber).child("Profile").child("dlNo").getValue(String.class);
+                                String _dlIMGURL = snapshot.child(phoneNumber).child("Profile").child("dlImageURL").getValue(String.class);
+                                String _aadharFront = snapshot.child(phoneNumber).child("Profile").child("aadharFrontURL").getValue(String.class);
+                                String _aadharBack = snapshot.child(phoneNumber).child("Profile").child("aadharBackURL").getValue(String.class);
                                 manager.setUserLogin(true);
-                                manager.setDetails(_phoneNo, _password,_name);
+                                manager.setDetails(_phoneNo, password,_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack); //Add Data To User Session manager
 
                                 progressDialog.dismiss();
 

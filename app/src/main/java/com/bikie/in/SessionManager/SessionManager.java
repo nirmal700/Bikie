@@ -24,10 +24,19 @@ public class SessionManager {
         return sharedPreferences.getBoolean("KEY_LOGIN", false);
     }
 
-    public void setDetails(String phoneNo, String password, String name) {
+    public void setDetails(String phoneNo, String password, String name, String dlNo,String aadharNo, String dlURL, String aadharURL1, String aadharURL2) {
         editor.putString("KEY_PHONE", phoneNo);
         editor.putString("KEY_PASSWORD", password);
         editor.putString("KEY_NAME",name);
+        editor.putString("KEY_DL_NO",dlNo);
+        editor.putString("KEY_AADHAR_NO",aadharNo);
+        editor.putString("KEY_DL_IMG_URL",dlURL);
+        editor.putString("KEY_AADHAR_IMG_URL1",aadharURL1);
+        editor.putString("KEY_AADHAR_IMG_URL2",aadharURL2);
+
+
+
+
 
         editor.commit();
 
@@ -37,6 +46,28 @@ public class SessionManager {
     public String getPhone() {
         return sharedPreferences.getString("KEY_PHONE", "");
     }
+    public String getPassword() {
+        return sharedPreferences.getString("KEY_PASSWORD", "");
+    }
+    public String getName() {
+        return sharedPreferences.getString("KEY_NAME", "");
+    }
+    public String getDlNo() {
+        return sharedPreferences.getString("KEY_DL_NO", "");
+    }
+    public String getDlImageURL() {
+        return sharedPreferences.getString("KEY_DL_IMG_URL", "");
+    }
+    public String getAadharNo() {
+        return sharedPreferences.getString("KEY_AADHAR_NO", "");
+    }
+    public String getAadharFrontURL() {
+        return sharedPreferences.getString("KEY_AADHAR_IMG_URL1", "");
+    }
+    public String getAadharBackURL() {
+        return sharedPreferences.getString("KEY_AADHAR_IMG_URL2", "");
+    }
+
 
 
     public void logoutUserFromSession() {

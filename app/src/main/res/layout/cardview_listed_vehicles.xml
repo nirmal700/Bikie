@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="10dp">
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchAvailaible"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textColor="@color/black"
+                android:text="Available"
+                android:layout_alignParentEnd="true" />
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/switchAvailaible"
+            android:id="@+id/FrameLayout">
+
+            <ImageView
+                android:id="@+id/Vehicle_image"
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                android:src="@drawable/ic_bike_dash"
+                android:scaleType="fitXY"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="match_parent"
+                android:layout_height="185dp"
+                app:lottie_fileName="ic_loading_image.json"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/Vehicle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FrameLayout"
+            android:layout_marginTop="15dp"
+            android:text="KTM Duke"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/Vehicle_location"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_below="@id/Vehicle_name"
+            android:text="Patia, Bhubaneswar" />
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
