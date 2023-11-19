@@ -15,6 +15,7 @@ import com.bikie.in.SessionManager.SessionManager;
 import com.bikie.in.Singup_Login.Signup;
 import com.bikie.in.Singup_Login.SignupAadhar;
 import com.bikie.in.Singup_Login.SingupDL;
+import com.bikie.in.Users.UserDashboard;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.debug.DebugAppCheckProviderFactory;
@@ -49,34 +50,37 @@ public class MainActivity extends AppCompatActivity {
                     manager = new SessionManager(getApplicationContext());
 
                     if (manager.getUserLogin()) {
-                        FirebaseDatabase.getInstance().getReference("Users").child(manager.getPhone()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) { //Check User
+//                        FirebaseDatabase.getInstance().getReference("Users").child(manager.getPhone()).child("Profile").addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @SuppressLint("SetTextI18n")
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                if (snapshot.exists()) { //Check User
+//
+//                                    String systemPassword = snapshot.child("password").getValue(String.class);
+//
+//                                    if (checkPassword(manager.getPassword(), systemPassword)) {
+//                                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
+//                                        finish();
+//                                    }
+//                                    else {
+//                                        Intent intent = new Intent(MainActivity.this, Signup.class);
+//                                        startActivity(intent);
+//                                        finish();
+//                                    }
+//                                }else {
+//                                    Intent intent = new Intent(MainActivity.this, Signup.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            }
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//                                Toast.makeText(MainActivity.this, "Error!"+error.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
 
-                                    String systemPassword = snapshot.child("password").getValue(String.class);
-
-                                    if (checkPassword(manager.getPassword(), systemPassword)) {
-                                        startActivity(new Intent(getApplicationContext(), Dashboard.class));
-                                        finish();
-                                    }
-                                    else {
-                                        Intent intent = new Intent(MainActivity.this, Signup.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                }else {
-                                    Intent intent = new Intent(MainActivity.this, Signup.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(MainActivity.this, "Error!"+error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        startActivity(new Intent(getApplicationContext(), UserDashboard.class));
+                        finish();
 
                     } else {
                         Intent intent = new Intent(MainActivity.this, Signup.class);
