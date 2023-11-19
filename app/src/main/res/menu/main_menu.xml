@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Bookings">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/mBookings"
+                    android:icon="@drawable/ic_bookings"
+                    android:title="My Bookings" />
+                <item
+                    android:id="@+id/mHelpAndSuppourt"
+                    android:icon="@drawable/ic_help_icon"
+                    android:title="Help &amp; Suppourt" />
+            </group>
+
+        </menu>
+    </item>
+
+    <item android:title="Legal">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/mCancellationPolicy"
+                    android:icon="@drawable/ic_cancellation"
+                    android:title="Cancellation Policy" />
+                <item
+                    android:id="@+id/mTermsAndConditions"
+                    android:icon="@drawable/ic_terms"
+                    android:title="Terms &amp; Conditions" />
+                <item
+                    android:id="@+id/mPrivacyPolicy"
+                    android:icon="@drawable/ic_bookings"
+                    android:title="Privacy Policy" />
+            </group>
+
+        </menu>
+    </item>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/mLogout"
+            android:icon="@drawable/ic_logout_user"
+            android:title="Logout" />
+    </group>
+
+</menu>

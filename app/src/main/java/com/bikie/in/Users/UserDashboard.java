@@ -1,25 +1,47 @@
 package com.bikie.in.Users;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
 
+import com.bikie.in.CustomTimePickerDialog;
 import com.bikie.in.FeaturedAdapter;
 import com.bikie.in.POJO_Classes.FeaturedBikes;
 import com.bikie.in.POJO_Classes.FeaturedTestimonials;
 import com.bikie.in.R;
 import com.bikie.in.TestimonialAdapter;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
-public class UserDashboard extends AppCompatActivity {
+public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView featuredBikes,featuredTestimonial;
     RecyclerView.Adapter adapter;
     RecyclerView.Adapter mTestimonialsadapter;
 
+    //Drawer Menu
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    private TextInputEditText etPickupDate;
+    private TextInputEditText etDropoffDate;
+    private DatePickerDialog datePickerDialog;
+    private TextInputEditText etPickupTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +49,54 @@ public class UserDashboard extends AppCompatActivity {
 
         featuredBikes = findViewById(R.id.featured_recycler);
         featuredTestimonial = findViewById(R.id.testimonial_recycler);
+        drawerLayout = findViewById(R.id.mDrawerLayout);
+        navigationView = findViewById(R.id.navigationView);
+        etPickupTime = findViewById(R.id.etPickupTime);
+
+        etPickupDate = findViewById(R.id.etPickupDate);
+        etDropoffDate = findViewById(R.id.etDropoffDate);
+        disableEditText(etPickupDate);
+        disableEditText(etDropoffDate);
+        disableEditText(etPickupTime);
+        setupDatePicker(etPickupDate);
+        setupDatePicker(etDropoffDate);
+        setupTimePicker(etPickupTime);
+
+
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(UserDashboard.this );
 
         featuredRecycler();
         testimonialRecycler();
+    }
+    private void setupDatePicker(final TextInputEditText editText) {
+        final Calendar calendar = Calendar.getInstance();
+
+        // Listener for date picker dialog
+        final DatePickerDialog.OnDateSetListener dateSetListener = (view, year, monthOfYear, dayOfMonth) -> {
+            // Set the date to the calendar instance
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel(editText, calendar);
+        };
+
+        // OnClickListener for the editText to open the DatePickerDialog
+        editText.setOnClickListener(v -> {
+            if (datePickerDialog == null || !datePickerDialog.isShowing()) {
+                datePickerDialog = new DatePickerDialog(UserDashboard.this, dateSetListener,
+                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                datePickerDialog.show();
+            }
+        });
+    }
+
+    private void updateLabel(TextInputEditText editText, Calendar calendar) {
+        String myFormat = "dd MMM yyyy"; // Desired format
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        editText.setText(sdf.format(calendar.getTime()));
     }
 
     private void testimonialRecycler() {
@@ -61,4 +128,54 @@ public class UserDashboard extends AppCompatActivity {
         adapter = new FeaturedAdapter(UserDashboard.this,bikes);
         featuredBikes.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return true;
+    }
+    private void disableEditText(TextInputEditText editText) {
+        editText.setFocusable(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setBackground(null);
+    }
+    private void setupTimePicker(final TextInputEditText editText) {
+        final Calendar calendar = Calendar.getInstance();
+
+        // Listener for time picker dialog
+        final TimePickerDialog.OnTimeSetListener timeSetListener = (view, hourOfDay, minute) -> {
+            // Adjusting the minute to nearest 30 minutes interval
+            if (minute < 15) {
+                minute = 0;
+            } else if (minute < 45) {
+                minute = 30;
+            } else {
+                minute = 0;
+                hourOfDay++;
+            }
+
+            // Update Calendar instance
+            calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendar.set(Calendar.MINUTE, minute);
+
+            // Format and set time
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+            editText.setText(timeFormat.format(calendar.getTime()));
+        };
+
+        // OnClickListener for the editText to open the TimePickerDialog
+        editText.setOnClickListener(v -> {
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+
+            TimePickerDialog timePickerDialog = new TimePickerDialog(
+                    UserDashboard.this,
+                    timeSetListener,
+                    hour,
+                    minute,
+                    false); // Use 'true' for 24-hour mode if needed
+            timePickerDialog.show();
+        });
+    }
+
 }
