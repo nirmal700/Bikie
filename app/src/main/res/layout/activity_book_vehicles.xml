@@ -7,16 +7,10 @@
     android:background="@color/Primary_Blue"
     android:fillViewport="true"
     android:transitionName="transition_signUp">
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@drawable/bg_user_profile"
-        android:padding="20dp">
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:text="Book Vehicle"
-            android:textSize="20sp"
-            android:textColor="@color/white"/>
-    </RelativeLayout>
+        android:layout_height="wrap_content"
+        android:id="@+id/rv_availaibleVehicles">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </ScrollView>
