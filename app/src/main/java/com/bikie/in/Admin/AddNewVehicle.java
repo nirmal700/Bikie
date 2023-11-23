@@ -55,19 +55,92 @@ public class AddNewVehicle extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_vehicle);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user == null) {
-            mAuth.signInAnonymously().addOnSuccessListener(this, authResult -> Log.e("FireBase Anonymous Login ", "onSuccess: Anonymous Sign in Success"))
-                    .addOnFailureListener(this, exception -> Log.e("FireBase Anonymous Login", "signInAnonymously:FAILURE", exception));
+        initializeFirebase();
+        initializeViews();
+
+        progressDialog = createProgressDialog();
+
+
+    }
+
+    private ProgressDialog createProgressDialog() {
+        ProgressDialog progressDialog = new ProgressDialog(AddNewVehicle.this);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        progressDialog.setCancelable(false);
+        return progressDialog;
+    }
+
+    private void addNewVehicle() {
+        if (validateInputs()) {
+            progressDialog.show();
+            String category = ((RadioButton) findViewById(radioGroup.getCheckedRadioButtonId())).getText().toString();
+            StorageReference vehicleImageRef = storageReference.child("Vehicle_Images/");
+            StorageReference fileRef = vehicleImageRef.child("VI_" + UUID.randomUUID() + ".jpg");
+            UploadTask uploadTask = fileRef.putFile(mVehicleUri);
+            rb_selected = findViewById(radioGroup.getCheckedRadioButtonId());
+            int _vehicle_speed = Integer.parseInt(mVehicleTopSpeed.getEditText().getText().toString());
+            int _vehicle_mileage = Integer.parseInt(mVehicleMileage.getEditText().getText().toString());
+            int _vehicle_cc = Integer.parseInt(mVehicleCC.getEditText().getText().toString());
+            int _vehicle_1hr = Integer.parseInt(mVehicleRent1Hr.getEditText().getText().toString());
+            int _vehicle_2hr = Integer.parseInt(mVehicleRent2Hr.getEditText().getText().toString());
+            int _vehicle_4hr = Integer.parseInt(mVehicleRent4Hr.getEditText().getText().toString());
+            int _vehicle_12hr = Integer.parseInt(mVehicleRent12Hr.getEditText().getText().toString());
+            int _vehicle_24hr = Integer.parseInt(mVehicleRent24Hr.getEditText().getText().toString());
+            UUID uuid = UUID.randomUUID();
+            String uuidString = uuid.toString();
+            GeoPoint location = new GeoPoint(20.469460, 85.900783);
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            ArrayList<String> urlList = new ArrayList<>();
+                            String _bike_url = uri.toString();
+                            urlList.add(_bike_url);
+                            NewVehicle vehicle = new NewVehicle(uuidString, mVehicleName.getEditText().getText().toString(), mVehicleNo.getEditText().getText().toString(), mVehicleInfo.getEditText().getText().toString(), mVehicleLocation.getEditText().getText().toString(), category, location, _vehicle_speed, _vehicle_mileage, _vehicle_1hr, _vehicle_2hr, _vehicle_4hr, _vehicle_12hr, _vehicle_24hr, _vehicle_cc, false, true, null, urlList);
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("Vehicles").document(uuidString).set(vehicle)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                            finish();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(AddNewVehicle.this, "Failure!" + e.toString(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(AddNewVehicle.this, "Error!" + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(AddNewVehicle.this, "Error!" + e.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
+    }
+
+    private boolean validateInputs() {
+        return validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent2Hr) && validateNumericDigitData(mVehicleRent4Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory();
+    }
+
+    private void initializeViews() {
         btn_back = findViewById(R.id.btn_backToSd);
-
-        storageReference = FirebaseStorage.getInstance().getReference();
-
         radioGroup = findViewById(R.id.radio_group);
         rb_selected = findViewById(radioGroup.getCheckedRadioButtonId());
-
         mVehicleName = findViewById(R.id.et_vName);
         mVehicleNo = findViewById(R.id.et_vNo);
         mVehicleInfo = findViewById(R.id.et_vInfo);
@@ -84,80 +157,24 @@ public class AddNewVehicle extends AppCompatActivity {
         btn_cancel = findViewById(R.id.btn_cancel);
         btn_ChooseImage = findViewById(R.id.btn_chooseImage);
 
-        progressDialog = new ProgressDialog(AddNewVehicle.this);
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        progressDialog.cancel();
-
         btn_ChooseImage.setOnClickListener(v -> chooseImage());
-        btn_mAddVehicle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent2Hr) && validateNumericDigitData(mVehicleRent4Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory() ){
+        btn_mAddVehicle.setOnClickListener(v -> addNewVehicle());
+    }
 
-                    StorageReference vehicleImageRef = storageReference.child("Vehicle_Images/");
-                    StorageReference fileRef = vehicleImageRef.child("VI_" + UUID.randomUUID() + ".jpg");
-                    UploadTask uploadTask = fileRef.putFile(mVehicleUri);
-                    rb_selected = findViewById(radioGroup.getCheckedRadioButtonId());
-                    String category = rb_selected.getText().toString();
-                    int _vehicle_speed = Integer.parseInt(mVehicleTopSpeed.getEditText().getText().toString());
-                    int _vehicle_mileage = Integer.parseInt(mVehicleMileage.getEditText().getText().toString());
-                    int _vehicle_cc = Integer.parseInt(mVehicleCC.getEditText().getText().toString());
-                    int _vehicle_1hr = Integer.parseInt(mVehicleRent1Hr.getEditText().getText().toString());
-                    int _vehicle_2hr = Integer.parseInt(mVehicleRent2Hr.getEditText().getText().toString());
-                    int _vehicle_4hr = Integer.parseInt(mVehicleRent4Hr.getEditText().getText().toString());
-                    int _vehicle_12hr = Integer.parseInt(mVehicleRent12Hr.getEditText().getText().toString());
-                    int _vehicle_24hr = Integer.parseInt(mVehicleRent24Hr.getEditText().getText().toString());
-                    UUID uuid = UUID.randomUUID();
-                    String uuidString = uuid.toString();
-                    GeoPoint location = new GeoPoint(20.469460, 85.900783);
+    private void initializeFirebase() {
 
-                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    ArrayList<String> urlList = new ArrayList<>();
-                                    String _bike_url = uri.toString();
-                                    urlList.add(_bike_url);
-                                    NewVehicle vehicle = new NewVehicle(uuidString,mVehicleName.getEditText().getText().toString(),mVehicleNo.getEditText().getText().toString(),mVehicleInfo.getEditText().getText().toString(),mVehicleLocation.getEditText().getText().toString(),category, location,_vehicle_speed,_vehicle_mileage,_vehicle_1hr,_vehicle_2hr,_vehicle_4hr,_vehicle_12hr,_vehicle_24hr,_vehicle_cc,false,true,null,urlList);
-                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                    db.collection("Vehicles").document(uuidString).set(vehicle)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void unused) {
-                                                    startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                                    finish();
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(AddNewVehicle.this, "Failure!"+e.toString(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(AddNewVehicle.this, "Error!"+e.toString(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddNewVehicle.this, "Error!"+e.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            signInAnonymously(mAuth);
+        }
+        storageReference = FirebaseStorage.getInstance().getReference();
+    }
 
-                }
-            }
-        });
-
-
-
+    private void signInAnonymously(FirebaseAuth mAuth) {
+        mAuth.signInAnonymously()
+                .addOnSuccessListener(this, authResult -> Log.e("Firebase Login", "Anonymous Sign in Success"))
+                .addOnFailureListener(this, e -> Log.e("Firebase Login", "signInAnonymously:FAILURE", e));
     }
 
     private void chooseImage() {
@@ -166,6 +183,7 @@ public class AddNewVehicle extends AppCompatActivity {
         galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(galleryIntent, 1);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -193,11 +211,11 @@ public class AddNewVehicle extends AppCompatActivity {
                 textInputLayout.setError(null); // Clear error
                 return true;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
+
     public boolean validateVehicleRegistration(TextInputLayout textInputLayout) {
         if (textInputLayout.getEditText() == null) {
             return false; // EditText is not found in the layout
@@ -214,6 +232,7 @@ public class AddNewVehicle extends AppCompatActivity {
             return true;
         }
     }
+
     public boolean validateTextLength(TextInputLayout textInputLayout) {
         if (textInputLayout.getEditText() == null) {
             return false; // Return false as EditText is not found
@@ -228,6 +247,7 @@ public class AddNewVehicle extends AppCompatActivity {
             return false;
         }
     }
+
     private boolean validateCategory() {
 
         return radioGroup.getCheckedRadioButtonId() != -1;

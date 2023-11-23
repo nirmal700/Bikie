@@ -33,11 +33,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import javax.annotation.Nullable;
 
 public class Listed_Vehicles extends AppCompatActivity implements ListedVehiclesAdapter.OnItemClickListener {
 
@@ -97,31 +100,6 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
         db = FirebaseFirestore.getInstance();
     }
 
-    private void loadInitialData() {
-        db.collection("Vehicles")
-                .limit(5)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (DocumentSnapshot document : task.getResult()) {
-                            list.add(document.toObject(NewVehicle.class));
-
-
-                        }
-                        Log.e("Inititial Data: ", "loadInitialData: "+list.toString() );
-                        listedVehiclesAdapter.notifyDataSetChanged();
-                        progressDialog.dismiss();
-
-                        int documentSnapshotSize = task.getResult().size();
-                        if (documentSnapshotSize > 0) {
-                            lastVisible = task.getResult().getDocuments().get(documentSnapshotSize - 1);
-                        }
-                        isLastItemReached = documentSnapshotSize < 5;
-                    } else {
-                        Toast.makeText(Listed_Vehicles.this, "Error fetching documents: " + task.getException(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
 
     private void setupScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -132,39 +110,50 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
 
-                if (totalItemCount <= lastVisibleItem + 1) {
+                if (!isLoading && !isLastItemReached && totalItemCount <= lastVisibleItem + 1) {
                     loadMoreData();
                 }
             }
         });
     }
 
+
+    private void fetchDataFromFirestore(@Nullable DocumentSnapshot startAfter) {
+        Query query = db.collection("Vehicles").limit(5);
+        if (startAfter != null) {
+            query = query.startAfter(startAfter);
+        }
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                for (DocumentSnapshot document : task.getResult()) {
+                    list.add(document.toObject(NewVehicle.class));
+                }
+                listedVehiclesAdapter.notifyDataSetChanged();
+                int documentSnapshotSize = task.getResult().size();
+                if (documentSnapshotSize > 0) {
+                    lastVisible = task.getResult().getDocuments().get(documentSnapshotSize - 1);
+                }
+                isLastItemReached = documentSnapshotSize < 5;
+            } else {
+                Toast.makeText(Listed_Vehicles.this, "Error fetching documents: " + task.getException(), Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
+            isLoading = false;
+        });
+    }
+
+    private void loadInitialData() {
+        fetchDataFromFirestore(null);
+    }
+
     private void loadMoreData() {
         if (!isLastItemReached && !isLoading) {
-            isLoading = true; // Set loading to true
-
-            db.collection("Vehicles")
-                    .startAfter(lastVisible)
-                    .limit(5)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        isLoading = false; // Loading done
-                        if (task.isSuccessful()) {
-                            for (DocumentSnapshot document : task.getResult()) {
-                                list.add(document.toObject(NewVehicle.class));
-                            }
-                            listedVehiclesAdapter.notifyDataSetChanged();
-                            int documentSnapshotSize = task.getResult().size();
-                            if (documentSnapshotSize > 0) {
-                                lastVisible = task.getResult().getDocuments().get(documentSnapshotSize - 1);
-                            }
-                            isLastItemReached = documentSnapshotSize < 5;
-                        } else {
-                            Toast.makeText(Listed_Vehicles.this, "Error fetching more documents: " + task.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            isLoading = true;
+            fetchDataFromFirestore(lastVisible);
         }
     }
+
 
     public void onItemClick(int position,  String transitionName) {
 
@@ -173,9 +162,6 @@ public class Listed_Vehicles extends AppCompatActivity implements ListedVehicles
 
         String id = vehicleData.getmVehicleId();
 
-       // Intent intent = new Intent(Listed_Vehicles.this, Edit_Listed_Vehicle.class);
-        //
-        //startActivity(intent);
 
         Intent intent = new Intent(this, Edit_Listed_Vehicle.class);
         // Pass any other necessary data through intent
