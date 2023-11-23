@@ -27,6 +27,7 @@ android {
         }
     }
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -41,11 +42,11 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("com.google.firebase:firebase-firestore:24.9.1")
     implementation("com.google.firebase:firebase-storage:20.3.0")
-    implementation("com.google.firebase:firebase-crashlytics:18.5.1")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.0")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
-    implementation("com.google.firebase:firebase-perf:20.5.0")
-    implementation("com.google.firebase:firebase-auth:22.2.0")
-    implementation("com.google.firebase:firebase-config:21.5.0")
+    implementation("com.google.firebase:firebase-perf:20.5.1")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.firebase:firebase-config:21.6.0")
     implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.google.firebase:firebase-functions:20.4.0")
@@ -57,5 +58,12 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.github.dhaval2404:imagepicker:2.1")  //Image Picker
     implementation ("org.mindrot:jbcrypt:0.4")
+    // Amplify API and Datastore dependencies
+    implementation ("com.amplifyframework:aws-api:2.14.5")
+    implementation ("com.amplifyframework:aws-datastore:2.14.5")
+    implementation ("com.amplifyframework:aws-auth-cognito:2.14.5")
+
+    // Support for Java 8 features
+    coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
 
 }

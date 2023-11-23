@@ -24,14 +24,15 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/linear_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/Primary_Blue"
+                android:layout_height="220dp"
+                android:background="@drawable/bg_dashboard_upper"
                 android:padding="20dp">
 
 
@@ -40,8 +41,53 @@
                     android:layout_width="65dp"
                     android:layout_height="50dp"
                     app:lottie_autoPlay="true"
+                    app:lottie_colorFilter="@color/white"
                     app:lottie_rawRes="@raw/drawer_menu1" />
+
+                <!--            <RelativeLayout-->
+                <!--                android:layout_width="match_parent"-->
+                <!--                android:layout_height="150dp"-->
+                <!--                android:background="@drawable/bg_user_profile"-->
+                <!--                android:padding="20dp">-->
+
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="20dp"
+                    android:src="@drawable/ic_user_profile" />
+
+                <TextView
+                    android:id="@+id/full_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toLeftOf="@+id/profile_image"
+                    android:fontFamily="@font/bungee"
+                    android:includeFontPadding="false"
+                    android:paddingTop="40dp"
+                    android:text="Nirmal Kumar"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/full_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_toLeftOf="@+id/profile_image"
+                    android:includeFontPadding="false"
+                    android:text="Joined Since Nov 2023"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
             </RelativeLayout>
+            <!--            </RelativeLayout>-->
 
             <!--            <RelativeLayout-->
             <!--                android:layout_width="wrap_content"-->
@@ -173,132 +219,143 @@
             <!--            </RelativeLayout>-->
 
 
-            <LinearLayout
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:elevation="4dp"
-                android:orientation="vertical"
-                android:padding="24dp">
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardPreventCornerOverlap="true"
+                app:cardUseCompatPadding="true">
 
-                <TextView
-                    android:id="@+id/tvBookYourRide"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Book your ride"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <!-- Pickup Date and Time -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="15dp">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilPickupDate"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
+                    <TextView
+                        android:id="@+id/tvBookYourRide"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="20 Nov 2023"
+                        android:gravity="center_horizontal"
+                        android:text="Book your ride"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
 
-                        android:textColorHint="@color/hintBlack">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etPickupDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:drawableStart="@drawable/ic_calendar"
-
-
-                            android:drawablePadding="10dp"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilPickupTime"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
+                    <!-- Pickup Date and Time -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="10:00 AM">
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etPickupTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:drawableStart="@drawable/ic_clock"
-                            android:drawablePadding="10dp"
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilPickupDate"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Pickup Date"
+                            android:textColorHint="@color/hintBlack"
+                            app:placeholderText="20 Nov 2023">
 
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPickupDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp"
+                                android:drawableStart="@drawable/ic_calendar"
 
+                                android:drawablePadding="10dp"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilPickupTime"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:hint="Pickup Time"
+                            app:placeholderText="10:00 AM">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etPickupTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp"
+                                android:drawableStart="@drawable/ic_clock"
+                                android:drawablePadding="10dp"
+
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <!-- Dropoff Date and Time -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilDropoffDate"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Dropoff Date"
+                            app:placeholderText="22 Nov 2023">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDropoffDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp"
+                                android:drawableStart="@drawable/ic_calendar"
+                                android:drawablePadding="10dp"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilDropoffTime"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:hint="Dropoff Time"
+                            app:placeholderText="12:30 PM">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etDropoffTime"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp"
+                                android:drawableStart="@drawable/ic_clock"
+                                android:drawablePadding="10dp"
+                                android:inputType="none" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_Search"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="50dp"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/Primary_Blue"
+                        android:fontFamily="@font/robotto"
+                        android:gravity="center"
+                        android:text="Search"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:cornerRadius="5dp"
+                        app:strokeColor="@color/Primary_Blue"
+                        app:strokeWidth="1dp" />
                 </LinearLayout>
-
-                <!-- Dropoff Date and Time -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilDropoffDate"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="22 Nov 2023"
-                        app:placeholderText="">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etDropoffDate"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:drawableStart="@drawable/ic_calendar"
-                            android:drawablePadding="10dp"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/tilDropoffTime"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:hint="12:30 PM">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/etDropoffTime"
-                            android:layout_width="match_parent"
-                            android:layout_height="55dp"
-                            android:drawableStart="@drawable/ic_clock"
-                            android:drawablePadding="10dp"
-                            android:inputType="none" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </LinearLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_getOtp"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="50dp"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/Primary_Blue"
-                    android:fontFamily="@font/robotto"
-                    android:gravity="center"
-                    android:text="Search"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    app:cornerRadius="5dp"
-                    app:strokeColor="@color/Primary_Blue"
-                    app:strokeWidth="1dp" />
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
