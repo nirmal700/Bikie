@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:background="@drawable/bg_lower"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:autoSizeTextType="uniform"
+        android:text="Add On"
+        android:textColor="@color/black"
+        android:fontFamily="@font/baloo"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:targetApi="o" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Helmets to your ride"
+        android:textSize="20sp"
+        android:fontFamily="@font/baloo"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"/>
+    <!-- List of Options -->
+    <LinearLayout
+        android:id="@+id/options_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:paddingBottom="100dp"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_one_helmet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="1 Regular Helmet ₹ 0"
+            android:textSize="16sp"
+            android:padding="8dp"/>
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/checkbox_two_helmets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2 Regular Helmets ₹ 50 / day"
+            android:fontFamily="@font/baloo"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:padding="8dp"/>
+
+     </LinearLayout>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_add"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:hint="Add"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="20sp"
+        android:textStyle="normal"
+        android:fontFamily="@font/robotto"
+        app:backgroundTint="@color/Primary_Blue"
+        app:cornerRadius="5dp"
+        app:startIconTint="@color/black"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp"
+        tools:ignore="VisualLintButtonSize"
+        android:layout_marginBottom="30dp"
+        tools:targetApi="o" />
+
+
+</LinearLayout>
