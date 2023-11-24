@@ -1,9 +1,473 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Users.BookingSummary">
+    android:background="@color/white"
+    android:fillViewport="true">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/mEditCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:strokeColor="@color/Primary_Blue"
+        app:strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@drawable/bg_summary_upper"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btn_backToSd"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="20dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:contentDescription="@null"
+                        android:focusable="true"
+
+                        android:src="@drawable/ic_back_arrow"
+                        app:tint="@color/white" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:autoSizeTextType="uniform"
+                        android:fontFamily="@font/my_fav_sans_number"
+                        android:paddingEnd="35dp"
+                        android:text="Summary"
+                        android:textColor="@color/white"
+                        android:textSize="35sp"
+                        android:textStyle="bold"
+                        tools:ignore="MissingConstraints"
+                        tools:targetApi="o" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/mBikeImage"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="-150dp"
+                android:contentDescription="Bike Image"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_demo_bike" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+                <!-- Header -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Booking details"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/baloo"
+                    android:textStyle="bold"
+                    android:textSize="25sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <!-- Material CardView -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Date and Time for Pickup -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <!-- Pickup Date -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/baloo"
+                                    android:textSize="20sp"
+                                    android:text="28 Nov 2023"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="17sp"
+                                    android:fontFamily="@font/baloo"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:text="11:00 AM"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            </LinearLayout>
+
+                            <!-- Arrow Icon -->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_forward" /> <!-- Use appropriate arrow drawable -->
+
+                            <!-- Dropoff Date -->
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:gravity="end">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/baloo"
+                                    android:textSize="20sp"
+                                    android:text="30 Nov 2023"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/baloo"
+                                    android:textSize="17sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:text="11:30 AM"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Separator -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray"
+                            android:layout_marginVertical="8dp"/>
+
+                        <!-- Location and km Included -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="center_vertical">
+
+                            <!-- Top - Location -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="Location"
+                                    android:fontFamily="@font/baloo"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:fontFamily="@font/baloo"
+                                    android:text="DLF Cyber City"
+                                    android:gravity="end"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            </LinearLayout>
+
+                            <!-- Bottom - km Included -->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_marginTop="8dp"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="km Included"
+                                    android:fontFamily="@font/baloo"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
+                                    android:layout_weight="1"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="291 km"
+                                    android:gravity="end"
+                                    android:fontFamily="@font/baloo"
+                                    android:layout_gravity="end"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- First MaterialCardView for line items -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Vehicle Rental Charges -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:text="Vehicle Rental Charges"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+
+                                android:text="₹ 824.50"/>
+                        </LinearLayout>
+
+                        <!-- Dotted line separator -->
+                        <!-- Create a dotted drawable and use it as the background for the View -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@drawable/dotted_line"
+                            android:layout_marginVertical="4dp"/>
+
+                        <!-- Taxes -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/baloo"
+                                android:text="Taxes"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/baloo"
+                                android:text="₹ 200.50"/>
+                        </LinearLayout>
+                        <!-- Repeat the structure above for Taxes and Refundable Deposit -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/baloo"
+                                android:layout_weight="1"
+                                android:text="Add On Helmet"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/baloo"
+                                android:text="₹ 30.00"/>
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:background="@drawable/dotted_line"
+                            android:layout_marginVertical="8dp"/>
+
+                        <!-- Subtotal -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold"
+                                android:text="Subtotal"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/baloo"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+
+                                android:text="₹ 1054.50"/>
+                        </LinearLayout>
+                        <!-- Repeat the structure above for Subtotal -->
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Second MaterialCardView for Total Payable Amount -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Payable Amount"
+                            android:fontFamily="@font/baloo"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="18sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="₹ 1054.50"
+                            android:fontFamily="@font/baloo"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Third MaterialCardView for the booking review notice -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="4dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Review Booking Details To Avoid Cancellations"
+                            android:fontFamily="@font/baloo"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="An immediate cancellation can lead to a penalty of up to 100%. Do carefully check and review your booking before proceeding further."
+                            android:fontFamily="@font/baloo"
+                            android:textSize="14sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_getOtp"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/Primary_Blue"
+                    android:fontFamily="@font/baloo"
+                    android:gravity="center"
+                    android:text="Proceed To Pay"
+                    android:textColor="@color/white"
+                    android:textSize="25sp"
+                    app:cornerRadius="5dp"
+                    app:strokeColor="@color/Primary_Blue"
+                    app:strokeWidth="1dp" />
+
+                <!-- Buttons for Overview and Terms & Conditions -->
+                <!-- Use Material Buttons with custom styles if needed -->
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

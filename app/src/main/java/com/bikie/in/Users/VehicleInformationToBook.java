@@ -113,7 +113,9 @@ public class VehicleInformationToBook extends AppCompatActivity {
                                     @Override
                                     public void onClick(View v) {
                                         if (validateSelection()) {
-                                            Toast.makeText(VehicleInformationToBook.this, "Added Helmets", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(VehicleInformationToBook.this, BookingSummary.class);
+                                            // Pass any other necessary data through intent
+                                            startActivity(intent);
                                         }
 
                                     }
