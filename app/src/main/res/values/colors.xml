@@ -15,4 +15,5 @@
     <color name="hintBlack">#808080</color>
     <color name="light_red">#FD4755</color>
     <color name="light_green">#09EAA3</color>
+    <color name="black_900">#212121</color>
 </resources>

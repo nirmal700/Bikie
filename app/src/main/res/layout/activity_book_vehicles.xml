@@ -1,16 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Primary_Blue"
-    android:fillViewport="true"
-    android:transitionName="transition_signUp">
-    <androidx.recyclerview.widget.RecyclerView
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:id="@+id/mEditCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rv_availaibleVehicles">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:strokeColor="@color/Primary_Blue"
+        app:strokeWidth="0dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
-</ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dashboard_upper"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_backToSd"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+
+                    android:src="@drawable/ic_back_arrow"
+                    app:tint="@color/white" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/my_fav_sans_number"
+                    android:paddingEnd="35dp"
+                    android:text="Book Vehicle"
+                    android:textColor="@color/white"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"
+                    tools:targetApi="o" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginHorizontal="40dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/pickupLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pickup"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/baloo"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!-- "20 Nov 2023" part -->
+                        <TextView
+                            android:id="@+id/dateText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20 Nov 2023"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/abeezee"
+                            android:textColor="@color/black_900"/>
+
+                        <!-- " at " part -->
+                        <TextView
+                            android:id="@+id/atText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:text=" at "
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee"
+                            android:textColor="@color/black"/>
+
+                        <!-- "01:00 PM" part -->
+                        <TextView
+                            android:id="@+id/timeText2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01:00 PM"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/abeezee"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+
+
+                    <!-- Separator line -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginVertical="8dp"
+                        android:layout_marginEnd="50dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <TextView
+                        android:id="@+id/dropoffLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dropoff"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/baloo"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <!-- "20 Nov 2023" part -->
+                        <TextView
+                            android:id="@+id/dateText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20 Nov 2023"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/abeezee"
+                            android:textColor="@color/black_900"/>
+
+                        <!-- " at " part -->
+                        <TextView
+                            android:id="@+id/atText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:text=" at "
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/abeezee"
+                            android:textColor="@color/black"/>
+
+                        <!-- "01:00 PM" part -->
+                        <TextView
+                            android:id="@+id/timeText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="01:00 PM"
+                            android:textSize="15sp"
+                            android:fontFamily="@font/abeezee"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <!-- ImageView for the icon, adjust drawable as needed -->
+                    <ImageView
+                        android:id="@+id/iconImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="-80dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_two_way" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_availaibleVehicles"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
