@@ -90,7 +90,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         public ImageView imageView;
         public LottieAnimationView animationView;
         public TextView tv_location, tv_name;
-        SwitchMaterial mAvailaible;
+
         MaterialCardView cardView;
 
         public ImageViewHolder(@NonNull View itemView) {
@@ -111,7 +111,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
             if (mListener != null) {
                 int position = getAdapterPosition();
                 if (position != RecyclerView.NO_POSITION) {
-                    mListener.onItemClick(position, cardView.getTransitionName());
+                    mListener.onItemClick(position);
                 }
             }
 
@@ -120,7 +120,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position, String transitionName);
+        void onItemClick(int position);
 
     }
 

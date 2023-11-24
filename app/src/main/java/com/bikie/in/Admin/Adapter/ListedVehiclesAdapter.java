@@ -31,7 +31,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.List;
 
 
-
 public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAdapter.ImageViewHolder> {
     private final Context mContext;
     private final List<NewVehicle> ListedvehicleDataList;
@@ -75,7 +74,7 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
                             Toast.makeText(mContext, "Successfully changed the state!", Toast.LENGTH_SHORT).show();
                         })
                         .addOnFailureListener(e -> {
-                            Toast.makeText(mContext, "Error!"+e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "Error!" + e.toString(), Toast.LENGTH_SHORT).show();
                         });
             }
         });
@@ -103,7 +102,6 @@ public class ListedVehiclesAdapter extends RecyclerView.Adapter<ListedVehiclesAd
     public int getItemCount() {
         return ListedvehicleDataList.size();
     }
-
 
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

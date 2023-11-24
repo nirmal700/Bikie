@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Primary_Blue"
+    android:fillViewport="true"
+    android:transitionName="transition_signUp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btn_backToSd"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@null"
+                android:focusable="true"
+
+                android:src="@drawable/ic_back_arrow"
+                app:tint="@color/white" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/my_fav_sans_number"
+                android:paddingEnd="35dp"
+                android:text="Vehicle Info"
+                android:textColor="@color/white"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"
+                tools:targetApi="o" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_dashboard"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerVehicleImages"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="10dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:clickable="true"
+                    android:contentDescription="@null"
+                    android:focusable="true"
+                    android:src="@drawable/ic_map" />
+
+                <TextView
+                    android:id="@+id/mLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:autoSizeTextType="uniform"
+                    android:text="Patia, Bhubaneswar"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="normal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="-5dp"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/mVehicleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="uniform"
+                    android:text="RE Classic 350"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/mPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:autoSizeTextType="uniform"
+                    android:fontFamily="@font/abeezee"
+                    android:text="₹ 500/day"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/mVehicleDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                android:text="The RE Classic 350 sports a 349cc engine with 20.2 HP, 19.9 ft-lbs torque, five-speed gearbox, standard ABSThe bike's suspension and brakes are robust, with a 41mm non-adjustable fork and twin emulsion rear shocks designed for durability."
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="25dp"
+                android:text="Specification"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:weightSum="3"> <!-- This should be set to the number of child views -->
+
+                <!-- Speed Icon and Text -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <!-- ImageView and TextView for speed -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_speed" /> <!-- Replace with your speed icon resource ID -->
+
+                    <TextView
+                        android:id="@+id/mTopSpeed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="160 mph" />
+                </LinearLayout>
+
+                <!-- Power Icon and Text -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <!-- ImageView and TextView for power -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_power" /> <!-- Replace with your power icon resource ID -->
+
+                    <TextView
+                        android:id="@+id/mVehicleCC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="150 cc" />
+                </LinearLayout>
+
+                <!-- Mileage Icon and Text -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <!-- ImageView and TextView for mileage -->
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_mileage" /> <!-- Replace with your mileage icon resource ID -->
+
+                    <TextView
+                        android:id="@+id/mVehicleMileage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="40 km" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_mBookNow"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/Primary_Blue"
+                android:fontFamily="@font/abeezee"
+                android:gravity="center"
+                android:text="Book Now"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                app:cornerRadius="5dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="1dp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

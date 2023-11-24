@@ -2,16 +2,19 @@ package com.bikie.in.Users;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bikie.in.Admin.Adapter.ListedVehiclesAdapter;
+import com.bikie.in.Admin.Edit_Listed_Vehicle;
 import com.bikie.in.Admin.Listed_Vehicles;
 import com.bikie.in.POJO_Classes.Booking;
 import com.bikie.in.POJO_Classes.NewVehicle;
@@ -20,6 +23,7 @@ import com.bikie.in.Users.Adapter.AvailaibleVehiclesAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,12 +37,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BookVehicles extends AppCompatActivity implements AvailaibleVehiclesAdapter.OnItemClickListener {
 
     String pickupDateTimeString, dropoffDateTimeString;
-    Timestamp requestedpickupDateTimeStamp,requesteddropoffDateTimeStamp;
+    Timestamp requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private RecyclerView recyclerView;
     private ProgressDialog progressDialog;
@@ -50,6 +55,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
     ImageView btn_back;
     RecyclerView.LayoutManager layoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +99,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
                     Timestamp bookingAttemptedTime = vehicleDocument.getTimestamp("mBookingAttemptedTime");
 
                     // Check if in pending and time difference is more than 3 mins
-                    if (isInPending && (Timestamp.now().getSeconds() - bookingAttemptedTime.getSeconds()) > 180) {
+                    if (isInPending && (Timestamp.now().getSeconds() - Objects.requireNonNull(bookingAttemptedTime).getSeconds()) > 180) {
                         // Update the vehicle document
                         vehicleDocument.getReference().update("mBookingAttemptedTime", null, "mIsInPending", false);
                     }
@@ -101,7 +107,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
                     availableVehicleIds.add(vehicleDocument.getId());
                     availableVehicleData.add(vehicleDocument.toObject(NewVehicle.class));
                 }
-                Log.e("Vehicles", "onCreate: "+availableVehicleIds.toString() );
+                Log.e("Vehicles", "onCreate: " + availableVehicleIds.toString());
                 // Inside onCreate or relevant method
                 checkVehicleAvailability(availableVehicleIds, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp, new AvailabilityCheckCallback() {
                     @Override
@@ -113,6 +119,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
                             @Override
                             public void run() {
                                 availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList);
+                                availaibleVehiclesAdapter.setOnItemClickListener(BookVehicles.this);
                                 recyclerView.setAdapter(availaibleVehiclesAdapter);
                                 progressDialog.dismiss();
                             }
@@ -122,10 +129,6 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
 
                 // Now, check bookings for each available vehicle
-
-
-
-
 
 
             } else {
@@ -146,7 +149,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         progressDialog = new ProgressDialog(BookVehicles.this);
         progressDialog.show();
         progressDialog.setContentView(R.layout.progress_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         progressDialog.setCancelable(false);
 
 
@@ -154,13 +157,23 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
     }
 
     @Override
-    public void onItemClick(int position, String transitionName) {
-        Toast.makeText(this, "Position"+position, Toast.LENGTH_SHORT).show();
+    public void onItemClick(int position) {
+        NewVehicle vehicleData = availableVehicleDataList.get(position);
+
+
+        String id = vehicleData.getmVehicleId();
+
+
+        Intent intent = new Intent(this, VehicleInformationToBook.class);
+        // Pass any other necessary data through intent
+        intent.putExtra("VehicleID", id);
+        startActivity(intent);
     }
 
     interface AvailabilityCheckCallback {
         void onCheckComplete();
     }
+
     public void checkVehicleAvailability(final List<String> availableVehicleIds, final Timestamp requestedPickupTime, final Timestamp requestedDropoffTime, final AvailabilityCheckCallback callback) {
         final AtomicInteger counter = new AtomicInteger(availableVehicleIds.size());
 
@@ -209,6 +222,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         });
         onCheckComplete.run();
     }
+
     public void separateVehicles(List<NewVehicle> allVehicles, List<String> unavailableVehicleIds,
                                  List<NewVehicle> availableVehicleData, List<NewVehicle> unavailableVehicleData) {
 
