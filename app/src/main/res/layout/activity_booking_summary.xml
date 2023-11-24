@@ -444,7 +444,7 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_getOtp"
+                    android:id="@+id/btn_proceedToPayment"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_gravity="center"
