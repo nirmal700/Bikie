@@ -32,7 +32,7 @@ import java.util.Objects;
 
 public class Edit_Listed_Vehicle extends AppCompatActivity {
 
-    private TextInputLayout mVehicleName, mVehicleNo, mVehicleInfo, mVehicleLocation, mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr, mVehicleRent2Hr, mVehicleRent4Hr, mVehicleRent12Hr, mVehicleRent24Hr, mVehicleCC;
+    private TextInputLayout mVehicleName, mVehicleNo, mVehicleInfo, mVehicleLocation, mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr, mVehicleRent3Hr, mVehicleRent6Hr, mVehicleRent12Hr, mVehicleRent24Hr, mVehicleCC;
     private RadioGroup radioGroup;
     private RadioButton rb_bike;
     private RadioButton rb_scooty;
@@ -81,8 +81,8 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
         Objects.requireNonNull(mVehicleMileage.getEditText()).setText(Integer.toString(vehicle.getmVehicleMileage()));
         Objects.requireNonNull(mVehicleCC.getEditText()).setText(Integer.toString(vehicle.getmVehicleCC()));
         Objects.requireNonNull(mVehicleRent1Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent1Hr()));
-        Objects.requireNonNull(mVehicleRent2Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent2Hr()));
-        Objects.requireNonNull(mVehicleRent4Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent4Hr()));
+        Objects.requireNonNull(mVehicleRent3Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent3Hr()));
+        Objects.requireNonNull(mVehicleRent6Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent6Hr()));
         Objects.requireNonNull(mVehicleRent12Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent12Hr()));
         Objects.requireNonNull(mVehicleRent24Hr.getEditText()).setText(Integer.toString(vehicle.getmVehicleRent24Hr()));
         Objects.requireNonNull(mVehicleLocation.getEditText()).setText(vehicle.getmVehicleLocation());
@@ -109,8 +109,8 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
         mVehicleTopSpeed = findViewById(R.id.et_vTopSpeed);
         mVehicleMileage = findViewById(R.id.et_vMileage);
         mVehicleRent1Hr = findViewById(R.id.et_v1Hour);
-        mVehicleRent2Hr = findViewById(R.id.et_v2Hour);
-        mVehicleRent4Hr = findViewById(R.id.et_v4Hour);
+        mVehicleRent3Hr = findViewById(R.id.et_v3Hour);
+        mVehicleRent6Hr = findViewById(R.id.et_v6Hour);
         mVehicleRent12Hr = findViewById(R.id.et_v12Hour);
         mVehicleRent24Hr = findViewById(R.id.et_v24Hour);
         mVehicleCC = findViewById(R.id.et_vCC);
@@ -137,8 +137,8 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
         int _vehicle_mileage = Integer.parseInt(Objects.requireNonNull(mVehicleMileage.getEditText()).getText().toString());
         int _vehicle_cc = Integer.parseInt(Objects.requireNonNull(mVehicleCC.getEditText()).getText().toString());
         int _vehicle_1hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent1Hr.getEditText()).getText().toString());
-        int _vehicle_2hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent2Hr.getEditText()).getText().toString());
-        int _vehicle_4hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent4Hr.getEditText()).getText().toString());
+        int _vehicle_3hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent3Hr.getEditText()).getText().toString());
+        int _vehicle_6hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent6Hr.getEditText()).getText().toString());
         int _vehicle_12hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent12Hr.getEditText()).getText().toString());
         int _vehicle_24hr = Integer.parseInt(Objects.requireNonNull(mVehicleRent24Hr.getEditText()).getText().toString());
 
@@ -150,8 +150,8 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
         updates.put("mVehicleNo", Objects.requireNonNull(mVehicleNo.getEditText()).getText().toString());
         updates.put("mVehicleRent12Hr", _vehicle_12hr);
         updates.put("mVehicleRent1Hr", _vehicle_1hr);
-        updates.put("mVehicleRent2Hr", _vehicle_2hr);
-        updates.put("mVehicleRent4Hr", _vehicle_4hr);
+        updates.put("mVehicleRent3Hr", _vehicle_3hr);
+        updates.put("mVehicleRent6Hr", _vehicle_6hr);
         updates.put("mVehicleRent24Hr", _vehicle_24hr);
         updates.put("mVehicleCC", _vehicle_cc);
         updates.put("mVehicleCategory", category);
@@ -172,7 +172,7 @@ public class Edit_Listed_Vehicle extends AppCompatActivity {
 
 
     private boolean validateInputs() {
-        return validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent2Hr) && validateNumericDigitData(mVehicleRent4Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory();
+        return validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent3Hr) && validateNumericDigitData(mVehicleRent6Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory();
     }
 
     private ProgressDialog createProgressDialog() {

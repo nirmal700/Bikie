@@ -37,7 +37,7 @@ import java.util.UUID;
 
 public class AddNewVehicle extends AppCompatActivity {
 
-    private TextInputLayout mVehicleName, mVehicleNo, mVehicleInfo, mVehicleLocation, mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr, mVehicleRent2Hr, mVehicleRent4Hr, mVehicleRent12Hr, mVehicleRent24Hr, mVehicleCC;
+    private TextInputLayout mVehicleName, mVehicleNo, mVehicleInfo, mVehicleLocation, mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr, mVehicleRent3Hr, mVehicleRent6Hr, mVehicleRent12Hr, mVehicleRent24Hr, mVehicleCC;
     private RadioGroup radioGroup;
     private RadioButton rb_selected;
     private ProgressDialog progressDialog;
@@ -83,8 +83,8 @@ public class AddNewVehicle extends AppCompatActivity {
             int _vehicle_mileage = Integer.parseInt(mVehicleMileage.getEditText().getText().toString());
             int _vehicle_cc = Integer.parseInt(mVehicleCC.getEditText().getText().toString());
             int _vehicle_1hr = Integer.parseInt(mVehicleRent1Hr.getEditText().getText().toString());
-            int _vehicle_2hr = Integer.parseInt(mVehicleRent2Hr.getEditText().getText().toString());
-            int _vehicle_4hr = Integer.parseInt(mVehicleRent4Hr.getEditText().getText().toString());
+            int _vehicle_3hr = Integer.parseInt(mVehicleRent3Hr.getEditText().getText().toString());
+            int _vehicle_6hr = Integer.parseInt(mVehicleRent6Hr.getEditText().getText().toString());
             int _vehicle_12hr = Integer.parseInt(mVehicleRent12Hr.getEditText().getText().toString());
             int _vehicle_24hr = Integer.parseInt(mVehicleRent24Hr.getEditText().getText().toString());
             UUID uuid = UUID.randomUUID();
@@ -100,7 +100,7 @@ public class AddNewVehicle extends AppCompatActivity {
                             ArrayList<String> urlList = new ArrayList<>();
                             String _bike_url = uri.toString();
                             urlList.add(_bike_url);
-                            NewVehicle vehicle = new NewVehicle(uuidString, mVehicleName.getEditText().getText().toString(), mVehicleNo.getEditText().getText().toString(), mVehicleInfo.getEditText().getText().toString(), mVehicleLocation.getEditText().getText().toString(), category, location, _vehicle_speed, _vehicle_mileage, _vehicle_1hr, _vehicle_2hr, _vehicle_4hr, _vehicle_12hr, _vehicle_24hr, _vehicle_cc, false, true, null, urlList);
+                            NewVehicle vehicle = new NewVehicle(uuidString, mVehicleName.getEditText().getText().toString(), mVehicleNo.getEditText().getText().toString(), mVehicleInfo.getEditText().getText().toString(), mVehicleLocation.getEditText().getText().toString(), category, location, _vehicle_speed, _vehicle_mileage, _vehicle_1hr, _vehicle_3hr, _vehicle_6hr, _vehicle_12hr, _vehicle_24hr, _vehicle_cc, false, true, null, urlList);
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
                             db.collection("Vehicles").document(uuidString).set(vehicle)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -134,7 +134,7 @@ public class AddNewVehicle extends AppCompatActivity {
     }
 
     private boolean validateInputs() {
-        return validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent2Hr) && validateNumericDigitData(mVehicleRent4Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory();
+        return validateNumericDigitData(mVehicleTopSpeed) && validateNumericDigitData(mVehicleMileage) && validateNumericDigitData(mVehicleRent1Hr) && validateNumericDigitData(mVehicleRent3Hr) && validateNumericDigitData(mVehicleRent6Hr) && validateNumericDigitData(mVehicleRent12Hr) && validateNumericDigitData(mVehicleRent24Hr) && validateNumericDigitData(mVehicleCC) && validateVehicleRegistration(mVehicleNo) && validateTextLength(mVehicleName) && validateTextLength(mVehicleInfo) && validateTextLength(mVehicleLocation) && validateCategory();
     }
 
     private void initializeViews() {
@@ -148,8 +148,8 @@ public class AddNewVehicle extends AppCompatActivity {
         mVehicleTopSpeed = findViewById(R.id.et_vTopSpeed);
         mVehicleMileage = findViewById(R.id.et_vMileage);
         mVehicleRent1Hr = findViewById(R.id.et_v1Hour);
-        mVehicleRent2Hr = findViewById(R.id.et_v2Hour);
-        mVehicleRent4Hr = findViewById(R.id.et_v4Hour);
+        mVehicleRent3Hr = findViewById(R.id.et_v3Hour);
+        mVehicleRent6Hr = findViewById(R.id.et_v6Hour);
         mVehicleRent12Hr = findViewById(R.id.et_v12Hour);
         mVehicleRent24Hr = findViewById(R.id.et_v24Hour);
         mVehicleCC = findViewById(R.id.et_vCC);

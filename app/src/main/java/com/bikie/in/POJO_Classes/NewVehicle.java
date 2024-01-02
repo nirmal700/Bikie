@@ -10,7 +10,7 @@ import com.google.firebase.Timestamp;
 public class NewVehicle {
     private String mVehicleId,mVehicleName,mVehicleNo,mVehicleInfo,mVehicleLocation,mVehicleCategory;
     private GeoPoint mVehicleLatLong;
-    private int mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr,mVehicleRent2Hr, mVehicleRent4Hr, mVehicleRent12Hr, mVehicleRent24Hr,mVehicleCC;
+    private int mVehicleTopSpeed, mVehicleMileage, mVehicleRent1Hr,mVehicleRent3Hr, mVehicleRent6Hr, mVehicleRent12Hr, mVehicleRent24Hr,mVehicleCC;
 
     private Boolean mIsInPending, mIsAvailable;
     private Timestamp mBookingAttemptedTime;
@@ -20,7 +20,7 @@ public class NewVehicle {
     public NewVehicle() {
     }
 
-    public NewVehicle(String mVehicleId, String mVehicleName, String mVehicleNo, String mVehicleInfo, String mVehicleLocation, String mVehicleCategory, GeoPoint mVehicleLatLong, int mVehicleTopSpeed, int mVehicleMileage, int mVehicleRent1Hr, int mVehicleRent2Hr, int mVehicleRent4Hr, int mVehicleRent12Hr, int mVehicleRent24Hr, int mVehicleCC, Boolean mIsInPending, Boolean mIsAvailable, Timestamp mBookingAttemptedTime, ArrayList<String> mVehicleImages) {
+    public NewVehicle(String mVehicleId, String mVehicleName, String mVehicleNo, String mVehicleInfo, String mVehicleLocation, String mVehicleCategory, GeoPoint mVehicleLatLong, int mVehicleTopSpeed, int mVehicleMileage, int mVehicleRent1Hr, int mVehicleRent3Hr, int mVehicleRent6Hr, int mVehicleRent12Hr, int mVehicleRent24Hr, int mVehicleCC, Boolean mIsInPending, Boolean mIsAvailable, Timestamp mBookingAttemptedTime, ArrayList<String> mVehicleImages) {
         this.mVehicleId = mVehicleId;
         this.mVehicleName = mVehicleName;
         this.mVehicleNo = mVehicleNo;
@@ -31,8 +31,8 @@ public class NewVehicle {
         this.mVehicleTopSpeed = mVehicleTopSpeed;
         this.mVehicleMileage = mVehicleMileage;
         this.mVehicleRent1Hr = mVehicleRent1Hr;
-        this.mVehicleRent2Hr = mVehicleRent2Hr;
-        this.mVehicleRent4Hr = mVehicleRent4Hr;
+        this.mVehicleRent3Hr = mVehicleRent3Hr;
+        this.mVehicleRent6Hr = mVehicleRent6Hr;
         this.mVehicleRent12Hr = mVehicleRent12Hr;
         this.mVehicleRent24Hr = mVehicleRent24Hr;
         this.mVehicleCC = mVehicleCC;
@@ -122,20 +122,20 @@ public class NewVehicle {
         this.mVehicleRent1Hr = mVehicleRent1Hr;
     }
 
-    public int getmVehicleRent2Hr() {
-        return mVehicleRent2Hr;
+    public int getmVehicleRent3Hr() {
+        return mVehicleRent3Hr;
     }
 
-    public void setmVehicleRent2Hr(int mVehicleRent2Hr) {
-        this.mVehicleRent2Hr = mVehicleRent2Hr;
+    public void setmVehicleRent3Hr(int mVehicleRent3Hr) {
+        this.mVehicleRent3Hr = mVehicleRent3Hr;
     }
 
-    public int getmVehicleRent4Hr() {
-        return mVehicleRent4Hr;
+    public int getmVehicleRent6Hr() {
+        return mVehicleRent6Hr;
     }
 
-    public void setmVehicleRent4Hr(int mVehicleRent4Hr) {
-        this.mVehicleRent4Hr = mVehicleRent4Hr;
+    public void setmVehicleRent6Hr(int mVehicleRent6Hr) {
+        this.mVehicleRent6Hr = mVehicleRent6Hr;
     }
 
     public int getmVehicleRent12Hr() {

@@ -118,10 +118,12 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList);
+                                availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList,requestedpickupDateTimeStamp,requesteddropoffDateTimeStamp);
                                 availaibleVehiclesAdapter.setOnItemClickListener(BookVehicles.this);
                                 recyclerView.setAdapter(availaibleVehiclesAdapter);
                                 progressDialog.dismiss();
+
+                                availaibleVehiclesAdapter.notifyDataSetChanged();
                             }
                         });
                     }
@@ -234,6 +236,11 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
             }
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(BookVehicles.this, UserDashboard.class));
+        finishAffinity();
+        super.onBackPressed();
+    }
 
 }

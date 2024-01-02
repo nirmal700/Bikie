@@ -37,10 +37,10 @@ dependencies {
 
     implementation("com.airbnb.android:lottie:6.1.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
-    implementation("com.google.firebase:firebase-firestore:24.9.1")
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.firebase:firebase-crashlytics:18.6.0")
     implementation("com.google.firebase:firebase-analytics:21.5.0")
@@ -48,7 +48,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation("com.google.firebase:firebase-config:21.6.0")
     implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
-    implementation("com.google.firebase:firebase-messaging:23.3.1")
+    implementation("com.google.firebase:firebase-messaging:23.4.0")
     implementation("com.google.firebase:firebase-functions:20.4.0")
     testImplementation("junit:junit:4.13.2")
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
@@ -62,6 +62,7 @@ dependencies {
     implementation ("com.amplifyframework:aws-api:2.14.5")
     implementation ("com.amplifyframework:aws-datastore:2.14.5")
     implementation ("com.amplifyframework:aws-auth-cognito:2.14.5")
+    implementation ("phonepe.intentsdk.android.release:IntentSDK:2.3.0")
 
     // Support for Java 8 features
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")

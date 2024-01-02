@@ -309,11 +309,6 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 return false;
             }
 
-            // Check if times are within the allowed range
-            if (!isTimeWithinRange(pickupDateTime) || !isTimeWithinRange(dropoffDateTime)) {
-                Toast.makeText(this, "Times must be between 8:00 AM and 9:00 PM.", Toast.LENGTH_LONG).show();
-                return false;
-            }
 
             // Check if the difference is at least 1 hour
             long difference = dropoffDateTime.getTime() - pickupDateTime.getTime();
@@ -332,34 +327,34 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     }
 
 
-    private boolean isTimeWithinRange(Date time) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(time);
-
-        Calendar start = Calendar.getInstance();
-        start.setTime(time);
-        start.set(Calendar.HOUR_OF_DAY, 8);
-        start.set(Calendar.MINUTE, 0);
-        start.set(Calendar.SECOND, 0);
-        start.set(Calendar.MILLISECOND, 0);
-
-        Calendar end = Calendar.getInstance();
-        end.setTime(time);
-        end.set(Calendar.HOUR_OF_DAY, 21); // 9 PM
-        end.set(Calendar.MINUTE, 0);
-        end.set(Calendar.SECOND, 0);
-        end.set(Calendar.MILLISECOND, 0);
-
-        // Reset the date part to be the same for start, end, and the input time
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        start.set(year, month, day);
-        end.set(year, month, day);
-
-        return !time.before(start.getTime()) && !time.after(end.getTime());
-    }
+//    private boolean isTimeWithinRange(Date time) {
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(time);
+//
+//        Calendar start = Calendar.getInstance();
+//        start.setTime(time);
+//        start.set(Calendar.HOUR_OF_DAY, 8);
+//        start.set(Calendar.MINUTE, 0);
+//        start.set(Calendar.SECOND, 0);
+//        start.set(Calendar.MILLISECOND, 0);
+//
+//        Calendar end = Calendar.getInstance();
+//        end.setTime(time);
+//        end.set(Calendar.HOUR_OF_DAY, 21); // 9 PM
+//        end.set(Calendar.MINUTE, 0);
+//        end.set(Calendar.SECOND, 0);
+//        end.set(Calendar.MILLISECOND, 0);
+//
+//        // Reset the date part to be the same for start, end, and the input time
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH);
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//
+//        start.set(year, month, day);
+//        end.set(year, month, day);
+//
+//        return !time.before(start.getTime()) && !time.after(end.getTime());
+//    }
 
 
 }
