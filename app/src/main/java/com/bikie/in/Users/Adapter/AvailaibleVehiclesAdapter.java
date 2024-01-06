@@ -53,7 +53,6 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         availaiblevehicleDataList = vehicleData;
         mrequestedpickupDateTimeStamp = requestedpickupDateTimeStamp;
         mrequesteddropoffDateTimeStamp = requesteddropoffDateTimeStamp;
-        Log.e("TAG", "AvailaibleVehiclesAdapter: "+ availaiblevehicleDataList);
     }
 
     @NonNull
@@ -182,18 +181,8 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
             price = (double) vehicle.getmVehicleRent24Hr() /24.00;
         }
 
-        // Calculate the total price
 
         double calculatedPrice = price * durationInHours;
-
-        // Log the relevant fields and the calculated price
-        System.out.println("Duration in hours: " + durationInHours);
-        System.out.println("Hourly Rate for 1 hour: " + vehicle.getmVehicleRent1Hr());
-        System.out.println("Hourly Rate for 3 hours: " + vehicle.getmVehicleRent3Hr());
-        System.out.println("Hourly Rate for 6 hours: " + vehicle.getmVehicleRent6Hr());
-        System.out.println("Hourly Rate for 12 hours: " + vehicle.getmVehicleRent12Hr());
-        System.out.println("Hourly Rate for 24 hours: " + vehicle.getmVehicleRent24Hr());
-        System.out.println("Calculated Price: " + calculatedPrice);
 
         return calculatedPrice;
     }

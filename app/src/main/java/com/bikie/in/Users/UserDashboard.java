@@ -285,10 +285,27 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             profileSection();
         } else if (id == R.id.mHome) {
             Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.mTermsAndConditions){
+            Toast.makeText(getApplicationContext(), "Terms & Conditions!", Toast.LENGTH_SHORT).show();
+            drawerLayout.closeDrawer(GravityCompat.START);
+            terms_Conditions();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void animateTermsAndConditions() {
+        // Assuming you have a View for your Terms & Conditions content
+        View termsAndConditionsView = findViewById(R.id.terms_condition_layout);
+
+        // Add your desired animation here, for example, fade in
+        termsAndConditionsView.setAlpha(0f);
+        termsAndConditionsView.animate().alpha(1f).setDuration(500).start();
+    }
+
+    private void terms_Conditions() {
+        startActivity(new Intent(getApplicationContext(), TermsAndConditions.class));
     }
 
     private void profileSection() {

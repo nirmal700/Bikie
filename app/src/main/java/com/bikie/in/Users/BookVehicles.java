@@ -51,9 +51,12 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
     private ProgressDialog progressDialog;
     private AvailaibleVehiclesAdapter availaibleVehiclesAdapter;
 
+    List<String> availableVehicleIds = new ArrayList<>();
     List<String> unavailableVehicleIds = new ArrayList<>();
     List<NewVehicle> availableVehicleDataList = new ArrayList<>();
     List<NewVehicle> unavailableVehicleDataList = new ArrayList<>();
+    List<NewVehicle> finalAvailaibleVehicleDataList = new ArrayList<>();
+
 
     ImageView btn_back;
     RecyclerView.LayoutManager layoutManager;
@@ -66,55 +69,24 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
 
         initializeViews();
-
         setupDateTime();
-
         fetchAvailableVehicles();
-
 
     }
 
     private void fetchAvailableVehicles() {
         CollectionReference vehiclesRef = db.collection("Vehicles");
-        // First, get all available vehicles
         vehiclesRef.whereEqualTo("mIsAvailable", true).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                List<String> availableVehicleIds = new ArrayList<>();
-                List<NewVehicle> availableVehicleData = new ArrayList<>();
-
-
+                availableVehicleIds.clear();
+                availableVehicleDataList.clear();
                 for (QueryDocumentSnapshot vehicleDocument : task.getResult()) {
-                   handleAvailableVehicle(vehicleDocument,availableVehicleIds,availableVehicleData);
+                   handleAvailableVehicle(vehicleDocument,availableVehicleIds,availableVehicleDataList);
                 }
 
-                // Inside onCreate or relevant method
-                checkVehicleAvailability(availableVehicleIds, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp, new AvailabilityCheckCallback() {
-                    @Override
-                    public void onCheckComplete() {
-
-                        separateVehicles(availableVehicleData, unavailableVehicleIds, availableVehicleDataList, unavailableVehicleDataList);
-
-                        // Now update the RecyclerView with the available vehicles
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp);
-                                availaibleVehiclesAdapter.setOnItemClickListener(BookVehicles.this);
-                                recyclerView.setAdapter(availaibleVehiclesAdapter);
-                                progressDialog.dismiss();
-
-                                availaibleVehiclesAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                });
-
-
-                // Now, check bookings for each available vehicle
-
+                checkVehicleAvailability(availableVehicleIds, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp, this::updateUI);
 
             } else {
-                // Handle the error in vehicles query
                 Toast.makeText(this, "Error! in vehicle query", Toast.LENGTH_SHORT).show();
             }
         });
@@ -186,7 +158,6 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         String id = vehicleData.getmVehicleId();
 
         Intent intent = new Intent(this, VehicleInformationToBook.class);
-        // Pass any other necessary data through intent
         intent.putExtra("VehicleID", id);
         startActivity(intent);
     }
@@ -202,6 +173,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
             checkBookingOverlap(vehicleId, requestedPickupTime, requestedDropoffTime, new Runnable() {
                 @Override
                 public void run() {
+                    Log.e("TAG", "run: "+counter );
                     if (counter.decrementAndGet() == 0) {
                         callback.onCheckComplete();
                     }
@@ -219,35 +191,52 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         Task<QuerySnapshot> ongoingTask = ongoingBookingsQuery.get();
 
         Tasks.whenAllSuccess(upcomingTask, ongoingTask).addOnSuccessListener(results -> {
+            boolean isAvailable = true;
             for (Object result : results) {
                 QuerySnapshot snapshot = (QuerySnapshot) result;
                 for (QueryDocumentSnapshot document : snapshot) {
                     BookingConfirmation booking = document.toObject(BookingConfirmation.class);
-                    Log.e("Booking", "checkBookingOverlap: " + booking.getmDropOffDate().compareTo(requestedPickupTime) + "-----" + booking.getmVehicleName());
                     if (booking.getmDropOffDate().compareTo(requestedPickupTime) > 0) {
-                        // Vehicle is not available
-                        Log.e("Not Available", "Not Avalaible Vehicle ID: " + vehicleId);
                         unavailableVehicleIds.add(vehicleId);
-                        return; // Exit as soon as an overlapping booking is found
+                        Log.e("Booking", "Unavailaible "+unavailableVehicleIds);
+                        isAvailable = false;
+                        break;
                     }
                 }
             }
-            // Vehicle is available
-            Log.e("Available", "Vehicle ID: " + vehicleId);
+            if (isAvailable) {
+                Log.e("Available", "Vehicle ID: " + vehicleId);
+            }
+            onCheckComplete.run();
+            separateVehicles();
         }).addOnFailureListener(e -> {
             Log.e("Booking Check Failure", "Error: " + e.getMessage());
             Toast.makeText(this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            onCheckComplete.run();
         });
-        onCheckComplete.run();
+
+
     }
+    private void updateUI() {
 
-    public void separateVehicles(List<NewVehicle> allVehicles, List<String> unavailableVehicleIds, List<NewVehicle> availableVehicleData, List<NewVehicle> unavailableVehicleData) {
 
-        for (NewVehicle vehicle : allVehicles) {
+
+        runOnUiThread(() -> {
+            availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, finalAvailaibleVehicleDataList, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp);
+            availaibleVehiclesAdapter.setOnItemClickListener(BookVehicles.this);
+            recyclerView.setAdapter(availaibleVehiclesAdapter);
+            availaibleVehiclesAdapter.notifyDataSetChanged();
+            progressDialog.dismiss();
+        });
+    }
+    public void separateVehicles() {
+        unavailableVehicleDataList.clear();
+        finalAvailaibleVehicleDataList.clear();
+        for (NewVehicle vehicle : availableVehicleDataList) {
             if (unavailableVehicleIds.contains(vehicle.getmVehicleId())) {
-                unavailableVehicleData.add(vehicle);
+                unavailableVehicleDataList.add(vehicle);
             } else {
-                availableVehicleData.add(vehicle);
+                finalAvailaibleVehicleDataList.add(vehicle);
             }
         }
     }

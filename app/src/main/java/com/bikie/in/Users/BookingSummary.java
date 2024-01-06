@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -65,6 +66,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 import kotlin.text.Charsets;
@@ -74,12 +76,13 @@ public class BookingSummary extends AppCompatActivity {
     Button mProceedToPayment;
     String apiEndPoint = "/pg/v1/pay";
     String merchantID = "PGTESTPAYUAT";
-    String mCallBackURL ="https://webhook.site/3891c569-8b9c-45db-9946-62adc780307c";
+    String mCallBackURL = "https://webhook.site/3891c569-8b9c-45db-9946-62adc780307c";
     private static final String BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/";
     private static final String CONTENT_TYPE_HEADER = "Content-Type";
     private static final String VERIFY_HEADER = "X-VERIFY";
     private static final String MERCHANT_ID_HEADER = "X-MERCHANT-ID";
     private static int B2B_PG_REQUEST_CODE = 777;
+    private ProgressDialog progressDialog;
     private static final String PREFIX = "BIKIE";
     private static final int RANDOM_STRING_LENGTH = 15;
     String base64String;
@@ -90,19 +93,20 @@ public class BookingSummary extends AppCompatActivity {
     double subtotal;
     private ImageView mVehicleImage;
     String merchantTransactionID;
-    String vehicleID,vehicleImage,vehicleName,location,pickupTime,dropOffTime;
-    Timestamp mPickupTimeStamp,mDropoffTimeStamp;
-    Double helmetRental,priceToBook;
+    String vehicleID, vehicleImage, vehicleName, location, pickupTime, dropOffTime;
+    Timestamp mPickupTimeStamp, mDropoffTimeStamp;
+    Double helmetRental, priceToBook;
     private TextView mPickupDate, mPickupTime, mDropoffDate, mDropoffTime, mVehicleRental, mHelmetRental, mTotalRental, mLocation, mSubTotal;
 
     private Timestamp mBookingStartedTime = Timestamp.now();
+    SessionManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_summary);
 
-        SessionManager manager = new SessionManager(BookingSummary.this);
+        manager = new SessionManager(BookingSummary.this);
 
         merchantTransactionID = generateRandomTransactionId();
 
@@ -116,14 +120,15 @@ public class BookingSummary extends AppCompatActivity {
     }
 
     private void setupBookingDetails() {
+        progressDialog.show();
         vehicleID = getIntent().getStringExtra("VehicleID");
-         priceToBook = getIntent().getDoubleExtra("CalculatedPrice", 0.00);
-         helmetRental = getIntent().getDoubleExtra("HelmetCharges", 0.00);
-         vehicleImage = getIntent().getStringExtra("VehicleImageURL");
-         vehicleName = getIntent().getStringExtra("VehicleName");
-         pickupTime = getIntent().getStringExtra("mPickupTimeStamp");
-         dropOffTime = getIntent().getStringExtra("mDropoffTimeStamp");
-         location = getIntent().getStringExtra("mVehicleLocation");
+        priceToBook = getIntent().getDoubleExtra("CalculatedPrice", 0.00);
+        helmetRental = getIntent().getDoubleExtra("HelmetCharges", 0.00);
+        vehicleImage = getIntent().getStringExtra("VehicleImageURL");
+        vehicleName = getIntent().getStringExtra("VehicleName");
+        pickupTime = getIntent().getStringExtra("mPickupTimeStamp");
+        dropOffTime = getIntent().getStringExtra("mDropoffTimeStamp");
+        location = getIntent().getStringExtra("mVehicleLocation");
 
         SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.US);
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd MMM yyyy h:mm a", Locale.US);
@@ -144,6 +149,7 @@ public class BookingSummary extends AppCompatActivity {
         mTotalRental.setText(String.format(Locale.US, "₹ %.2f", subtotal));
 
         loadImageWithGlide(vehicleImage);
+        progressDialog.dismiss();
         prepareBase64AndChecksum();
     }
 
@@ -160,18 +166,18 @@ public class BookingSummary extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(BookingSummary.this, "" + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
         }
-        Log.e("Phonepe", "Checksum: "+checksum );
-        Log.e("Phonepe", "BASE64: "+base64String );
+        Log.e("Phonepe", "Checksum: " + checksum);
+        Log.e("Phonepe", "BASE64: " + base64String);
     }
 
     private Map<String, Object> createMerchantRequestMap() {
-        int mPhonepeTotal = (int) (subtotal*100);
+        int mPhonepeTotal = (int) (subtotal * 100);
         Map<String, Object> merchantRequestMap = new HashMap<>();
         merchantRequestMap.put("merchantId", merchantID);
         merchantRequestMap.put("merchantTransactionId", merchantTransactionID);
         merchantRequestMap.put("merchantUserId", "MUID676776123");
         merchantRequestMap.put("amount", mPhonepeTotal);
-        merchantRequestMap.put("callbackUrl",mCallBackURL );
+        merchantRequestMap.put("callbackUrl", mCallBackURL);
         merchantRequestMap.put("mobileNumber", "9999999999");
 
         // Create the nested paymentInstrument map
@@ -179,14 +185,13 @@ public class BookingSummary extends AppCompatActivity {
         paymentInstrumentMap.put("type", "PAY_PAGE");
 
         merchantRequestMap.put("paymentInstrument", paymentInstrumentMap);
-        Log.e("Phonepe", "Merchant Request Map "+merchantRequestMap );
-        Log.e("Phonepe", "Salt "+BuildConfig.PHONEPE_UAT_SALT );
+        Log.e("Phonepe", "Merchant Request Map " + merchantRequestMap);
+        Log.e("Phonepe", "Salt " + BuildConfig.PHONEPE_UAT_SALT);
         return merchantRequestMap;
     }
 
     private void loadImageWithGlide(String imageUrl) {
-        Glide.with(BookingSummary.this)
-                .load(imageUrl)
+        Glide.with(BookingSummary.this).load(imageUrl)
 //                .placeholder(R.drawable.sand_clock)
                 .into(mVehicleImage);
     }
@@ -271,6 +276,11 @@ public class BookingSummary extends AppCompatActivity {
         mSubTotal = findViewById(R.id.mSubTotal);
         mVehicleImage = findViewById(R.id.mBikeImage);
         mProceedToPayment = findViewById(R.id.btn_proceedToPayment);
+        // Initialize ProgressDialog
+        progressDialog = new ProgressDialog(BookingSummary.this);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        progressDialog.setCancelable(false);
     }
 
 
@@ -290,14 +300,12 @@ public class BookingSummary extends AppCompatActivity {
     }
 
     private B2BPGRequest createB2BPGRequest() {
-        return new B2BPGRequestBuilder()
-                .setData(base64String)
-                .setChecksum(checksum)
-                .setUrl(apiEndPoint)
-                .build();
+        return new B2BPGRequestBuilder().setData(base64String).setChecksum(checksum).setUrl(apiEndPoint).build();
     }
 
     private void CheckPaymentStatus() {
+
+        progressDialog.show();
         String url = BASE_URL + merchantID + "/" + merchantTransactionID;
         String mStatuschecksum = convertToSHA256("/pg/v1/status/" + merchantID + "/" + merchantTransactionID + BuildConfig.PHONEPE_UAT_SALT) + "###1";
 
@@ -313,59 +321,60 @@ public class BookingSummary extends AppCompatActivity {
         headers.put(MERCHANT_ID_HEADER, merchantID);
 
         // Make a GET request using Volley
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Handle the response
-                        Log.e("Phonepe", "Volley Response: " + response);
-                        try {
-                            if (response.has("success") && response.getBoolean("success"))
-                            {
-                                String transactionId = response.getJSONObject("data").getString("transactionId");
-                                String merchantTransaction = response.getJSONObject("data").getString("merchantTransactionId");
-                                String bankId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("bankId");
-                                String bankTransactionId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("bankTransactionId");
-                                String pgTransactionId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("pgTransactionId");
-                                String type = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("type");
-                                String state = response.getJSONObject("data").getString("state");
-                                mPickupTimeStamp = convertStringToTimestamp(pickupTime);
-                                mDropoffTimeStamp = convertStringToTimestamp(dropOffTime);
-                                Timestamp mCompletionTime = Timestamp.now();
-                                String mBookingID = generateBookingId();
-                                Log.e("Date", "onResponse: "+pickupTime+"Converted"+mPickupTimeStamp );
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                // Handle the response
+                Log.e("Phonepe", "Volley Response: " + response);
+                try {
+                    if (response.has("success") && response.getBoolean("success")) {
+                        String transactionId = response.getJSONObject("data").getString("transactionId");
+                        String merchantTransaction = response.getJSONObject("data").getString("merchantTransactionId");
+                        String bankId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("bankId");
+                        String bankTransactionId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("bankTransactionId");
+                        String pgTransactionId = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("pgTransactionId");
+                        String type = response.getJSONObject("data").getJSONObject("paymentInstrument").getString("type");
+                        String state = response.getJSONObject("data").getString("state");
+                        mPickupTimeStamp = convertStringToTimestamp(pickupTime);
+                        mDropoffTimeStamp = convertStringToTimestamp(dropOffTime);
+                        Timestamp mCompletionTime = Timestamp.now();
+                        String mBookingID = generateBookingId();
 
-                                BookingConfirmation confirmation = new BookingConfirmation(String.format(Locale.US, "₹ %.2f", subtotal),merchantTransaction,bankId,bankTransactionId,pgTransactionId,type,transactionId,state,vehicleID,vehicleImage,vehicleName,location,true,true,mPickupTimeStamp,mDropoffTimeStamp,mBookingStartedTime,mCompletionTime,helmetRental,priceToBook,subtotal,mBookingID);
-                                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("UpcomingBookings")
-                                        .document(mBookingID)
-                                        .set(confirmation)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Log.e("BookingSuccessFull", "onComplete: "+mBookingID );
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(BookingSummary.this, "Vehicle booking was not successful!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-
+                        BookingConfirmation confirmation = new BookingConfirmation(String.format(Locale.US, "₹ %.2f", subtotal), merchantTransaction, bankId, bankTransactionId, pgTransactionId, type, transactionId, state, vehicleID, vehicleImage, vehicleName, location, true, true, mPickupTimeStamp, mDropoffTimeStamp, mBookingStartedTime, mCompletionTime, String.format(Locale.US, "₹ %.2f", helmetRental), String.format(Locale.US, "₹ %.2f", priceToBook), String.format(Locale.US, "₹ %.2f", subtotal), mBookingID, manager.getName(), manager.getPhone().toString(), manager.getAadharNo().toString(), manager.getDlNo().toString(), manager.getAadharFrontURL().toString(), manager.getAadharBackURL().toString(), manager.getDlImageURL());
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("UpcomingBookings").document(mBookingID).set(confirmation).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Log.e("BookingSuccessFull", "onComplete: " + mBookingID);
+                                Intent intent = new Intent(BookingSummary.this, BookingSuccessfullPage.class);
+                                intent.putExtra("BookingID", mBookingID);
+                                startActivity(intent);
+                                progressDialog.dismiss();
                             }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(BookingSummary.this, "Vehicle booking was not successful!", Toast.LENGTH_SHORT).show();
+                                progressDialog.dismiss();
+                            }
+                        });
+
                     }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // Handle errors
-                        // This block will be called if there is an error in the request
-                        Log.e("Phonepe", "Volley Error: " + error.toString());
-                    }
-                }) {
+                } catch (JSONException e) {
+                    progressDialog.dismiss();
+                    throw new RuntimeException(e);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Handle errors
+                // This block will be called if there is an error in the request
+                Log.e("Phonepe", "Volley Error: " + error.toString());
+                Toast.makeText(BookingSummary.this, "Volley Error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        }) {
             @Override
             public Map<String, String> getHeaders() {
                 return headers;
@@ -375,8 +384,6 @@ public class BookingSummary extends AppCompatActivity {
         // Add the request to the request queue
         requestQueue.add(getRequest);
 
-        Log.e("B2G", "CheckPaymentStatus: " + mStatuschecksum);
-        Log.e("B2G", "CheckPaymentString: " + "/pg/v1/status/" + merchantID + "/" + merchantTransactionID + "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399");
     }
 
 
@@ -404,6 +411,7 @@ public class BookingSummary extends AppCompatActivity {
             return null;
         }
     }
+
     public static String generateRandomTransactionId() {
         // Set the prefix for the transaction ID
         String prefix = "BI";
@@ -422,6 +430,7 @@ public class BookingSummary extends AppCompatActivity {
         // Combine the prefix and random numbers to create the final transaction ID
         return prefix + randomNumbers.toString();
     }
+
     private static Timestamp convertStringToTimestamp(String dateString) {
         try {
             // Define your date format
@@ -437,6 +446,7 @@ public class BookingSummary extends AppCompatActivity {
             return null; // Handle parsing error as needed
         }
     }
+
     public static String generateBookingId() {
         StringBuilder bookingId = new StringBuilder(PREFIX);
 

@@ -3,15 +3,15 @@ package com.bikie.in.POJO_Classes;
 import com.google.firebase.Timestamp;
 
 public class BookingConfirmation {
-    String mAmount,mMerchantTransactionID,bankId,bankTransactionId,pgTransactionId,mPaymentInstrumentType,mPhonepeTransactionID,mResponseCode,mVehicleID,mVehicleImage,mVehicleName,mVehicleLocation,mBookingID;
+    String mAmount,mMerchantTransactionID,bankId,bankTransactionId,pgTransactionId,mPaymentInstrumentType,mPhonepeTransactionID,mResponseCode,mVehicleID,mVehicleImage,mVehicleName,mVehicleLocation,mBookingID,mUserName,mUserPhoneNo,mUserAadharNo,mUserDlNo,mUserAadharFPIMG,mUserAadharBPIMG,muserDLIMG;
     Boolean isBookingSuccessfull, isPaymentSuccessfull;
     Timestamp mPickupDate,mDropOffDate,mBookingAttemptedTime,mBookingCompletedTime;
-    Double mHelmetRentalCharge,mVehicleRentalCharge,mSubTotal;
+    String mHelmetRentalCharge,mVehicleRentalCharge,mSubTotal;
 
     public BookingConfirmation() {
     }
 
-    public BookingConfirmation(String mAmount, String mMerchantTransactionID, String bankId, String bankTransactionId, String pgTransactionId, String mPaymentInstrumentType, String mPhonepeTransactionID, String mResponseCode, String mVehicleID, String mVehicleImage, String mVehicleName, String mVehicleLocation, Boolean isBookingSuccessfull, Boolean isPaymentSuccessfull, Timestamp mPickupDate, Timestamp mDropOffDate, Timestamp mBookingAttemptedTime, Timestamp mBookingCompletedTime, Double mHelmetRentalCharge, Double mVehicleRentalCharge, Double mSubTotal, String mBookingID) {
+    public BookingConfirmation(String mAmount, String mMerchantTransactionID, String bankId, String bankTransactionId, String pgTransactionId, String mPaymentInstrumentType, String mPhonepeTransactionID, String mResponseCode, String mVehicleID, String mVehicleImage, String mVehicleName, String mVehicleLocation, Boolean isBookingSuccessfull, Boolean isPaymentSuccessfull, Timestamp mPickupDate, Timestamp mDropOffDate, Timestamp mBookingAttemptedTime, Timestamp mBookingCompletedTime, String mHelmetRentalCharge, String mVehicleRentalCharge, String mSubTotal, String mBookingID,String mUserName,String mUserPhoneNo,String mUserAadharNo, String mUserDlNo,String mUserAadharFPIMG,String mUserAadharBPIMG,String muserDLIMG) {
         this.mAmount = mAmount;
         this.mMerchantTransactionID = mMerchantTransactionID;
         this.bankId = bankId;
@@ -34,6 +34,69 @@ public class BookingConfirmation {
         this.mVehicleRentalCharge = mVehicleRentalCharge;
         this.mSubTotal = mSubTotal;
         this.mBookingID = mBookingID;
+        this.mUserName = mUserName;
+        this.mUserPhoneNo = mUserPhoneNo;
+        this.mUserAadharNo = mUserAadharNo;
+        this.mUserDlNo = mUserDlNo;
+        this.mUserAadharFPIMG = mUserAadharFPIMG;
+        this.mUserAadharBPIMG = mUserAadharBPIMG;
+        this.muserDLIMG = muserDLIMG;
+    }
+
+    public String getmUserAadharNo() {
+        return mUserAadharNo;
+    }
+
+    public void setmUserAadharNo(String mUserAadharNo) {
+        this.mUserAadharNo = mUserAadharNo;
+    }
+
+    public String getmUserDlNo() {
+        return mUserDlNo;
+    }
+
+    public void setmUserDlNo(String mUserDlNo) {
+        this.mUserDlNo = mUserDlNo;
+    }
+
+    public String getmUserAadharFPIMG() {
+        return mUserAadharFPIMG;
+    }
+
+    public void setmUserAadharFPIMG(String mUserAadharFPIMG) {
+        this.mUserAadharFPIMG = mUserAadharFPIMG;
+    }
+
+    public String getmUserAadharBPIMG() {
+        return mUserAadharBPIMG;
+    }
+
+    public void setmUserAadharBPIMG(String mUserAadharBPIMG) {
+        this.mUserAadharBPIMG = mUserAadharBPIMG;
+    }
+
+    public String getMuserDLIMG() {
+        return muserDLIMG;
+    }
+
+    public void setMuserDLIMG(String muserDLIMG) {
+        this.muserDLIMG = muserDLIMG;
+    }
+
+    public String getmUserName() {
+        return mUserName;
+    }
+
+    public void setmUserName(String mUserName) {
+        this.mUserName = mUserName;
+    }
+
+    public String getmUserPhoneNo() {
+        return mUserPhoneNo;
+    }
+
+    public void setmUserPhoneNo(String mUserPhoneNo) {
+        this.mUserPhoneNo = mUserPhoneNo;
     }
 
     public String getmAmount() {
@@ -180,27 +243,27 @@ public class BookingConfirmation {
         this.mBookingCompletedTime = mBookingCompletedTime;
     }
 
-    public Double getmHelmetRentalCharge() {
+    public String getmHelmetRentalCharge() {
         return mHelmetRentalCharge;
     }
 
-    public void setmHelmetRentalCharge(Double mHelmetRentalCharge) {
+    public void setmHelmetRentalCharge(String mHelmetRentalCharge) {
         this.mHelmetRentalCharge = mHelmetRentalCharge;
     }
 
-    public Double getmVehicleRentalCharge() {
+    public String getmVehicleRentalCharge() {
         return mVehicleRentalCharge;
     }
 
-    public void setmVehicleRentalCharge(Double mVehicleRentalCharge) {
+    public void setmVehicleRentalCharge(String mVehicleRentalCharge) {
         this.mVehicleRentalCharge = mVehicleRentalCharge;
     }
 
-    public Double getmSubTotal() {
+    public String getmSubTotal() {
         return mSubTotal;
     }
 
-    public void setmSubTotal(Double mSubTotal) {
+    public void setmSubTotal(String mSubTotal) {
         this.mSubTotal = mSubTotal;
     }
 
