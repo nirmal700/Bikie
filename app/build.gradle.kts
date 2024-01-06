@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
@@ -5,7 +7,10 @@ plugins {
     id("com.google.firebase.firebase-perf")
     id("com.google.firebase.appdistribution")
 }
-
+val apiKeysPropertiesFile = rootProject.file("local.properties")
+val apiKeysProperties = Properties().apply {
+    load(apiKeysPropertiesFile.inputStream())
+}
 android {
     namespace = "com.bikie.in"
     compileSdk = 34
@@ -16,9 +21,12 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        android.buildFeatures.buildConfig = true
+        buildConfigField("String", "PHONEPE_UAT_SALT", "\"${apiKeysProperties.getProperty("API_KEY_UAT_PHONEPE")}\"")
+        buildConfigField("String", "PHONEPE_PROD_SALT", "\"${apiKeysProperties.getProperty("API_KEY_RELEASE_PHONEPE")}\"")
     }
+
 
     buildTypes {
         release {
@@ -51,7 +59,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging:23.4.0")
     implementation("com.google.firebase:firebase-functions:20.4.0")
     testImplementation("junit:junit:4.13.2")
-    implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck-debug")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -63,6 +71,7 @@ dependencies {
     implementation ("com.amplifyframework:aws-datastore:2.14.5")
     implementation ("com.amplifyframework:aws-auth-cognito:2.14.5")
     implementation ("phonepe.intentsdk.android.release:IntentSDK:2.3.0")
+    implementation("com.android.volley:volley:1.2.1")
 
     // Support for Java 8 features
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")

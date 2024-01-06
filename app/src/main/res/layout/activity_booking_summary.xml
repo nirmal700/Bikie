@@ -125,6 +125,7 @@
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/mPickupDate"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/baloo"
@@ -134,6 +135,7 @@
 
                                 <TextView
                                     android:layout_width="wrap_content"
+                                    android:id="@+id/mPickupTime"
                                     android:layout_height="wrap_content"
                                     android:textSize="17sp"
                                     android:fontFamily="@font/baloo"
@@ -161,6 +163,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/baloo"
+                                    android:id="@+id/mDropoffDate"
                                     android:textSize="20sp"
                                     android:text="30 Nov 2023"
                                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
@@ -168,6 +171,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/mDropoffTime"
                                     android:fontFamily="@font/baloo"
                                     android:textSize="17sp"
                                     android:textStyle="bold"
@@ -210,6 +214,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:id="@+id/mLocation"
                                     android:layout_gravity="end"
                                     android:fontFamily="@font/baloo"
                                     android:text="DLF Cyber City"
@@ -285,6 +290,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/baloo"
+                                android:id="@+id/mVehicleRentalCharges"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
 
@@ -317,7 +323,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/baloo"
-                                android:text="₹ 200.50"/>
+                                android:text="₹ 00.00"/>
                         </LinearLayout>
                         <!-- Repeat the structure above for Taxes and Refundable Deposit -->
                         <LinearLayout
@@ -336,6 +342,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:id="@+id/mHelmetCharges"
                                 android:fontFamily="@font/baloo"
                                 android:text="₹ 30.00"/>
                         </LinearLayout>
@@ -369,6 +376,7 @@
                                 android:fontFamily="@font/baloo"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
+                                android:id="@+id/mSubTotal"
 
                                 android:text="₹ 1054.50"/>
                         </LinearLayout>
@@ -405,6 +413,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/mTotalPayable"
                             android:text="₹ 1054.50"
                             android:fontFamily="@font/baloo"
                             android:textStyle="bold"

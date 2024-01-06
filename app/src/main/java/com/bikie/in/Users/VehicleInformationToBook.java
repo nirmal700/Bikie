@@ -31,6 +31,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class VehicleInformationToBook extends AppCompatActivity {
 
@@ -57,6 +58,9 @@ public class VehicleInformationToBook extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerVehicleImages);
 
         String vehicleID = getIntent().getStringExtra("VehicleID");
+        String PickupTime = getIntent().getStringExtra("mPickupTimeStamp");
+        String DropOffTime = getIntent().getStringExtra("mDropoffTimeStamp");
+        Double priceToBook = getIntent().getDoubleExtra("CalculatedPrice",0.00);
         DocumentReference docRef = db.collection("Vehicles").document(vehicleID);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -68,7 +72,7 @@ public class VehicleInformationToBook extends AppCompatActivity {
                         NewVehicle vehicle = documentSnapshot.toObject(NewVehicle.class);
                         mLocation.setText(vehicle.getmVehicleLocation());
                         mVehicleName.setText(vehicle.getmVehicleName());
-                        mPrice.setText(String.format("₹ %s", vehicle.getmVehicleRent1Hr()));
+                        mPrice.setText(String.format(Locale.US, "₹ %.2f", priceToBook));
                         mVehicleInfo.setText(vehicle.getmVehicleInfo());
                         mTopSpeed.setText(String.format("%d Km/h", vehicle.getmVehicleTopSpeed()));
                         mVehicleMileage.setText(String.format("%d Km/L", vehicle.getmVehicleMileage()));
@@ -115,6 +119,17 @@ public class VehicleInformationToBook extends AppCompatActivity {
                                         if (validateSelection()) {
                                             Intent intent = new Intent(VehicleInformationToBook.this, BookingSummary.class);
                                             // Pass any other necessary data through intent
+                                            intent.putExtra("VehicleID", vehicleID);
+                                            intent.putExtra("CalculatedPrice", priceToBook);
+                                            intent.putExtra("VehicleImageURL",vehicle.getmVehicleImages().get(0));
+                                            intent.putExtra("VehicleName",vehicle.getmVehicleName().toString());
+                                            intent.putExtra("mPickupTimeStamp",PickupTime);
+                                            intent.putExtra("mDropoffTimeStamp",DropOffTime);
+                                            intent.putExtra("mVehicleLocation",vehicle.getmVehicleLocation());
+
+                                            // Add helmet charges based on selection
+                                            double helmetCharges = checkBoxOneHelmet.isChecked() ? 0.00 : 30.00;
+                                            intent.putExtra("HelmetCharges", helmetCharges);
                                             startActivity(intent);
                                         }
 

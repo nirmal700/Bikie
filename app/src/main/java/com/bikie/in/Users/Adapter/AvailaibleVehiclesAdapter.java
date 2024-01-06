@@ -1,11 +1,15 @@
 package com.bikie.in.Users.Adapter;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +23,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.bikie.in.Admin.Adapter.ListedVehiclesAdapter;
 import com.bikie.in.POJO_Classes.NewVehicle;
 import com.bikie.in.R;
+import com.bikie.in.Users.VehicleInformationToBook;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -31,6 +36,8 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,7 +53,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         availaiblevehicleDataList = vehicleData;
         mrequestedpickupDateTimeStamp = requestedpickupDateTimeStamp;
         mrequesteddropoffDateTimeStamp = requesteddropoffDateTimeStamp;
-        Log.e("TAG", "AvailaibleVehiclesAdapter: "+ availaiblevehicleDataList.get(0).getmVehicleRent24Hr());
+        Log.e("TAG", "AvailaibleVehiclesAdapter: "+ availaiblevehicleDataList);
     }
 
     @NonNull
@@ -65,6 +72,22 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         double calculatedPrice = calculatePrice(availaiblevehicleDataList.get(position), mrequestedpickupDateTimeStamp, mrequesteddropoffDateTimeStamp);
         String formattedPrice = String.format(Locale.US, "₹ %.2f", calculatedPrice);
         holder.tv_price.setText(formattedPrice);
+        holder.mBookNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = currentData.getmVehicleId();
+
+
+                Intent intent = new Intent(mContext, VehicleInformationToBook.class);
+                // Pass any other necessary data through intent
+                intent.putExtra("VehicleID", id);
+                intent.putExtra("CalculatedPrice",calculatedPrice);
+                intent.putExtra("mPickupTimeStamp",convertTimestampToString(mrequestedpickupDateTimeStamp));
+                intent.putExtra("mDropoffTimeStamp",convertTimestampToString(mrequesteddropoffDateTimeStamp));
+
+                mContext.startActivity(intent);
+            }
+        });
 
 
         Glide.with(mContext)
@@ -99,6 +122,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         public ImageView imageView;
         public LottieAnimationView animationView;
         public TextView tv_location, tv_name,tv_price;
+        public Button mBookNowButton;
 
         MaterialCardView cardView;
 
@@ -110,6 +134,7 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
             tv_location = itemView.findViewById(R.id.bike_location);
             animationView = itemView.findViewById(R.id.lottieAnimationView);
             cardView = itemView.findViewById(R.id.mCardViewListed);
+            mBookNowButton = itemView.findViewById(R.id.mBookNowButton);
             tv_price = itemView.findViewById(R.id.bike_price_bold);
             itemView.setOnClickListener(this);
 
@@ -171,6 +196,16 @@ public class AvailaibleVehiclesAdapter extends RecyclerView.Adapter<AvailaibleVe
         System.out.println("Calculated Price: " + calculatedPrice);
 
         return calculatedPrice;
+    }
+    public static String convertTimestampToString(com.google.firebase.Timestamp timestamp) {
+        // Assuming timestamp is of type java.sql.Timestamp
+        Date date = timestamp.toDate();
+
+        // Choose the desired date and time format
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy h:mm a", Locale.US);
+
+        // Convert the Date object to a formatted string
+        return dateFormat.format(date);
     }
 
 

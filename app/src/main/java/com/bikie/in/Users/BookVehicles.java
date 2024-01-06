@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bikie.in.Admin.Adapter.ListedVehiclesAdapter;
 import com.bikie.in.Admin.Edit_Listed_Vehicle;
 import com.bikie.in.Admin.Listed_Vehicles;
 import com.bikie.in.POJO_Classes.Booking;
+import com.bikie.in.POJO_Classes.BookingConfirmation;
 import com.bikie.in.POJO_Classes.NewVehicle;
 import com.bikie.in.R;
 import com.bikie.in.Users.Adapter.AvailaibleVehiclesAdapter;
@@ -55,6 +57,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
     ImageView btn_back;
     RecyclerView.LayoutManager layoutManager;
+    private TextView mDropOffDate, mPickupDate, mDropOffTime, mPickupTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,30 +67,16 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
         initializeViews();
 
-        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd MMM yyyy h:mm a", Locale.US);
-        pickupDateTimeString = getIntent().getStringExtra("pickupDateTime");
-        dropoffDateTimeString = getIntent().getStringExtra("dropoffDateTime");
-        try {
-            Date pickupDateTime = dateTimeFormat.parse(pickupDateTimeString);
-            assert pickupDateTime != null;
-            requestedpickupDateTimeStamp = new Timestamp(pickupDateTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            Date dropoffDateTime = dateTimeFormat.parse(dropoffDateTimeString);
-            assert dropoffDateTime != null;
-            requesteddropoffDateTimeStamp = new Timestamp(dropoffDateTime);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        setupDateTime();
+
+        fetchAvailableVehicles();
 
 
+    }
+
+    private void fetchAvailableVehicles() {
         CollectionReference vehiclesRef = db.collection("Vehicles");
-        CollectionReference bookingsRef = db.collection("Bookings");
-
-
-// First, get all available vehicles
+        // First, get all available vehicles
         vehiclesRef.whereEqualTo("mIsAvailable", true).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 List<String> availableVehicleIds = new ArrayList<>();
@@ -95,30 +84,21 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
 
 
                 for (QueryDocumentSnapshot vehicleDocument : task.getResult()) {
-                    boolean isInPending = vehicleDocument.getBoolean("mIsInPending");
-                    Timestamp bookingAttemptedTime = vehicleDocument.getTimestamp("mBookingAttemptedTime");
-
-                    // Check if in pending and time difference is more than 3 mins
-                    if (isInPending && (Timestamp.now().getSeconds() - Objects.requireNonNull(bookingAttemptedTime).getSeconds()) > 180) {
-                        // Update the vehicle document
-                        vehicleDocument.getReference().update("mBookingAttemptedTime", null, "mIsInPending", false);
-                    }
-
-                    availableVehicleIds.add(vehicleDocument.getId());
-                    availableVehicleData.add(vehicleDocument.toObject(NewVehicle.class));
+                   handleAvailableVehicle(vehicleDocument,availableVehicleIds,availableVehicleData);
                 }
-                Log.e("Vehicles", "onCreate: " + availableVehicleIds.toString());
+
                 // Inside onCreate or relevant method
                 checkVehicleAvailability(availableVehicleIds, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp, new AvailabilityCheckCallback() {
                     @Override
                     public void onCheckComplete() {
+
                         separateVehicles(availableVehicleData, unavailableVehicleIds, availableVehicleDataList, unavailableVehicleDataList);
 
                         // Now update the RecyclerView with the available vehicles
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList,requestedpickupDateTimeStamp,requesteddropoffDateTimeStamp);
+                                availaibleVehiclesAdapter = new AvailaibleVehiclesAdapter(BookVehicles.this, availableVehicleDataList, requestedpickupDateTimeStamp, requesteddropoffDateTimeStamp);
                                 availaibleVehiclesAdapter.setOnItemClickListener(BookVehicles.this);
                                 recyclerView.setAdapter(availaibleVehiclesAdapter);
                                 progressDialog.dismiss();
@@ -138,7 +118,44 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
                 Toast.makeText(this, "Error! in vehicle query", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void handleAvailableVehicle(QueryDocumentSnapshot vehicleDocument, List<String> availableVehicleIds, List<NewVehicle> availableVehicleData) {
+        boolean isInPending = vehicleDocument.getBoolean("mIsInPending");
+        Timestamp bookingAttemptedTime = vehicleDocument.getTimestamp("mBookingAttemptedTime");
 
+        if (isInPending && (Timestamp.now().getSeconds() - Objects.requireNonNull(bookingAttemptedTime).getSeconds()) > 180) {
+            vehicleDocument.getReference().update("mBookingAttemptedTime", null, "mIsInPending", false);
+        }
+
+        availableVehicleIds.add(vehicleDocument.getId());
+        availableVehicleData.add(vehicleDocument.toObject(NewVehicle.class));
+    }
+
+    private void setupDateTime() {
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("dd MMM yyyy h:mm a", Locale.US);
+        // Format for date and time
+        SimpleDateFormat displayDateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.US);
+        SimpleDateFormat displayTimeFormat = new SimpleDateFormat("h:mm a", Locale.US);
+        pickupDateTimeString = getIntent().getStringExtra("pickupDateTime");
+        dropoffDateTimeString = getIntent().getStringExtra("dropoffDateTime");
+        try {
+            Date pickupDateTime = dateTimeFormat.parse(pickupDateTimeString);
+            assert pickupDateTime != null;
+            mPickupDate.setText(displayDateFormat.format(pickupDateTime));
+            mPickupTime.setText(displayTimeFormat.format(pickupDateTime));
+            requestedpickupDateTimeStamp = new Timestamp(pickupDateTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            Date dropoffDateTime = dateTimeFormat.parse(dropoffDateTimeString);
+            assert dropoffDateTime != null;
+            mDropOffDate.setText(displayDateFormat.format(dropoffDateTime));
+            mDropOffTime.setText(displayTimeFormat.format(dropoffDateTime));
+            requesteddropoffDateTimeStamp = new Timestamp(dropoffDateTime);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initializeViews() {
@@ -154,6 +171,10 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         Objects.requireNonNull(progressDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         progressDialog.setCancelable(false);
 
+        mDropOffDate = findViewById(R.id.dateTextDrop);
+        mDropOffTime = findViewById(R.id.timeTextDrop);
+        mPickupDate = findViewById(R.id.dateTextPickup);
+        mPickupTime = findViewById(R.id.timeTextPickup);
 
         btn_back = findViewById(R.id.btn_backToSd);
     }
@@ -162,9 +183,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
     public void onItemClick(int position) {
         NewVehicle vehicleData = availableVehicleDataList.get(position);
 
-
         String id = vehicleData.getmVehicleId();
-
 
         Intent intent = new Intent(this, VehicleInformationToBook.class);
         // Pass any other necessary data through intent
@@ -192,13 +211,9 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
     }
 
     private void checkBookingOverlap(String vehicleId, Timestamp requestedPickupTime, Timestamp requestedDropoffTime, final Runnable onCheckComplete) {
-        Query upcomingBookingsQuery = db.collection("UpcomingBookings")
-                .whereEqualTo("vehicleId", vehicleId)
-                .whereLessThanOrEqualTo("pickupTime", requestedDropoffTime);
+        Query upcomingBookingsQuery = db.collection("UpcomingBookings").whereEqualTo("mVehicleID", vehicleId).whereLessThanOrEqualTo("mPickupDate", requestedDropoffTime);
 
-        Query ongoingBookingsQuery = db.collection("OngoingBookings")
-                .whereEqualTo("vehicleId", vehicleId)
-                .whereLessThanOrEqualTo("pickupTime", requestedDropoffTime);
+        Query ongoingBookingsQuery = db.collection("OngoingBookings").whereEqualTo("mVehicleID", vehicleId).whereLessThanOrEqualTo("mPickupDate", requestedDropoffTime);
 
         Task<QuerySnapshot> upcomingTask = upcomingBookingsQuery.get();
         Task<QuerySnapshot> ongoingTask = ongoingBookingsQuery.get();
@@ -207,10 +222,11 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
             for (Object result : results) {
                 QuerySnapshot snapshot = (QuerySnapshot) result;
                 for (QueryDocumentSnapshot document : snapshot) {
-                    Booking booking = document.toObject(Booking.class);
-                    if (booking.getDropoffTime().compareTo(requestedPickupTime) > 0) {
+                    BookingConfirmation booking = document.toObject(BookingConfirmation.class);
+                    Log.e("Booking", "checkBookingOverlap: " + booking.getmDropOffDate().compareTo(requestedPickupTime) + "-----" + booking.getmVehicleName());
+                    if (booking.getmDropOffDate().compareTo(requestedPickupTime) > 0) {
                         // Vehicle is not available
-                        Log.e("Not Available", "Vehicle ID: " + vehicleId);
+                        Log.e("Not Available", "Not Avalaible Vehicle ID: " + vehicleId);
                         unavailableVehicleIds.add(vehicleId);
                         return; // Exit as soon as an overlapping booking is found
                     }
@@ -225,8 +241,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
         onCheckComplete.run();
     }
 
-    public void separateVehicles(List<NewVehicle> allVehicles, List<String> unavailableVehicleIds,
-                                 List<NewVehicle> availableVehicleData, List<NewVehicle> unavailableVehicleData) {
+    public void separateVehicles(List<NewVehicle> allVehicles, List<String> unavailableVehicleIds, List<NewVehicle> availableVehicleData, List<NewVehicle> unavailableVehicleData) {
 
         for (NewVehicle vehicle : allVehicles) {
             if (unavailableVehicleIds.contains(vehicle.getmVehicleId())) {
@@ -236,6 +251,7 @@ public class BookVehicles extends AppCompatActivity implements AvailaibleVehicle
             }
         }
     }
+
     @Override
     public void onBackPressed() {
         startActivity(new Intent(BookVehicles.this, UserDashboard.class));

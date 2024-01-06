@@ -87,7 +87,7 @@
                 android:textStyle="bold" />
         </LinearLayout>
         <Button
-            android:id="@+id/action_button"
+            android:id="@+id/mBookNowButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/bike_image"

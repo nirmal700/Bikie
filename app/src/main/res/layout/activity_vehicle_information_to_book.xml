@@ -132,11 +132,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="25dp"
                     android:layout_weight="1"
                     android:autoSizeTextType="uniform"
                     android:fontFamily="@font/abeezee"
-                    android:text="₹ 500/day"
+                    android:text="₹"
                     android:textAlignment="textEnd"
                     android:textColor="@color/black"
                     android:textSize="25sp"
@@ -242,11 +242,15 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_mBookNow"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_gravity="center"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="@color/Primary_Blue"

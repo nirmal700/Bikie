@@ -99,7 +99,7 @@
 
                         <!-- "20 Nov 2023" part -->
                         <TextView
-                            android:id="@+id/dateText2"
+                            android:id="@+id/dateTextPickup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="20 Nov 2023"
@@ -122,7 +122,7 @@
 
                         <!-- "01:00 PM" part -->
                         <TextView
-                            android:id="@+id/timeText2"
+                            android:id="@+id/timeTextPickup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="01:00 PM"
@@ -160,7 +160,7 @@
 
                         <!-- "20 Nov 2023" part -->
                         <TextView
-                            android:id="@+id/dateText"
+                            android:id="@+id/dateTextDrop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="20 Nov 2023"
@@ -183,7 +183,7 @@
 
                         <!-- "01:00 PM" part -->
                         <TextView
-                            android:id="@+id/timeText"
+                            android:id="@+id/timeTextDrop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="01:00 PM"
