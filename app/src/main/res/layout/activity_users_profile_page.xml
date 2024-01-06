@@ -172,6 +172,7 @@
                     android:layout_height="55dp"
                     android:autoSizeTextType="uniform"
                     android:inputType="textCapSentences"
+                    android:focusable="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hintBlack"
                     android:textSize="20sp" />
@@ -200,6 +201,7 @@
                     android:layout_height="55dp"
                     android:autoSizeTextType="uniform"
                     android:inputType="textCapSentences"
+                    android:focusable="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hintBlack"
                     android:textSize="20sp" />
@@ -256,6 +258,7 @@
                     android:layout_height="55dp"
                     android:autoSizeTextType="uniform"
                     android:inputType="textCapSentences"
+                    android:focusable="false"
                     android:textColor="@color/black"
                     android:textColorHint="@color/hintBlack"
                     android:textSize="20sp" />
@@ -328,6 +331,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:focusable="false"
                     android:hint="DL No"
                     android:inputType="textCapCharacters"
                     android:maxLength="20"
