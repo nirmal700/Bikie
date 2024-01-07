@@ -12,6 +12,14 @@ val apiKeysProperties = Properties().apply {
     load(apiKeysPropertiesFile.inputStream())
 }
 android {
+    signingConfigs {
+        create("release") {
+            storeFile = file("/Users/nirmalkumar/BikieKeystore")
+            keyAlias = "keyBikie"
+            storePassword = "Nirmal@5689"
+            keyPassword = "Nirmal@5689"
+        }
+    }
     namespace = "com.bikie.in"
     compileSdk = 34
 
@@ -25,6 +33,7 @@ android {
         android.buildFeatures.buildConfig = true
         buildConfigField("String", "PHONEPE_UAT_SALT", "\"${apiKeysProperties.getProperty("API_KEY_UAT_PHONEPE")}\"")
         buildConfigField("String", "PHONEPE_PROD_SALT", "\"${apiKeysProperties.getProperty("API_KEY_RELEASE_PHONEPE")}\"")
+        signingConfig = signingConfigs.getByName("release")
     }
 
 
@@ -32,6 +41,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            isDebuggable = false
+
         }
     }
     compileOptions {

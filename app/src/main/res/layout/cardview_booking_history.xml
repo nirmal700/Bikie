@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/bike_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KTM Duke"
+            android:fontFamily="@font/baloo"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/bike_image"
+            android:layout_width="180dp"
+            android:layout_height="155dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/bike_name"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_bike_dash" />
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/PickupDate"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:layout_gravity="end">
+
+            <TextView
+                android:id="@+id/mPickupDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="20sp"
+                android:text="28 Nov 2023"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <TextView
+                android:id="@+id/mPickupTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/baloo"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="11:00 AM"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="55dp"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/DropOffDate"
+            android:layout_below="@id/PickupDate"
+            android:background="@drawable/dotted_line_vertical" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="10dp"
+            android:id="@+id/DropOffDate"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/mButtons"
+            android:orientation="vertical"
+            android:layout_gravity="end">
+
+            <TextView
+                android:id="@+id/mDropoffDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:textSize="20sp"
+                android:text="28 Nov 2023"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <TextView
+                android:id="@+id/mDropoffTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:fontFamily="@font/baloo"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="11:00 AM"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/statusChipGroup"
+            android:layout_below="@id/bike_image"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="120dp"
+                android:layout_marginStart="15dp"
+                android:textAlignment="center"
+                android:layout_height="50dp"
+                app:chipBackgroundColor="@color/light_green"
+                android:textColor="@color/black"
+                android:checked="true"
+                android:text="Ongoing"/>
+        </com.google.android.material.chip.ChipGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/mButtons"
+            android:layout_below="@id/statusChipGroup"
+            android:gravity="center">
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="150dp"
+                android:id="@+id/mViewDetails"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="View Details"
+                android:textColor="@color/white"
+                app:cornerRadius="5dp"
+                app:backgroundTint="@color/Primary_Blue" />
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="150dp"
+                android:id="@+id/mNavigate"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/cardview_light_background"
+                android:text="Navigate"
+                app:strokeColor="@color/Primary_Blue"
+                app:strokeWidth="1dp"
+                android:textColor="@color/Primary_Blue"
+                app:cornerRadius="5dp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

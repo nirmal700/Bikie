@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -242,7 +243,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     private void navigationDrawer() {
         navigationView.bringToFront();
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.mProfile);
+        navigationView.setCheckedItem(R.id.mHome);
 
         animateNavigationDrawer();
     }
@@ -280,33 +281,44 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         });
     }
 
+
+    @SuppressLint("NonConstantResourceId")
     @Override
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.mProfile) {
             profileSection();
+            Toast.makeText(getApplicationContext(), "Profile", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.mHome) {
             Toast.makeText(getApplicationContext(), "Home", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.mTermsAndConditions){
-            Toast.makeText(getApplicationContext(), "Terms & Conditions!", Toast.LENGTH_SHORT).show();
-            drawerLayout.closeDrawer(GravityCompat.START);
+            // Perform home-related action if needed
+        } else if (id == R.id.mTermsAndConditions) {
+            Toast.makeText(getApplicationContext(), "Terms & Conditions", Toast.LENGTH_SHORT).show();
             terms_Conditions();
-        } else if (id == R.id.mPrivacyPolicy){
-            Toast.makeText(getApplicationContext(), "Privacy Policy!", Toast.LENGTH_SHORT).show();
-            drawerLayout.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.mPrivacyPolicy) {
+            Toast.makeText(getApplicationContext(), "Privacy Policy", Toast.LENGTH_SHORT).show();
             privacy_policy();
-        } else if (id == R.id.mCancellationPolicy){
-            Toast.makeText(getApplicationContext(), "Return & Refund Policy!", Toast.LENGTH_SHORT).show();
-            drawerLayout.closeDrawer(GravityCompat.START);
-            refund_policy();
-        } else if(id == R.id.mLogout){
+        } else if (id == R.id.mLogout) {
             logout();
+        } else if (id == R.id.mCancellationPolicy) {
+            Toast.makeText(this, "Cancellation & Refund Policy!", Toast.LENGTH_SHORT).show();
+            refund_policy();
+        }else if (id == R.id.mBookings) {
+            Toast.makeText(this, "Booking History!", Toast.LENGTH_SHORT).show();
+            bookings();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void bookings() {
+        startActivity(new Intent(getApplicationContext(), BookingHistoryUser.class));
+
+    }
+
     private void logout() {
 
         manager = new SessionManager(getApplicationContext());

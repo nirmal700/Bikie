@@ -347,7 +347,7 @@
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="10dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_driving_license"
+                android:src="@drawable/ic_driving_license_png"
                 android:contentDescription="@null" />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_Proceed"
