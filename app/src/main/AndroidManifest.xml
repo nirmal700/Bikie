@@ -35,6 +35,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Users.ReturnRefundPolicy"
+            android:exported="false" />
+        <activity
+            android:name=".Users.PrivacyPolicy"
+            android:exported="false" />
+        <activity
             android:name=".Users.TermsAndConditions"
             android:exported="false" />
         <activity

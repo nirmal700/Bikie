@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.bikie.in.Dashboard;
 import com.bikie.in.R;
 import com.bikie.in.SessionManager.SessionManager;
+import com.bikie.in.Users.UserDashboard;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -102,7 +103,7 @@ public class Login extends AppCompatActivity {
                         manager.setUserLogin(true); //Set User Login Session
                         manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(),_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack); //Add Data To User Session manager
                         // Intent to Next Activity
-                        startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        startActivity(new Intent(getApplicationContext(), UserDashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
 
                     } else {

@@ -10,7 +10,7 @@
     android:paddingBottom="50dp"
     android:background="@color/Primary_Blue"
     android:orientation="vertical"
-    tools:context=".Users.TermsAndConditions">
+    tools:context=".Users.ReturnRefundPolicy">
 
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:text="Terms &amp; Conditions"
+            android:text="@string/return_refund_policy"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:padding="20dp"
-            android:id="@+id/termsAndConditionsTextView"
+            android:id="@+id/refundPolicyTextView"
             android:text=""
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -86,16 +86,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/to_twitter"-->
-<!--                    android:layout_width="30dp"-->
-<!--                    android:layout_height="30dp"-->
-<!--                    android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--                    android:clickable="true"-->
-<!--                    android:contentDescription="@null"-->
-<!--                    android:focusable="true"-->
-<!--                    android:src="@drawable/ic_twitter"-->
-<!--                    app:tint="@color/black" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/to_twitter"-->
+                <!--                    android:layout_width="30dp"-->
+                <!--                    android:layout_height="30dp"-->
+                <!--                    android:background="?attr/selectableItemBackgroundBorderless"-->
+                <!--                    android:clickable="true"-->
+                <!--                    android:contentDescription="@null"-->
+                <!--                    android:focusable="true"-->
+                <!--                    android:src="@drawable/ic_twitter"-->
+                <!--                    app:tint="@color/black" />-->
 
                 <ImageView
                     android:id="@+id/to_instagram"

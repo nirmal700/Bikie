@@ -33,7 +33,7 @@
                 <item
                     android:id="@+id/mCancellationPolicy"
                     android:icon="@drawable/ic_cancellation"
-                    android:title="Cancellation Policy" />
+                    android:title="@string/return_refund_policy" />
                 <item
                     android:id="@+id/mTermsAndConditions"
                     android:icon="@drawable/ic_terms"

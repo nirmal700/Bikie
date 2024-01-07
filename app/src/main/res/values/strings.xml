@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bikie</string>
+    <string name="return_refund_policy"><![CDATA[Return & Refund Policy]]></string>
 </resources>

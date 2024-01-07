@@ -1,6 +1,7 @@
 package com.bikie.in.Users;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import com.bikie.in.FeaturedAdapter;
 import com.bikie.in.POJO_Classes.FeaturedBikes;
 import com.bikie.in.POJO_Classes.FeaturedTestimonials;
 import com.bikie.in.R;
+import com.bikie.in.SessionManager.SessionManager;
 import com.bikie.in.Singup_Login.OtpVerification;
 import com.bikie.in.Singup_Login.Signup;
 import com.bikie.in.TestimonialAdapter;
@@ -61,6 +63,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     private Button btn_mSearch;
 
     String pickupDateTimeString, dropoffDateTimeString;
+    private SessionManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -289,10 +292,63 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             Toast.makeText(getApplicationContext(), "Terms & Conditions!", Toast.LENGTH_SHORT).show();
             drawerLayout.closeDrawer(GravityCompat.START);
             terms_Conditions();
+        } else if (id == R.id.mPrivacyPolicy){
+            Toast.makeText(getApplicationContext(), "Privacy Policy!", Toast.LENGTH_SHORT).show();
+            drawerLayout.closeDrawer(GravityCompat.START);
+            privacy_policy();
+        } else if (id == R.id.mCancellationPolicy){
+            Toast.makeText(getApplicationContext(), "Return & Refund Policy!", Toast.LENGTH_SHORT).show();
+            drawerLayout.closeDrawer(GravityCompat.START);
+            refund_policy();
+        } else if(id == R.id.mLogout){
+            logout();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void logout() {
+
+        manager = new SessionManager(getApplicationContext());
+
+        //Initialize alert dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //Set Title
+        builder.setTitle("Log out");
+
+        //set Message
+        builder.setMessage("Are you sure to Log out ?");
+
+        //positive YES button
+        builder.setPositiveButton("YES", (dialog, which) -> {
+
+            manager.setUserLogin(false);
+            manager.setDetails("", "", "", "","","","","");
+
+            //activity.finishAffinity();
+            dialog.dismiss();
+
+            //Finish Activity
+            startActivity(new Intent(getApplicationContext(), Signup.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+            finish();
+        });
+
+        //Negative NO button
+        builder.setNegativeButton("NO", (dialog, which) -> {
+            //Dismiss Dialog
+            dialog.dismiss();
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    private void refund_policy() {
+        startActivity(new Intent(getApplicationContext(), ReturnRefundPolicy.class));
+    }
+
+    private void privacy_policy() {
+        startActivity(new Intent(getApplicationContext(), PrivacyPolicy.class));
     }
 
     private void animateTermsAndConditions() {
