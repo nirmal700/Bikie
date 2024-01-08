@@ -6,6 +6,9 @@ buildscript {
         maven (
             url  = "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         )
+        maven (
+            url  = "https://maven.java.net/content/groups/public/"
+        )
     }
     dependencies {
         classpath("com.google.gms:google-services:4.4.0")

@@ -1,3 +1,4 @@
+import com.android.build.api.dsl.Packaging
 import java.util.Properties
 
 plugins {
@@ -33,6 +34,8 @@ android {
         android.buildFeatures.buildConfig = true
         buildConfigField("String", "PHONEPE_UAT_SALT", "\"${apiKeysProperties.getProperty("API_KEY_UAT_PHONEPE")}\"")
         buildConfigField("String", "PHONEPE_PROD_SALT", "\"${apiKeysProperties.getProperty("API_KEY_RELEASE_PHONEPE")}\"")
+        buildConfigField("String", "MAIL_ID", "\"${apiKeysProperties.getProperty("API_GMAIL_ID")}\"")
+        buildConfigField("String", "MAIL_PASSWORD", "\"${apiKeysProperties.getProperty("API_GMAIL_PASSWORD")}\"")
         signingConfig = signingConfigs.getByName("release")
     }
 
@@ -49,6 +52,10 @@ android {
         isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    // picks the JavaMail license file
+    fun Packaging.() {
+        pickFirst("META-INF/LICENSE.txt") // picks the JavaMail license file
     }
 }
 
@@ -69,7 +76,7 @@ dependencies {
     implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
     implementation("com.google.firebase:firebase-messaging:23.4.0")
     implementation("com.google.firebase:firebase-functions:20.4.0")
-    implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.activity:activity:1.8.2")
     testImplementation("junit:junit:4.13.2")
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
@@ -87,5 +94,7 @@ dependencies {
 
     // Support for Java 8 features
     coreLibraryDesugaring ("com.android.tools:desugar_jdk_libs:2.0.4")
-
+    implementation ("com.sun.mail:android-mail:1.6.2")
+    implementation ("com.sun.mail:android-activation:1.6.2")
+    implementation ("com.itextpdf:html2pdf:4.0.5")
 }
