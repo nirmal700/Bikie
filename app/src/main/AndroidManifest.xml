@@ -32,8 +32,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Bikie"
-        android:usesCleartextTraffic="true"
-        >
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".Singup_Login.SignupProfilePicture"
+            android:exported="false" />
         <activity
             android:name=".Users.BookingHistoryUser"
             android:exported="false" />

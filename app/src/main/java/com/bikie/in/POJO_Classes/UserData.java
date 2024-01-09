@@ -1,13 +1,13 @@
 package com.bikie.in.POJO_Classes;
 
 public class UserData {
-    String name, phoneNumber, password,gender,aadharNo,aadharFrontURL,aadharBackURL,dlImageURL,dlNo;
+    String name, phoneNumber, password,gender,aadharNo,aadharFrontURL,aadharBackURL,dlImageURL,dlNo,profilePictureURL,mailID;
     Boolean isAllowedToMCWOG,isAllowedToMCWG,isAllowedToLMV;
 
     public UserData() {
     }
 
-    public UserData(String name, String phoneNumber, String password, String gender, String aadharNo, String aadharFrontURL, String aadharBackURL, String dlImageURL, String dlNo, Boolean isAllowedToMCWOG, Boolean isAllowedToMCWG, Boolean isAllowedToLMV) {
+    public UserData(String name, String phoneNumber, String password, String gender, String aadharNo, String aadharFrontURL, String aadharBackURL, String dlImageURL, String dlNo, Boolean isAllowedToMCWOG, Boolean isAllowedToMCWG, Boolean isAllowedToLMV,String profilePictureURL,String mailID) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -20,6 +20,25 @@ public class UserData {
         this.isAllowedToMCWOG = isAllowedToMCWOG;
         this.isAllowedToMCWG = isAllowedToMCWG;
         this.isAllowedToLMV = isAllowedToLMV;
+        this.profilePictureURL = profilePictureURL;
+        this.mailID = mailID;
+    }
+
+
+    public String getProfilePictureURL() {
+        return profilePictureURL;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
+    }
+
+    public String getMailID() {
+        return mailID;
+    }
+
+    public void setMailID(String mailID) {
+        this.mailID = mailID;
     }
 
     public String getName() {

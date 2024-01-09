@@ -34,14 +34,16 @@ public class SendMail extends AsyncTask<Void, Void, Void> {
     private String message;
     private String attachmentFilePath; // Add this variable for attachment
     private ProgressDialog progressDialog;
+    String mFileName;
 
 
-    public SendMail(Context context, String email, String subject, String message, String attachmentFilePath) {
+    public SendMail(Context context, String email, String subject, String message, String attachmentFilePath, String mFileName) {
         this.context = context;
         this.email = email;
         this.subject = subject;
         this.message = message;
         this.attachmentFilePath = attachmentFilePath;
+        this.mFileName = mFileName;
     }
 
     @Override
@@ -106,7 +108,7 @@ public class SendMail extends AsyncTask<Void, Void, Void> {
                 MimeBodyPart attachmentBodyPart = new MimeBodyPart();
                 DataSource source = new FileDataSource(attachmentFilePath);
                 attachmentBodyPart.setDataHandler(new DataHandler(source));
-                attachmentBodyPart.setFileName(attachmentFilePath);
+                attachmentBodyPart.setFileName(mFileName);
                 multipart.addBodyPart(attachmentBodyPart);
             }
 

@@ -70,160 +70,11 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     String pickupDateTimeString, dropoffDateTimeString;
     private SessionManager manager;
+    String htmlString;
 
     private static final String EMAIL_TO = "cst.20bcta16@silicon.ac.in";
     private static final String EMAIL_SUBJECT = "Test Email";
-    private static final String EMAIL_MESSAGE = "<!DOCTYPE html>\n" +
-            "<html lang=\"en\">\n" +
-            "  <head>\n" +
-            "    <meta charset=\"UTF-8\" />\n" +
-            "    <title>Bill Generation</title>\n" +
-            "    <style>\n" +
-            "      /* Updated CSS with blue and white theme */\n" +
-            "      body {\n" +
-            "        font-family: Arial, sans-serif;\n" +
-            "        margin: 20px;\n" +
-            "        background-color: #06327d; /* Updated background color */\n" +
-            "        color: #333;\n" +
-            "      }\n" +
-            "      .container {\n" +
-            "        width: 80%;\n" +
-            "        margin: 0 auto;\n" +
-            "        background-color: #fff;\n" +
-            "        padding: 20px;\n" +
-            "        border-radius: 8px;\n" +
-            "        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" +
-            "      }\n" +
-            "      .header {\n" +
-            "        text-align: center;\n" +
-            "        margin-bottom: 20px;\n" +
-            "      }\n" +
-            "      .logo {\n" +
-            "        max-width: 150px;\n" +
-            "      }\n" +
-            "      table {\n" +
-            "        width: 100%;\n" +
-            "        border-collapse: collapse;\n" +
-            "        margin-bottom: 20px;\n" +
-            "      }\n" +
-            "      th,\n" +
-            "      td {\n" +
-            "        border: 1px solid #cddbf7;\n" +
-            "        padding: 8px;\n" +
-            "        text-align: left;\n" +
-            "      }\n" +
-            "      th {\n" +
-            "        background-color: #cddbf7;\n" +
-            "      }\n" +
-            "      .total {\n" +
-            "        text-align: right;\n" +
-            "        background-color: #cddbf7;\n" +
-            "      }\n" +
-            "      .footer {\n" +
-            "        margin-top: 20px;\n" +
-            "        font-size: 14px;\n" +
-            "        text-align: center;\n" +
-            "        color: #666;\n" +
-            "      }\n" +
-            "      .footer p {\n" +
-            "        margin-bottom: 5px;\n" +
-            "        color: #000000; /* Updated text color to white */\n" +
-            "      }\n" +
-            "      .footer strong {\n" +
-            "        font-weight: bold;\n" +
-            "      }\n" +
-            "    </style>\n" +
-            "  </head>\n" +
-            "  <body>\n" +
-            "    <div class=\"container\">\n" +
-            "      <div class=\"header\">\n" +
-            "        <img\n" +
-            "          class=\"logo\"\n" +
-            "          src=\"https://firebasestorage.googleapis.com/v0/b/bikie-in.appspot.com/o/ic_bikie_rectrangular.jpg?alt=media&token=ac722e1f-fe8f-45fe-948d-8c168c3da94b\"\n" +
-            "          alt=\"Company Logo\"\n" +
-            "        />\n" +
-            "        <h1>Invoice</h1>\n" +
-            "      </div>\n" +
-            "      <table>\n" +
-            "        <tr>\n" +
-            "          <th>Customer Name</th>\n" +
-            "          <td>Nirmal Kumar</td>\n" +
-            "          <th>Invoice No.</th>\n" +
-            "          <td>#2305270019237</td>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <th>Mobile No.</th>\n" +
-            "          <td>8249494447</td>\n" +
-            "          <th>Booking Date</th>\n" +
-            "          <td>27 - May - 2023</td>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <th>Booked Vehicle</th>\n" +
-            "          <td>Honda Amaze</td>\n" +
-            "          <th>Pick & Drop Time</th>\n" +
-            "          <td>27 - May - 2023 12:00 PM To 29 - May - 2023 07:00 PM</td>\n" +
-            "        </tr>\n" +
-            "      </table>\n" +
-            "\n" +
-            "      <table>\n" +
-            "        <tr>\n" +
-            "          <th>Description</th>\n" +
-            "          <th>Price</th>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <td>Helmet Charge</td>\n" +
-            "          <td>Rs. 5,018.75</td>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <td>Delivery Fee</td>\n" +
-            "          <td>Rs. 0</td>\n" +
-            "        </tr>\n" +
-            "\n" +
-            "        <tr>\n" +
-            "          <td>Subtotal</td>\n" +
-            "          <td>Rs. 5,018.75</td>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <td>Discount(10.00%)</td>\n" +
-            "          <td>Rs. 501.88</td>\n" +
-            "        </tr>\n" +
-            "        <tr>\n" +
-            "          <td>Security</td>\n" +
-            "          <td>Rs. 0</td>\n" +
-            "        </tr>\n" +
-            "\n" +
-            "        <tr>\n" +
-            "          <td>Extended Cost</td>\n" +
-            "          <td>Rs. 0.00</td>\n" +
-            "        </tr>\n" +
-            "        <tr class=\"total\">\n" +
-            "          <td><strong>Total Paid</strong></td>\n" +
-            "          <td><strong>Rs. 4,516.87</strong></td>\n" +
-            "        </tr>\n" +
-            "      </table>\n" +
-            "    </div>\n" +
-            "    <div class=\"footer\">\n" +
-            "      <p>\n" +
-            "        <em>Instruction:</em> Please reach at the Booked location before 30 mins\n" +
-            "        for better avail of service.\n" +
-            "      </p>\n" +
-            "      <p>\n" +
-            "        <em>Note:</em> Please bring Original Documents for authenticity\n" +
-            "        verification which are opted while booking. For Indian: (Aadhar card\n" +
-            "        along with your Aadhar linked mobile number) & Driving License are\n" +
-            "        mandatory. For non-Indian: Passport/Visa, International driving permit\n" +
-            "        license are mandatory.\n" +
-            "      </p>\n" +
-            "      <p><strong>BIKIEINDIA PRIVATE LIMITED</strong></p>\n" +
-            "      <p>GSTIN : 21GDDPM5414C1Z4</p>\n" +
-            "      <p>Pareswar Sahi,College Road, College Square, Cuttack, Odisha 753003</p>\n" +
-            "      <p>\n" +
-            "        This is an electronically generated invoice and does not require a\n" +
-            "        signature.\n" +
-            "      </p>\n" +
-            "    </div>\n" +
-            "  </body>\n" +
-            "</html>\n";
+    private static final String EMAIL_MESSAGE = "<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "  <head>\n" + "    <meta charset=\"UTF-8\" />\n" + "    <title>Bill Generation</title>\n" + "    <style>\n" + "      /* Updated CSS with blue and white theme */\n" + "      body {\n" + "        font-family: Arial, sans-serif;\n" + "        margin: 20px;\n" + "        background-color: #fff; /* Updated background color */\n" + "        color: #333;\n" + "      }\n" + "      .container {\n" + "        width: 80%;\n" + "        margin: 0 auto;\n" + "        background-color: #fff;\n" + "        padding: 20px;\n" + "        border-radius: 8px;\n" + "        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" + "      }\n" + "      .header {\n" + "        text-align: center;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      .logo {\n" + "        max-width: 150px;\n" + "      }\n" + "      table {\n" + "        width: 100%;\n" + "        border-collapse: collapse;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      th,\n" + "      td {\n" + "        border: 1px solid #cddbf7;\n" + "        padding: 8px;\n" + "        text-align: left;\n" + "      }\n" + "      th {\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .total {\n" + "        text-align: right;\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .footer {\n" + "        margin-top: 20px;\n" + "        font-size: 14px;\n" + "        text-align: center;\n" + "        color: #666;\n" + "      }\n" + "      .footer p {\n" + "        margin-bottom: 5px;\n" + "        color: #000000; /* Updated text color to white */\n" + "      }\n" + "      .footer strong {\n" + "        font-weight: bold;\n" + "      }\n" + "    </style>\n" + "  </head>\n" + "  <body>\n" + "    <div class=\"container\">\n" + "      <div class=\"header\">\n" + "        <img\n" + "          class=\"logo\"\n" + "          src=\"https://firebasestorage.googleapis.com/v0/b/bikie-in.appspot.com/o/ic_bikie_rectrangular.jpg?alt=media&token=ac722e1f-fe8f-45fe-948d-8c168c3da94b\"\n" + "          alt=\"Company Logo\"\n" + "        />\n" + "        <h1>Invoice</h1>\n" + "      </div>\n" + "      <table>\n" + "        <tr>\n" + "          <th>Customer Name</th>\n" + "          <td>Nirmal Kumar</td>\n" + "          <th>Invoice No.</th>\n" + "          <td>#2305270019237</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <th>Mobile No.</th>\n" + "          <td>8249494447</td>\n" + "          <th>Booking Date</th>\n" + "          <td>27 - May - 2023</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <th>Booked Vehicle</th>\n" + "          <td>Honda Amaze</td>\n" + "          <th>Pick & Drop Time</th>\n" + "          <td>27 - May - 2023 12:00 PM To 29 - May - 2023 07:00 PM</td>\n" + "        </tr>\n" + "      </table>\n" + "\n" + "      <table>\n" + "        <tr>\n" + "          <th>Description</th>\n" + "          <th>Price</th>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Helmet Charge</td>\n" + "          <td>Rs. 5,018.75</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Delivery Fee</td>\n" + "          <td>Rs. 0</td>\n" + "        </tr>\n" + "\n" + "        <tr>\n" + "          <td>Subtotal</td>\n" + "          <td>Rs. 5,018.75</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Discount(10.00%)</td>\n" + "          <td>Rs. 501.88</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Security</td>\n" + "          <td>Rs. 0</td>\n" + "        </tr>\n" + "\n" + "        <tr>\n" + "          <td>Extended Cost</td>\n" + "          <td>Rs. 0.00</td>\n" + "        </tr>\n" + "        <tr class=\"total\">\n" + "          <td><strong>Total Paid</strong></td>\n" + "          <td><strong>Rs. 4,516.87</strong></td>\n" + "        </tr>\n" + "      </table>\n" + "    </div>\n" + "    <div class=\"footer\">\n" + "      <p>\n" + "        <em>Instruction:</em> Please reach at the Booked location before 30 mins\n" + "        for better avail of service.\n" + "      </p>\n" + "      <p>\n" + "        <em>Note:</em> Please bring Original Documents for authenticity\n" + "        verification which are opted while booking. For Indian: (Aadhar card\n" + "        along with your Aadhar linked mobile number) & Driving License are\n" + "        mandatory. For non-Indian: Passport/Visa, International driving permit\n" + "        license are mandatory.\n" + "      </p>\n" + "      <p><strong>BIKIEINDIA PRIVATE LIMITED</strong></p>\n" + "      <p>GSTIN : 21GDDPM5414C1Z4</p>\n" + "      <p>Pareswar Sahi,College Road, College Square, Cuttack, Odisha 753003</p>\n" + "      <p>\n" + "        This is an electronically generated invoice and does not require a\n" + "        signature.\n" + "      </p>\n" + "    </div>\n" + "  </body>\n" + "</html>\n";
     //private static final String ATTACHMENT_FILE_PATH = "/path/to/your/attachment/file.txt"; // Set the correct file path
 
 
@@ -253,12 +104,12 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         setupTimePicker(etPickupTime);
         setupTimePicker(etDropoffTime);
 
-//        SendMail sm = new SendMail(this, EMAIL_TO, EMAIL_SUBJECT, EMAIL_MESSAGE,"");
-//        sm.execute();
 
-        HtmlToPdfConverter converter = new HtmlToPdfConverter(this,EMAIL_TO, EMAIL_SUBJECT, EMAIL_MESSAGE);
-        converter.execute(EMAIL_MESSAGE,"BookingInvoiceBikie.pdf");
-
+//        String invoiceHtml = generateInvoice("Nirmal Kumar", "8249494447", "#2305270019237", "27 - May - 2023", "Card", "BI0344657223456234", "Honda Amaze", "27 - May - 2023 12:00 PM To 29 - May - 2023 07:00 PM", "Rs. 5,018.75", "Rs. 30", "Rs. 0", "Rs. 5,018.75", "Rs. 4,516.87");
+//
+//        Log.e("Invoice", "onCreate: " + invoiceHtml);
+//        HtmlToPdfConverter converter = new HtmlToPdfConverter(this, EMAIL_TO, EMAIL_SUBJECT, invoiceHtml);
+//        converter.execute(invoiceHtml, "BookingInvoiceBikie.pdf");
 
 
         navigationView.bringToFront();
@@ -300,9 +151,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         // OnClickListener for the editText to open the DatePickerDialog
         editText.setOnClickListener(v -> {
             if (datePickerDialog == null || !datePickerDialog.isShowing()) {
-                datePickerDialog = new DatePickerDialog(UserDashboard.this, dateSetListener,
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH));
+                datePickerDialog = new DatePickerDialog(UserDashboard.this, dateSetListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
                 datePickerDialog.show();
             }
@@ -398,12 +247,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
             int minute = calendar.get(Calendar.MINUTE);
 
-            TimePickerDialog timePickerDialog = new TimePickerDialog(
-                    UserDashboard.this,
-                    timeSetListener,
-                    hour,
-                    minute,
-                    false); // Use 'true' for 24-hour mode if needed
+            TimePickerDialog timePickerDialog = new TimePickerDialog(UserDashboard.this, timeSetListener, hour, minute, false); // Use 'true' for 24-hour mode if needed
             timePickerDialog.show();
         });
     }
@@ -420,8 +264,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     public void onBackPressed() {
         if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else
-            super.onBackPressed();
+        } else super.onBackPressed();
     }
 
     private void animateNavigationDrawer() {
@@ -473,7 +316,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         } else if (id == R.id.mCancellationPolicy) {
             Toast.makeText(this, "Cancellation & Refund Policy!", Toast.LENGTH_SHORT).show();
             refund_policy();
-        }else if (id == R.id.mBookings) {
+        } else if (id == R.id.mBookings) {
             Toast.makeText(this, "Booking History!", Toast.LENGTH_SHORT).show();
             bookings();
         }
@@ -504,7 +347,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         builder.setPositiveButton("YES", (dialog, which) -> {
 
             manager.setUserLogin(false);
-            manager.setDetails("", "", "", "","","","","");
+            manager.setDetails("", "", "", "", "", "", "", "","","");
 
             //activity.finishAffinity();
             dialog.dismiss();
@@ -523,6 +366,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         AlertDialog alert = builder.create();
         alert.show();
     }
+
     private void refund_policy() {
         startActivity(new Intent(getApplicationContext(), ReturnRefundPolicy.class));
     }
@@ -580,7 +424,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     }
 
 
-//    private boolean isTimeWithinRange(Date time) {
+    //    private boolean isTimeWithinRange(Date time) {
 //        Calendar calendar = Calendar.getInstance();
 //        calendar.setTime(time);
 //
@@ -608,6 +452,11 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 //
 //        return !time.before(start.getTime()) && !time.after(end.getTime());
 //    }
+    public String generateInvoice(String customerName, String mobileNo, String invoiceNo, String bookingDate, String paymentMode, String transactionRefNo, String bookedVehicle, String pickDropTime, String vehicleRentalCharge, String helmetFee, String security, String subtotal, String totalPaid) {
 
+        return "<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "  <head>\n" + "    <meta charset=\"UTF-8\" />\n" + "    <title>Bill Generation</title>\n" + "    <style>\n" + "      /* Updated CSS with blue and white theme */\n" + "      body {\n" + "        font-family: Arial, sans-serif;\n" + "        margin: 20px;\n" + "        background-color: #fff; /* Updated background color */\n" + "        color: #333;\n" + "      }\n" + "      .container {\n" + "        width: 80%;\n" + "        margin: 0 auto;\n" + "        background-color: #fff;\n" + "        padding: 20px;\n" + "        border-radius: 8px;\n" + "        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" + "      }\n" + "      .header {\n" + "        text-align: center;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      .logo {\n" + "        max-width: 150px;\n" + "      }\n" + "      table {\n" + "        width: 100%;\n" + "        border-collapse: collapse;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      th,\n" + "      td {\n" + "        border: 1px solid #cddbf7;\n" + "        padding: 8px;\n" + "        text-align: left;\n" + "      }\n" + "      th {\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .total {\n" + "        text-align: right;\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .footer {\n" + "        margin-top: 20px;\n" + "        font-size: 14px;\n" + "        text-align: center;\n" + "        color: #666;\n" + "      }\n" + "      .footer p {\n" + "        margin-bottom: 5px;\n" + "        color: #000000; /* Updated text color to white */\n" + "      }\n" + "      .footer strong {\n" + "        font-weight: bold;\n" + "      }\n" + "    </style>\n" + "  </head>\n" + "  <body>\n" + "    <div class=\"container\">\n" + "      <div class=\"header\">\n" + "        <img\n" + "          class=\"logo\"\n" + "          src=\"https://firebasestorage.googleapis.com/v0/b/bikie-in.appspot.com/o/ic_bikie_rectrangular.jpg?alt=media&token=ac722e1f-fe8f-45fe-948d-8c168c3da94b\"\n" + "          alt=\"Company Logo\"\n" + "        />\n" + "        <h1>Invoice</h1>\n" + "      </div>\n" + "      <table>\n" + "        <tr>\n" + "          <th>Customer Name</th>\n" + "          <td>" + customerName + "</td>\n" + "          <th>Invoice No.</th>\n" + "          <td>" + invoiceNo + "</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <th>Mobile No.</th>\n" + "          <td>" + mobileNo + "</td>\n" + "          <th>Booking Date</th>\n" + "          <td>" + bookingDate + "</td>\n" + "        </tr>\n" + "<tr>\n" + "                                <th>Payment Mode</th>\n" + "                                <td>" + paymentMode + "</td>\n" + "                                <th>Transaction Ref. No.</th>\n" + "                                <td>" + transactionRefNo + "</td>\n" + " </tr>" + "        <tr>\n" + "          <th>Booked Vehicle</th>\n" + "          <td>" + bookedVehicle + "</td>\n" + "          <th>Pick & Drop Time</th>\n" + "          <td>" + pickDropTime + "</td>\n" + "        </tr>\n" + "      </table>\n" + "\n" + "      <table>\n" + "        <tr>\n" + "          <th>Description</th>\n" + "          <th>Price</th>\n" + "        </tr>\n" + "<tr>\n" + "       <td>Vehicle Rental Charge</td>\n" + "       <td>" + vehicleRentalCharge + "</td>\n" + " </tr>\n" + "        <tr>\n" + "          <td>Helmet Charge</td>\n" + "          <td>" + helmetFee + "</td>\n" + "        </tr>\n" + "\n" + "        <tr>\n" + "          <td>Security</td>\n" + "          <td>" + security + "</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Subtotal</td>\n" + "          <td>" + subtotal + "</td>\n" + "        </tr>\n" +
 
+                "\n" + "        <tr class=\"total\">\n" + "          <td><strong>Total Paid</strong></td>\n" + "          <td><strong>" + totalPaid + "</strong></td>\n" + "        </tr>\n" + "      </table>\n" + "    </div>\n" + "    <div class=\"footer\">\n" + "      <p>\n" + "        <em>Instruction:</em> Please reach at the Booked location before 30 mins\n" + "        for better avail of service.\n" + "      </p>\n" + "      <p>\n" + "        <em>Note:</em> Please bring Original Documents for authenticity\n" + "        verification which are opted while booking. For Indian: (Aadhar card\n" + "        along with your Aadhar linked mobile number) & Driving License are\n" + "        mandatory. For non-Indian: Passport/Visa, International driving permit\n" + "        license are mandatory.\n" + "      </p>\n" + "      <p><strong>BIKIEINDIA PRIVATE LIMITED</strong></p>\n" + "      <p>GSTIN : 21GDDPM5414C1Z4</p>\n" + "      <p>Pareswar Sahi,College Road, College Square, Cuttack, Odisha 753003</p>\n" + "      <p>\n" + "        This is an electronically generated invoice and does not require a\n" + "        signature.\n" + "      </p>\n" + "    </div>\n" + "  </body>\n" + "</html>\n";
+
+    }
 }

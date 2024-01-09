@@ -97,11 +97,12 @@ public class Login extends AppCompatActivity {
                         String _dlIMGURL = snapshot.child(_completePhoneNumber).child("Profile").child("dlImageURL").getValue(String.class);
                         String _aadharFront = snapshot.child(_completePhoneNumber).child("Profile").child("aadharFrontURL").getValue(String.class);
                         String _aadharBack = snapshot.child(_completePhoneNumber).child("Profile").child("aadharBackURL").getValue(String.class);
-
+                        String _profilePic = snapshot.child(_completePhoneNumber).child("Profile").child("profilePictureURL").getValue(String.class);
+                        String _mailId = snapshot.child(_completePhoneNumber).child("Profile").child("mailID").getValue(String.class);
 
 
                         manager.setUserLogin(true); //Set User Login Session
-                        manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(),_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack); //Add Data To User Session manager
+                        manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(),_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack,_mailId,_profilePic); //Add Data To User Session manager
                         // Intent to Next Activity
                         startActivity(new Intent(getApplicationContext(), UserDashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();

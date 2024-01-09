@@ -36,7 +36,7 @@ public class SignupAadhar extends AppCompatActivity {
     private ImageView img_aadharFront, img_aadharBack;
     private Uri mAadharFrontFilePath, mAadharBackFilePath;
     private Boolean isAadharFrontSelected = false,isAadharBackSelected = false;
-    private String name, password, phoneNumber, gender, aadharNo;
+    private String name, password, phoneNumber, gender, aadharNo,mailId;
 
     private final int STORAGE_PERMISSION_CODE = 1;
 
@@ -67,6 +67,7 @@ public class SignupAadhar extends AppCompatActivity {
         password = getIntent().getStringExtra("password");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         gender = getIntent().getStringExtra("gender");
+        mailId = getIntent().getStringExtra("mailId");
 
         if (!(ContextCompat.checkSelfPermission(SignupAadhar.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
@@ -132,6 +133,7 @@ public class SignupAadhar extends AppCompatActivity {
                                             DLIntent.putExtra("password", password);
                                             DLIntent.putExtra("gender", gender);
                                             DLIntent.putExtra("aadharNo",aadharNo);
+                                            DLIntent.putExtra("mailId",mailId);
                                             DLIntent.putExtra("aadharFrontURL",mAadharFrontURL);
                                             DLIntent.putExtra("aadharBackURL",mAadharBackURL);
                                             progressDialog.dismiss();

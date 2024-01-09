@@ -20,6 +20,7 @@ public class HtmlToPdfConverter extends AsyncTask<String, Void, File> {
     private String email;
     private String subject;
     private String message;
+    String pdfFileName;
 
     public HtmlToPdfConverter(Context context,String email, String subject, String message) {
         this.context = context;
@@ -35,7 +36,7 @@ public class HtmlToPdfConverter extends AsyncTask<String, Void, File> {
         }
 
         String htmlContent = params[0];
-        String pdfFileName = params[1];
+        pdfFileName = params[1];
 
         File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), pdfFileName);
 
@@ -63,7 +64,7 @@ public class HtmlToPdfConverter extends AsyncTask<String, Void, File> {
             String pdfFilePath = pdfFile.getAbsolutePath();
             Log.e("PDF Location", pdfFilePath);
             Toast.makeText(context, "PDF generated successfully", Toast.LENGTH_SHORT).show();
-            SendMail sendMail = new SendMail(context,email,subject,message,pdfFilePath);
+            SendMail sendMail = new SendMail(context,email,subject,message,pdfFilePath,pdfFileName);
             sendMail.execute();
             // Now you can do something with the generated PDF file, like open it with a PDF viewer
         } else {

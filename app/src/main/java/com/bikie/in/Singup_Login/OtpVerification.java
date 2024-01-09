@@ -44,7 +44,7 @@ public class OtpVerification extends AppCompatActivity {
     private EditText et_otp;
     private ProgressDialog progressDialog;
 
-    private String name, password, phoneNumber, getOtp, gender;
+    private String name, password, phoneNumber, getOtp, gender,mailId;
     private FirebaseAuth firebaseAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     @Override
@@ -67,6 +67,7 @@ public class OtpVerification extends AppCompatActivity {
         password = getIntent().getStringExtra("password");
         phoneNumber = getIntent().getStringExtra("phoneNumber");
         gender = getIntent().getStringExtra("gender");
+        mailId = getIntent().getStringExtra("mailId");
 
         btn_resend.setVisibility(View.INVISIBLE);
         tv_resend.setVisibility(View.INVISIBLE);
@@ -117,6 +118,7 @@ public class OtpVerification extends AppCompatActivity {
                             aadharIntent.putExtra("name", name);
                             aadharIntent.putExtra("password", password);
                             aadharIntent.putExtra("gender", gender);
+                            aadharIntent.putExtra("mailId",mailId);
 
                             startActivity(aadharIntent);
                             finish();

@@ -58,7 +58,7 @@ public class SingupDL extends AppCompatActivity {
     private boolean isMcWogChecked;
     private boolean isMcWgChecked;
     private boolean isLmvChecked;
-    private String name, password, phoneNumber, gender, aadharNo, aadharFrontURL, aadharBackURL;
+    private String name, password, phoneNumber, gender, aadharNo, aadharFrontURL, aadharBackURL,mailId;
     SessionManager manager;
     private ProgressDialog progressDialog;
 
@@ -91,6 +91,7 @@ public class SingupDL extends AppCompatActivity {
         aadharNo = getIntent().getStringExtra("aadharNo");
         aadharFrontURL = getIntent().getStringExtra("aadharFrontURL");
         aadharBackURL = getIntent().getStringExtra("aadharBackURL");
+        mailId = getIntent().getStringExtra("mailId");
 
 
         if (!(ContextCompat.checkSelfPermission(SingupDL.this,
@@ -156,44 +157,29 @@ public class SingupDL extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         String dlImageURL = uri.toString();
-                        FirebaseDatabase rootNode = FirebaseDatabase.getInstance();
-                        DatabaseReference reference = rootNode.getReference("Users");
 
+                        Intent ProfilePic = new Intent(SingupDL.this, SignupProfilePicture.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-                        UserData addNewUser = new UserData(name,phoneNumber,hashPassword(password),gender,aadharNo,aadharFrontURL,aadharBackURL,dlImageURL,et_drivingLicenseNo.getEditText().getText().toString(),isMcWogChecked,isMcWgChecked,isLmvChecked);
-                        reference.child(phoneNumber).child("Profile").setValue(addNewUser);
-                        reference.child(phoneNumber).child("phoneNumber").setValue(phoneNumber);
+                        ProfilePic.putExtra("phoneNumber", phoneNumber);
+                        ProfilePic.putExtra("name", name);
+                        ProfilePic.putExtra("password", password);
+                        ProfilePic.putExtra("gender", gender);
+                        ProfilePic.putExtra("aadharNo",aadharNo);
+                        ProfilePic.putExtra("dlNo",et_drivingLicenseNo.getEditText().getText().toString());
+                        ProfilePic.putExtra("mailId",mailId);
+                        ProfilePic.putExtra("aadharFrontURL",aadharFrontURL);
+                        ProfilePic.putExtra("aadharBackURL",aadharBackURL);
+                        ProfilePic.putExtra("drivingLicenseURL",dlImageURL);
+                        ProfilePic.putExtra("isMcWogChecked",isMcWogChecked);
+                        ProfilePic.putExtra("isMcWgChecked",isMcWgChecked);
+                        ProfilePic.putExtra("isLmvChecked",isLmvChecked);
 
-                        Query checkUser = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phoneNumber").equalTo(phoneNumber);
+                        progressDialog.dismiss();
+                        startActivity(ProfilePic);
+                        finish();
+                        
+                        
 
-                        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                String _phoneNo = snapshot.child(phoneNumber).child("Profile").child("phoneNumber").getValue(String.class);
-                                String _password = snapshot.child(phoneNumber).child("Profile").child("password").getValue(String.class);
-                                String _name = snapshot.child(phoneNumber).child("Profile").child("name").getValue(String.class);
-                                String _aadharNo = snapshot.child(phoneNumber).child("Profile").child("aadharNo").getValue(String.class);
-                                String _dlNo = snapshot.child(phoneNumber).child("Profile").child("dlNo").getValue(String.class);
-                                String _dlIMGURL = snapshot.child(phoneNumber).child("Profile").child("dlImageURL").getValue(String.class);
-                                String _aadharFront = snapshot.child(phoneNumber).child("Profile").child("aadharFrontURL").getValue(String.class);
-                                String _aadharBack = snapshot.child(phoneNumber).child("Profile").child("aadharBackURL").getValue(String.class);
-                                manager.setUserLogin(true);
-                                manager.setDetails(_phoneNo, password,_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack); //Add Data To User Session manager
-
-                                progressDialog.dismiss();
-
-                                startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                                finish();
-                            }
-
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                progressDialog.dismiss();
-                                Toast.makeText(SingupDL.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

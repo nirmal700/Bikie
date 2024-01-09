@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -36,7 +37,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class Signup extends AppCompatActivity {
-    private TextInputLayout et_userName, et_phoneNumber, et_password;
+    private TextInputLayout et_userName, et_phoneNumber, et_password,et_mailId;
     Button btn_getOtp, btn_login;
 
     ProgressDialog progressDialog;
@@ -58,6 +59,7 @@ public class Signup extends AppCompatActivity {
         btn_getOtp = findViewById(R.id.btn_getOtp);
         btn_login = findViewById(R.id.btn_backToLogin);
         rg_gender = findViewById(R.id.radio_group);
+        et_mailId = findViewById(R.id.et_mailId);
 
         auth = FirebaseAuth.getInstance();
 
@@ -73,7 +75,7 @@ public class Signup extends AppCompatActivity {
             public void onClick(View v) {
 
                 //EditText Validations
-                if (!validatePhoneNumber() | !validateUserName() | !validateGender() |!validatePassword() ) {
+                if (!validatePhoneNumber() | !validateUserName() | !validateGender() |!validatePassword() |!isValidEmail() ){
 
                     return;
                 }
@@ -161,11 +163,13 @@ public class Signup extends AppCompatActivity {
                     String name = Objects.requireNonNull(et_userName.getEditText()).getText().toString();
                     String password = Objects.requireNonNull(et_password.getEditText()).getText().toString();
                     String gender = rb_selectedGender.getText().toString();
+                    String mail = Objects.requireNonNull(et_mailId.getEditText().getText().toString());
 
                     otpIntent.putExtra("phoneNumber", phoneNumber);
                     otpIntent.putExtra("name", name);
                     otpIntent.putExtra("password", password);
                     otpIntent.putExtra("gender", gender);
+                    otpIntent.putExtra("mailId",mail);
 
                     startActivity(otpIntent);
                     finish();
@@ -233,12 +237,22 @@ public class Signup extends AppCompatActivity {
 
     }
     private boolean validateGender(){
-
         if (rg_gender.getCheckedRadioButtonId() == -1){
             Toast.makeText(this, "Please Select Gender", Toast.LENGTH_SHORT).show();
             return false;
         }else
             return true;
+    }
+    public boolean isValidEmail() {
+        String val = Objects.requireNonNull(et_mailId.getEditText()).getText().toString().trim();
+        if(Patterns.EMAIL_ADDRESS.matcher(val).matches()){
+            et_mailId.setError(null);
+            return true;
+        }
+        else {
+            et_mailId.setError("Please Enter a Valid Mail");
+            return false;
+        }
     }
     //--------------- Internet Error Dialog Box -----------
     private void showCustomDialog() {
