@@ -42,6 +42,7 @@ public class VehicleInformationToBook extends AppCompatActivity {
     private MaterialCheckBox checkBoxOneHelmet;
     private MaterialCheckBox checkBoxTwoHelmets;
     private Button buttonAdd;
+    private  ImageView btn_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +56,7 @@ public class VehicleInformationToBook extends AppCompatActivity {
         mVehicleMileage = findViewById(R.id.mVehicleMileage);
         mVehicleCC = findViewById(R.id.mVehicleCC);
         mBookNow = findViewById(R.id.btn_mBookNow);
+        btn_back = findViewById(R.id.btn_backToSd);
         RecyclerView recyclerView = findViewById(R.id.recyclerVehicleImages);
 
         String vehicleID = getIntent().getStringExtra("VehicleID");
@@ -163,6 +165,10 @@ public class VehicleInformationToBook extends AppCompatActivity {
             }
         });
 
+        btn_back.setOnClickListener(v -> {
+            onBackPressed();
+        });
+
 
 
     }
@@ -173,5 +179,12 @@ public class VehicleInformationToBook extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(VehicleInformationToBook.this, UserDashboard.class));
+        finish();
+        super.onBackPressed();
     }
 }

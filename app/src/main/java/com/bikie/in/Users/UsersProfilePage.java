@@ -3,6 +3,7 @@ package com.bikie.in.Users;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bikie.in.R;
@@ -11,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class UsersProfilePage extends AppCompatActivity {
-    private TextInputLayout mUserName,mUserPhoneNumber,mAadharNo,mDlNo;
+    private TextInputLayout mUserName,mUserPhoneNumber,mAadharNo,mDlNo,mEmailId;
     private ImageView mAadharFront,mAadharBack,mDlURL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class UsersProfilePage extends AppCompatActivity {
         mAadharFront = findViewById(R.id.img_Aadhar_Front);
         mAadharBack = findViewById(R.id.img_Aadhar_Back);
         mDlURL = findViewById(R.id.img_DrivingLicense);
+        mEmailId = findViewById(R.id.et_vEmailAddress);
 
         SessionManager manager = new SessionManager(UsersProfilePage.this);
 
@@ -33,6 +35,8 @@ public class UsersProfilePage extends AppCompatActivity {
         mAadharNo.getEditText().setText(manager.getAadharNo());
         mDlNo.getEditText().setText(manager.getDlNo());
         mUserName.getEditText().setText(manager.getName());
+        mEmailId.getEditText().setText(manager.getMailId());
+        Log.e("TAG", "onCreate: "+ manager.getMailId());
 
         Glide.with(UsersProfilePage.this).load(manager.getAadharFrontURL())
 //                .placeholder(R.drawable.sand_clock)

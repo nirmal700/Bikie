@@ -26,10 +26,10 @@ android {
 
     defaultConfig {
         applicationId = "com.bikie.in"
-        minSdk = 33
+        minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0"
+        versionCode = 3
+        versionName = "3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         android.buildFeatures.buildConfig = true
         buildConfigField("String", "PHONEPE_UAT_SALT", "\"${apiKeysProperties.getProperty("API_KEY_UAT_PHONEPE")}\"")

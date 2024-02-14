@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -70,6 +71,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     String pickupDateTimeString, dropoffDateTimeString;
     private SessionManager manager;
+    private TextView mFull_name;
     String htmlString;
 
     private static final String EMAIL_TO = "cst.20bcta16@silicon.ac.in";
@@ -90,10 +92,16 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         etPickupTime = findViewById(R.id.etPickupTime);
         etDropoffTime = findViewById(R.id.etDropoffTime);
         btn_mSearch = findViewById(R.id.btn_Search);
+        mFull_name = findViewById(R.id.full_name);
 
         etPickupDate = findViewById(R.id.etPickupDate);
         etDropoffDate = findViewById(R.id.etDropoffDate);
         contentView = findViewById(R.id.linear_content);
+
+        manager = new SessionManager(getApplicationContext());
+
+        mFull_name.setText(manager.getName());
+
         disableEditText(etPickupDate);
         disableEditText(etDropoffDate);
         disableEditText(etPickupTime);
@@ -332,7 +340,6 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     private void logout() {
 
-        manager = new SessionManager(getApplicationContext());
 
         //Initialize alert dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
