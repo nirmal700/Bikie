@@ -28,8 +28,8 @@ android {
         applicationId = "com.bikie.in"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "3.0"
+        versionCode = 4
+        versionName = "4.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         android.buildFeatures.buildConfig = true
         buildConfigField("String", "PHONEPE_UAT_SALT", "\"${apiKeysProperties.getProperty("API_KEY_UAT_PHONEPE")}\"")
@@ -66,19 +66,19 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.firebase:firebase-database:20.3.0")
-    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("com.google.firebase:firebase-firestore:24.10.2")
     implementation("com.google.firebase:firebase-storage:20.3.0")
-    implementation("com.google.firebase:firebase-crashlytics:18.6.0")
-    implementation("com.google.firebase:firebase-analytics:21.5.0")
-    implementation("com.google.firebase:firebase-perf:20.5.1")
-    implementation("com.google.firebase:firebase-auth:22.3.0")
-    implementation("com.google.firebase:firebase-config:21.6.0")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.2")
+    implementation("com.google.firebase:firebase-analytics:21.5.1")
+    implementation("com.google.firebase:firebase-perf:20.5.2")
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+    implementation("com.google.firebase:firebase-config:21.6.1")
     implementation("com.google.firebase:firebase-inappmessaging-display:20.4.0")
-    implementation("com.google.firebase:firebase-messaging:23.4.0")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
     implementation("com.google.firebase:firebase-functions:20.4.0")
     implementation("androidx.activity:activity:1.8.2")
     testImplementation("junit:junit:4.13.2")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-appcheck-playintegrity")
     implementation("com.google.firebase:firebase-appcheck-debug")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
