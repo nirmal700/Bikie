@@ -3,40 +3,35 @@ package com.bikie.in.Users;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.bikie.in.CustomTimePickerDialog;
 import com.bikie.in.FeaturedAdapter;
 import com.bikie.in.HtmlToPdfAndSendEmailTask;
-import com.bikie.in.HtmlToPdfConverter;
-import com.bikie.in.MainActivity;
 import com.bikie.in.POJO_Classes.FeaturedBikes;
 import com.bikie.in.POJO_Classes.FeaturedTestimonials;
 import com.bikie.in.R;
-import com.bikie.in.SendMail;
 import com.bikie.in.SessionManager.SessionManager;
-import com.bikie.in.Singup_Login.OtpVerification;
 import com.bikie.in.Singup_Login.Signup;
 import com.bikie.in.TestimonialAdapter;
 import com.google.android.material.navigation.NavigationView;
@@ -48,10 +43,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 
 public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 201;
     RecyclerView featuredBikes, featuredTestimonial;
     RecyclerView.Adapter adapter;
     RecyclerView.Adapter mTestimonialsadapter;
@@ -112,12 +107,20 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         setupTimePicker(etPickupTime);
         setupTimePicker(etDropoffTime);
 
+// Check for permission
 
-//        String invoiceHtml = generateInvoice("Nirmal Kumar", "8249494447", "#2305270019237", "27 - May - 2023", "Card", "BI0344657223456234", "Honda Amaze", "27 - May - 2023 12:00 PM To 29 - May - 2023 07:00 PM", "Rs. 5,018.75", "Rs. 30", "Rs. 0", "Rs. 5,018.75", "Rs. 4,516.87");
-//
-//        Log.e("Invoice", "onCreate: " + invoiceHtml);
-//        HtmlToPdfConverter converter = new HtmlToPdfConverter(this, EMAIL_TO, EMAIL_SUBJECT, invoiceHtml);
-//        converter.execute(invoiceHtml, "BookingInvoiceBikie.pdf");
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            Log.e("Permission", "onRequestPermissionsResult: Permission Not granted" );
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        } else {
+            Log.e("Permission", "onRequestPermissionsResult: Permission granted" );
+        }
+
+
+
 
 
         navigationView.bringToFront();
@@ -459,11 +462,22 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 //
 //        return !time.before(start.getTime()) && !time.after(end.getTime());
 //    }
-    public String generateInvoice(String customerName, String mobileNo, String invoiceNo, String bookingDate, String paymentMode, String transactionRefNo, String bookedVehicle, String pickDropTime, String vehicleRentalCharge, String helmetFee, String security, String subtotal, String totalPaid) {
 
-        return "<!DOCTYPE html>\n" + "<html lang=\"en\">\n" + "  <head>\n" + "    <meta charset=\"UTF-8\" />\n" + "    <title>Bill Generation</title>\n" + "    <style>\n" + "      /* Updated CSS with blue and white theme */\n" + "      body {\n" + "        font-family: Arial, sans-serif;\n" + "        margin: 20px;\n" + "        background-color: #fff; /* Updated background color */\n" + "        color: #333;\n" + "      }\n" + "      .container {\n" + "        width: 80%;\n" + "        margin: 0 auto;\n" + "        background-color: #fff;\n" + "        padding: 20px;\n" + "        border-radius: 8px;\n" + "        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" + "      }\n" + "      .header {\n" + "        text-align: center;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      .logo {\n" + "        max-width: 150px;\n" + "      }\n" + "      table {\n" + "        width: 100%;\n" + "        border-collapse: collapse;\n" + "        margin-bottom: 20px;\n" + "      }\n" + "      th,\n" + "      td {\n" + "        border: 1px solid #cddbf7;\n" + "        padding: 8px;\n" + "        text-align: left;\n" + "      }\n" + "      th {\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .total {\n" + "        text-align: right;\n" + "        background-color: #cddbf7;\n" + "      }\n" + "      .footer {\n" + "        margin-top: 20px;\n" + "        font-size: 14px;\n" + "        text-align: center;\n" + "        color: #666;\n" + "      }\n" + "      .footer p {\n" + "        margin-bottom: 5px;\n" + "        color: #000000; /* Updated text color to white */\n" + "      }\n" + "      .footer strong {\n" + "        font-weight: bold;\n" + "      }\n" + "    </style>\n" + "  </head>\n" + "  <body>\n" + "    <div class=\"container\">\n" + "      <div class=\"header\">\n" + "        <img\n" + "          class=\"logo\"\n" + "          src=\"https://firebasestorage.googleapis.com/v0/b/bikie-in.appspot.com/o/ic_bikie_rectrangular.jpg?alt=media&token=ac722e1f-fe8f-45fe-948d-8c168c3da94b\"\n" + "          alt=\"Company Logo\"\n" + "        />\n" + "        <h1>Invoice</h1>\n" + "      </div>\n" + "      <table>\n" + "        <tr>\n" + "          <th>Customer Name</th>\n" + "          <td>" + customerName + "</td>\n" + "          <th>Invoice No.</th>\n" + "          <td>" + invoiceNo + "</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <th>Mobile No.</th>\n" + "          <td>" + mobileNo + "</td>\n" + "          <th>Booking Date</th>\n" + "          <td>" + bookingDate + "</td>\n" + "        </tr>\n" + "<tr>\n" + "                                <th>Payment Mode</th>\n" + "                                <td>" + paymentMode + "</td>\n" + "                                <th>Transaction Ref. No.</th>\n" + "                                <td>" + transactionRefNo + "</td>\n" + " </tr>" + "        <tr>\n" + "          <th>Booked Vehicle</th>\n" + "          <td>" + bookedVehicle + "</td>\n" + "          <th>Pick & Drop Time</th>\n" + "          <td>" + pickDropTime + "</td>\n" + "        </tr>\n" + "      </table>\n" + "\n" + "      <table>\n" + "        <tr>\n" + "          <th>Description</th>\n" + "          <th>Price</th>\n" + "        </tr>\n" + "<tr>\n" + "       <td>Vehicle Rental Charge</td>\n" + "       <td>" + vehicleRentalCharge + "</td>\n" + " </tr>\n" + "        <tr>\n" + "          <td>Helmet Charge</td>\n" + "          <td>" + helmetFee + "</td>\n" + "        </tr>\n" + "\n" + "        <tr>\n" + "          <td>Security</td>\n" + "          <td>" + security + "</td>\n" + "        </tr>\n" + "        <tr>\n" + "          <td>Subtotal</td>\n" + "          <td>" + subtotal + "</td>\n" + "        </tr>\n" +
-
-                "\n" + "        <tr class=\"total\">\n" + "          <td><strong>Total Paid</strong></td>\n" + "          <td><strong>" + totalPaid + "</strong></td>\n" + "        </tr>\n" + "      </table>\n" + "    </div>\n" + "    <div class=\"footer\">\n" + "      <p>\n" + "        <em>Instruction:</em> Please reach at the Booked location before 30 mins\n" + "        for better avail of service.\n" + "      </p>\n" + "      <p>\n" + "        <em>Note:</em> Please bring Original Documents for authenticity\n" + "        verification which are opted while booking. For Indian: (Aadhar card\n" + "        along with your Aadhar linked mobile number) & Driving License are\n" + "        mandatory. For non-Indian: Passport/Visa, International driving permit\n" + "        license are mandatory.\n" + "      </p>\n" + "      <p><strong>BIKIEINDIA PRIVATE LIMITED</strong></p>\n" + "      <p>GSTIN : 21GDDPM5414C1Z4</p>\n" + "      <p>Pareswar Sahi,College Road, College Square, Cuttack, Odisha 753003</p>\n" + "      <p>\n" + "        This is an electronically generated invoice and does not require a\n" + "        signature.\n" + "      </p>\n" + "    </div>\n" + "  </body>\n" + "</html>\n";
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE) {
+            // If request is cancelled, the result arrays are empty.
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e("Permission", "onRequestPermissionsResult: Permission granted" );
+            } else {
+                // Permission denied, handle accordingly
+                Log.e("Permission", "onRequestPermissionsResult: Permission Denied" );
+            }
+            return;
+        }
+        // Handle other permissions if needed
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 }

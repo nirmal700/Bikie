@@ -11,6 +11,7 @@ import com.itextpdf.html2pdf.HtmlConverter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Properties;
+import java.io.ByteArrayOutputStream;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -24,38 +25,32 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-public class HtmlToPdfAndSendEmailTask extends AsyncTask<String, Void, File> {
+public class HtmlToPdfAndSendEmailTask extends AsyncTask<String, Void, ByteArrayOutputStream> {
 
     private Context context;
     private String toEmail;
-    private String filename; // New parameter for the filename
+    private String htmlContent;
 
-    public HtmlToPdfAndSendEmailTask(Context context, String toEmail, String filename) {
+    public HtmlToPdfAndSendEmailTask(Context context, String toEmail) {
         this.context = context;
         this.toEmail = toEmail;
-        this.filename = filename;
     }
 
     @Override
-    protected File doInBackground(String... params) {
+    protected ByteArrayOutputStream doInBackground(String... params) {
         if (params.length < 1) {
             return null;
         }
 
-        String htmlContent = params[0];
-        String pdfFileName = (filename != null && !filename.isEmpty()) ? filename : "BikieInvoice.pdf";
-
-        File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), pdfFileName);
+        htmlContent = params[0];
 
         try {
-            FileOutputStream outputStream = new FileOutputStream(pdfFile);
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
             ConverterProperties converterProperties = new ConverterProperties();
             HtmlConverter.convertToPdf(htmlContent, outputStream, converterProperties);
 
-            outputStream.close();
-
-            return pdfFile;
+            return outputStream;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -64,71 +59,72 @@ public class HtmlToPdfAndSendEmailTask extends AsyncTask<String, Void, File> {
     }
 
     @Override
-    protected void onPostExecute(File pdfFile) {
-        super.onPostExecute(pdfFile);
+    protected void onPostExecute(ByteArrayOutputStream outputStream) {
+        super.onPostExecute(outputStream);
 
-        if (pdfFile != null) {
+        Log.e("Output Stream", "onPostExecute: "+outputStream );
+        if (outputStream != null) {
             Toast.makeText(context, "PDF generated successfully", Toast.LENGTH_SHORT).show();
-            // Log the location of the generated PDF file
-            String pdfFilePath = pdfFile.getAbsolutePath();
-            Log.d("PDF Location", pdfFilePath);
-
             // Now send email with the generated PDF as an attachment
-            sendEmail(pdfFile);
+            sendEmail(outputStream);
         } else {
             Toast.makeText(context, "Failed to generate PDF", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void sendEmail(File attachment) {
-        final String username = BuildConfig.MAIL_ID;
-        final String password = BuildConfig.MAIL_PASSWORD;
+    private void sendEmail(ByteArrayOutputStream attachment) {
+        new Thread(() -> {
+            final String username = BuildConfig.MAIL_ID;
+            final String password = BuildConfig.MAIL_PASSWORD;
 
-        Properties props = new Properties();
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
 
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                        return new javax.mail.PasswordAuthentication(username, password);
-                    }
-                });
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
+                            return new javax.mail.PasswordAuthentication(username, password);
+                        }
+                    });
 
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
-            message.setSubject("PDF Attachment");
-            message.setText("Please find the attached PDF.");
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(username));
+                message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
+                message.setSubject("PDF Attachment");
 
-            // Create the message body part
-            BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText("Please find the attached PDF.");
 
-            // Create the attachment body part
-            MimeBodyPart attachmentBodyPart = new MimeBodyPart();
-            attachmentBodyPart.attachFile(attachment);
+                // Create the message body part for HTML content
+                MimeBodyPart htmlBodyPart = new MimeBodyPart();
+                htmlBodyPart.setContent(htmlContent, "text/html");
 
-            // Create the Multipart object and add parts
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(messageBodyPart);
-            multipart.addBodyPart(attachmentBodyPart);
 
-            // Set the content of the message to the multipart object
-            message.setContent(multipart);
+                // Create the attachment body part
+                MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+                attachmentBodyPart.setFileName("BikieInvoice.pdf");
+                attachmentBodyPart.setContent(attachment.toByteArray(), "application/pdf");
 
-            // Send the message
-            Transport.send(message);
+                // Create the Multipart object and add parts
+                Multipart multipart = new MimeMultipart();
+                multipart.addBodyPart(htmlBodyPart);
+                multipart.addBodyPart(attachmentBodyPart);
 
-            Log.d("Email", "Email sent successfully");
+                // Set the content of the message to the multipart object
+                message.setContent(multipart);
 
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                // Send the message
+                Transport.send(message);
+
+                Log.d("Email", "Email sent successfully");
+
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 }
