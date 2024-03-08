@@ -262,7 +262,7 @@ public class BookingSummary extends AppCompatActivity {
     }
 
     private void initializePhonePe() {
-        PhonePe.init(BookingSummary.this, PhonePeEnvironment.UAT, "MERCHANTUAT", "");
+        PhonePe.init(BookingSummary.this, PhonePeEnvironment.STAGE, "MERCHANTUAT", "");
     }
 
     private void initializeViews() {

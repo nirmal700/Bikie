@@ -88,7 +88,7 @@
             android:name=".Singup_Login.Login"
             android:exported="false" />
         <activity
-            android:name=".Dashboard"
+            android:name=".Admin.Dashboard"
             android:exported="false" />
         <activity
             android:name=".Singup_Login.SingupDL"
