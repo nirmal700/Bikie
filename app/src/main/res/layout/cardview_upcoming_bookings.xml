@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="4dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/booking_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:layout_marginStart="10dp"
+            android:text="Booking ID: 123456"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/bike_name"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/booking_id"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo"
+            android:layout_marginStart="10dp"
+            android:text="KTM Duke"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/bike_image"
+            android:layout_width="160dp"
+            android:layout_height="155dp"
+            android:layout_below="@id/bike_name"
+            android:layout_marginTop="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_bike_dash" />
+
+
+        <LinearLayout
+            android:id="@+id/PickupDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/mPickupDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:text="28 Nov 2023"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/mPickupTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/baloo"
+                android:text="11:00 AM"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/pinPointAbove"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_pinpoint_green"
+            android:layout_marginEnd="54dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/PickupDate"
+            android:layout_marginBottom="3dp"
+            android:importantForAccessibility="no" />
+        <View
+            android:layout_width="4dp"
+            android:id="@+id/dashedLineVertical"
+            android:layout_height="match_parent"
+            android:layout_above="@id/pinPointBelow"
+            android:layout_below="@id/pinPointAbove"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="65dp"
+            android:background="@drawable/bg_dotted_line_vertical"
+            android:layerType="software" />
+        <ImageView
+            android:id="@+id/pinPointBelow"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_pinpoint"
+            android:layout_marginEnd="54dp"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/DropOffDate"
+            android:layout_marginTop="3dp"
+            android:importantForAccessibility="no" />
+
+
+        <LinearLayout
+            android:id="@+id/DropOffDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/mButtons"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="10dp">
+
+            <TextView
+                android:id="@+id/mDropoffDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/baloo"
+                android:text="28 Nov 2023"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/mDropoffTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/baloo"
+                android:text="11:00 AM"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/statusChipGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bike_image"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_1"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="15dp"
+                android:checked="true"
+                android:text="Ongoing"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:chipBackgroundColor="@color/light_green" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <LinearLayout
+            android:id="@+id/mButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/statusChipGroup"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mViewDetails"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:text="Lend Vehicle"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/Primary_Blue"
+                app:cornerRadius="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mNavigate"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/cardview_light_background"
+                android:text="Call"
+                android:textColor="@color/Primary_Blue"
+                app:cornerRadius="5dp"
+                app:strokeColor="@color/Primary_Blue"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

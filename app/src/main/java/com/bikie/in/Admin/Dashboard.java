@@ -13,15 +13,16 @@ import com.bikie.in.Admin.AddNewVehicle;
 import com.bikie.in.Admin.Listed_Vehicles;
 import com.bikie.in.R;
 import com.bikie.in.SessionManager.SessionManager;
+import com.bikie.in.SessionManager.SessionManagerAdmin;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Dashboard extends AppCompatActivity {
-    MaterialCardView  btn_addNewVehicle,btn_listedVehicles;
+    MaterialCardView  btn_addNewVehicle,btn_listedVehicles,btn_upcomingBookings;
     TextView tv_userName;
 
-    SessionManager manager;
+    SessionManagerAdmin managerAdmin;
     String phoneNumber, currentName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +37,13 @@ public class Dashboard extends AppCompatActivity {
         }
         btn_addNewVehicle = findViewById(R.id.button_AddNewVehicle);
         btn_listedVehicles = findViewById(R.id.btn_ListedVehicles);
+        btn_upcomingBookings = findViewById(R.id.button_UpcomingBookings);
 
         tv_userName = findViewById(R.id.tv_userName);
 
-        manager = new SessionManager(getApplicationContext());
-        phoneNumber = manager.getPhone();
-        currentName = manager.getName();
+        managerAdmin = new SessionManagerAdmin(getApplicationContext());
+        phoneNumber = managerAdmin.getAdminPhone();
+        currentName = managerAdmin.getAdminName();
 
         tv_userName.setText("Hai, " + currentName);
 
@@ -52,5 +54,12 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Listed_Vehicles.class));
             }
         });
+        btn_upcomingBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), UpcomingBookings.class));
+            }
+        });
+
     }
 }
