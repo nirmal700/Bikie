@@ -76,9 +76,9 @@ public class BookingSummary extends AppCompatActivity {
 
     Button mProceedToPayment;
     String apiEndPoint = "/pg/v1/pay";
-    String merchantID = "PGTESTPAYUAT";
-    String mCallBackURL = "https://webhook.site/3891c569-8b9c-45db-9946-62adc780307c";
-    private static final String BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/";
+    String merchantID = "M1TOU28ZZMRM";
+    String mCallBackURL = "https://webhook.site/7159f042-4dd8-4a11-8e8f-aeb8d5957848";
+    private static final String BASE_URL = "https://api.phonepe.com/apis/herme/pg/v1/status/";
     private static final String CONTENT_TYPE_HEADER = "Content-Type";
     private static final String VERIFY_HEADER = "X-VERIFY";
     private static final String MERCHANT_ID_HEADER = "X-MERCHANT-ID";
@@ -113,7 +113,11 @@ public class BookingSummary extends AppCompatActivity {
 
 
         initializeViews();
-        initializePhonePe();
+        try {
+            initializePhonePe();
+        } catch (PhonePeInitException e) {
+            throw new RuntimeException(e);
+        }
         setupBookingDetails();
         setOnClickListenerForPayment();
 
@@ -162,7 +166,7 @@ public class BookingSummary extends AppCompatActivity {
         base64String = Base64.getEncoder().encodeToString(jsonString.getBytes(Charsets.UTF_8));
 
         try {
-            checksum = convertToSHA256(base64String + apiEndPoint + BuildConfig.PHONEPE_UAT_SALT) + "###1";
+            checksum = convertToSHA256(base64String + apiEndPoint + BuildConfig.PHONEPE_PROD_SALT) + "###1";
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(BookingSummary.this, "" + e.getMessage().toString(), Toast.LENGTH_SHORT).show();
@@ -187,7 +191,7 @@ public class BookingSummary extends AppCompatActivity {
 
         merchantRequestMap.put("paymentInstrument", paymentInstrumentMap);
         Log.e("Phonepe", "Merchant Request Map " + merchantRequestMap);
-        Log.e("Phonepe", "Salt " + BuildConfig.PHONEPE_UAT_SALT);
+        Log.e("Phonepe", "Salt " + BuildConfig.PHONEPE_PROD_SALT);
         return merchantRequestMap;
     }
 
@@ -261,8 +265,11 @@ public class BookingSummary extends AppCompatActivity {
         }
     }
 
-    private void initializePhonePe() {
-        PhonePe.init(BookingSummary.this, PhonePeEnvironment.STAGE, "MERCHANTUAT", "");
+    private void initializePhonePe() throws PhonePeInitException {
+        PhonePe.init(BookingSummary.this, PhonePeEnvironment.RELEASE, "M1TOU28ZZMRM", null);
+        String string_signature = PhonePe.getPackageSignature();
+        Log.e("TAG", "Phonepe Signature: "+string_signature );
+
     }
 
     private void initializeViews() {
@@ -295,20 +302,26 @@ public class BookingSummary extends AppCompatActivity {
             Inform your server to make the transaction
             status call to get the status. Update your app with the
             success/failure status.*/
-            CheckPaymentStatus();
+            //CheckPaymentStatus();
 
         }
     }
 
     private B2BPGRequest createB2BPGRequest() {
+        Log.e("TAG", "Phonepe Pay ---"+base64String );
+        Log.e("TAG", "Phonepe Pay ---"+checksum );
+        Log.e("TAG", "Phonepe Pay ---"+apiEndPoint );
+
+
         return new B2BPGRequestBuilder().setData(base64String).setChecksum(checksum).setUrl(apiEndPoint).build();
+
     }
 
     private void CheckPaymentStatus() {
 
         progressDialog.show();
         String url = BASE_URL + merchantID + "/" + merchantTransactionID;
-        String mStatuschecksum = convertToSHA256("/pg/v1/status/" + merchantID + "/" + merchantTransactionID + BuildConfig.PHONEPE_UAT_SALT) + "###1";
+        String mStatuschecksum = convertToSHA256("/pg/v1/status/" + merchantID + "/" + merchantTransactionID + BuildConfig.PHONEPE_PROD_SALT) + "###1";
 
         Log.e("Phonepe", "Checksum Status: " + mStatuschecksum);
         Log.e("Phonepe", "URL " + url);
