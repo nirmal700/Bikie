@@ -10,7 +10,7 @@ plugins {
     id("com.google.firebase.firebase-perf")
     id("com.google.firebase.appdistribution")
 }
-val apiKeysPropertiesFile = rootProject.file("local.properties")
+val apiKeysPropertiesFile = rootProject.file("gradle.properties")
 val apiKeysProperties = Properties().apply {
     load(apiKeysPropertiesFile.inputStream())
 }
