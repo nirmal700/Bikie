@@ -1,17 +1,19 @@
 package com.bikie.in.Singup_Login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.bikie.in.Dashboard;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bikie.in.Admin.Dashboard;
 import com.bikie.in.R;
 import com.bikie.in.SessionManager.SessionManager;
+import com.bikie.in.SessionManager.SessionManagerAdmin;
 import com.bikie.in.Users.UserDashboard;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -27,11 +29,17 @@ import java.util.Objects;
 public class Login extends AppCompatActivity {
 
     SessionManager manager;
+    SessionManagerAdmin managerAdmin;
 
     ProgressDialog progressDialog;
 
     TextInputLayout et_phoneNumber, et_password;
     Button btn_login, btn_backSignUp;
+
+    public static boolean checkPassword(String plainTextPassword, String hashedPassword) {
+        return BCrypt.checkpw(plainTextPassword, hashedPassword);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +52,7 @@ public class Login extends AppCompatActivity {
         btn_backSignUp = findViewById(R.id.btn_backSignUp);
         //Create a Session
         manager = new SessionManager(getApplicationContext());
+        managerAdmin = new SessionManagerAdmin(getApplicationContext());
 
         btn_backSignUp.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), Signup.class)));
 
@@ -72,6 +81,52 @@ public class Login extends AppCompatActivity {
 
         String _completePhoneNumber = "+91" + _phoneNumber;
 
+
+        // Check for admin login
+        Query checkAdmin = FirebaseDatabase.getInstance().getReference("Admin").orderByChild("phoneNumber").equalTo(_completePhoneNumber);
+
+        checkAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) { // Admin Exists
+
+                    String systemPassword = snapshot.child(_completePhoneNumber).child("Profile").child("password").getValue(String.class);
+                    Log.e("TAG", "onDataChange: "+systemPassword );
+                    if (_password.equals(systemPassword)) {
+                        et_phoneNumber.getEditText().setError(null);
+
+                        //Get User data From DataBase
+                        String _phoneNo = snapshot.child(_completePhoneNumber).child("Profile").child("phoneNumber").getValue(String.class);
+                        String _name = snapshot.child(_completePhoneNumber).child("Profile").child("name").getValue(String.class);
+                        String _mailId = snapshot.child(_completePhoneNumber).child("Profile").child("mailID").getValue(String.class);
+                        managerAdmin.setAdminLogin(true); //Set User Login Session
+                        managerAdmin.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(), _name, _mailId); //Add Data To User Session managerAdmin
+                        // Intent to Next Activity
+                        startActivity(new Intent(getApplicationContext(), Dashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                        finish();
+                    } else {
+                        progressDialog.dismiss();
+                        Toast.makeText(Login.this, "Password Doesn't Match!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Admin does not exist, check for user login
+                    checkUserLogin();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                progressDialog.dismiss();
+                Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void checkUserLogin() {
+
+        String _completePhoneNumber = "+91" + Objects.requireNonNull(et_phoneNumber.getEditText()).getText().toString().trim();
         // DataBase Check Query
         Query checkUser = FirebaseDatabase.getInstance().getReference("Users").orderByChild("phoneNumber").equalTo(_completePhoneNumber);
 
@@ -85,7 +140,7 @@ public class Login extends AppCompatActivity {
                     String systemPassword = snapshot.child(_completePhoneNumber).child("Profile").child("password").getValue(String.class);
 
                     assert systemPassword != null;
-                    if (checkPassword(_password,systemPassword)) {
+                    if (checkPassword(Objects.requireNonNull(et_phoneNumber.getEditText()).getText().toString().trim(), systemPassword)) {
                         et_phoneNumber.getEditText().setError(null);
 
                         //Get User data From DataBase
@@ -102,7 +157,7 @@ public class Login extends AppCompatActivity {
 
 
                         manager.setUserLogin(true); //Set User Login Session
-                        manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(),_name,_dlNo,_aadharNo,_dlIMGURL,_aadharFront,_aadharBack,_mailId,_profilePic); //Add Data To User Session manager
+                        manager.setDetails(_phoneNo, et_password.getEditText().getText().toString().trim(), _name, _dlNo, _aadharNo, _dlIMGURL, _aadharFront, _aadharBack, _mailId, _profilePic); //Add Data To User Session manager
                         // Intent to Next Activity
                         startActivity(new Intent(getApplicationContext(), UserDashboard.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                         finish();
@@ -123,7 +178,6 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(Login.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private boolean validatePassword() {
@@ -158,8 +212,5 @@ public class Login extends AppCompatActivity {
             et_phoneNumber.setError(null);
             return true;
         }
-    }
-    public static boolean checkPassword(String plainTextPassword, String hashedPassword) {
-        return BCrypt.checkpw(plainTextPassword, hashedPassword);
     }
 }
