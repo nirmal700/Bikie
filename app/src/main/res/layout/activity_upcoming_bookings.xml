@@ -39,12 +39,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:autoSizeTextType="uniform"
-                android:text="Listed Vehicle's"
+                android:text="Upcoming Booking's"
                 android:paddingEnd="10dp"
                 android:fontFamily="@font/my_fav_sans_number"
                 android:textStyle="bold"
                 android:textColor="@color/white"
-                android:textSize="35sp"
+                android:textSize="30sp"
                 tools:ignore="MissingConstraints"
                 tools:targetApi="o" />
         </LinearLayout>
@@ -62,7 +62,7 @@
             android:padding="5dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_ListedVehicles"
+                android:id="@+id/rv_UpcomingBooking"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="1dp"
@@ -73,17 +73,5 @@
 
         </LinearLayout>
     </LinearLayout>
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/your_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="30dp"
-        android:text="New Vehicle"
-        android:backgroundTint="@color/Fab_Blue"
-        android:textColor="@color/white"
-        app:iconTint="@color/white"
-        app:icon="@drawable/ic_plus"
-        app:srcCompat="@drawable/ic_plus" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

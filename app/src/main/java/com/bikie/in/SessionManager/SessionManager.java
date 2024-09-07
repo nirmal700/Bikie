@@ -38,9 +38,6 @@ public class SessionManager {
 
 
 
-
-
-
         editor.commit();
 
     }

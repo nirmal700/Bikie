@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="4dp"
     android:background="@color/white"
     app:cardCornerRadius="5dp"
     android:id="@+id/mCardViewListed"
@@ -12,16 +12,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:padding="10dp">
+        android:background="@color/cardview_light_background"
+        android:padding="5dp">
 
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchAvailaible"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="55dp"
                 android:textColor="@color/black"
                 android:text="Available"
+                android:fontFamily="@font/baloo"
                 android:layout_alignParentEnd="true" />
 
 
@@ -34,6 +35,7 @@
             <ImageView
                 android:id="@+id/Vehicle_image"
                 android:layout_width="match_parent"
+                android:paddingHorizontal="25dp"
                 android:layout_height="155dp"
                 android:background="@drawable/bg_image_rounded"
                 android:src="@drawable/ic_bike_dash"
@@ -59,19 +61,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/FrameLayout"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:text="KTM Duke"
-            android:textSize="25sp"
-            android:fontFamily="@font/robotto"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/baloo"
+            android:textSize="30sp"
             android:textColor="@color/black"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/Vehicle_location"
             android:layout_width="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
-            android:fontFamily="@font/robotto"
+            android:fontFamily="@font/baloo"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="22sp"
             android:layout_below="@id/Vehicle_name"
             android:text="Patia, Bhubaneswar" />
 
